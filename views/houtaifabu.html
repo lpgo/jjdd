@@ -1,0 +1,141 @@
+﻿{{define "publish"}}
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>府谷交警内网后台管理程序</title>
+    <meta name="description" content="府谷交警 内网">
+    <link rel="stylesheet" type="text/css" href="/css/houtai.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta http-equiv="imagetoolbar" content="false">
+    <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
+    <!--[if IE 6]>
+<script src="DD_belatedPNG.js"></script>
+<script>
+  DD_belatedPNG.fix('.phoneicon');
+</script>
+<![endif]-->
+
+    <body ms-controller="fugujiaojing" id="homefirst">
+        <div id="wrapper">
+            <div id="header_index">
+                <h1><a href="/index.html" title="w3school 在线教程" style="float:left;"></a></h1>
+                <div id="searchui">
+                    <span style="color: white">2017年11月22日  &emsp;<span >王东</span><a href="" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
+                </div>
+            </div>
+            <div id="navfirst">
+                <div class="navBar">
+                    <ul class="nav clearfix">
+                        <li class="m on">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">网站首页</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">如何使用</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">查看参数</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">基础效果</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">扩展效果</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">SuperSlide</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">大话主席</a></h3>
+                        </li>
+                    </ul>
+                    <ul class="subNav">
+                        <li>你好，欢迎来到“大话主席”网站！</li>
+                        <li><a href="#">如何使用</a>|<a href="#">如何使用</a>|<a href="#">如何使用</a>|<a href="#">如何使用</a></li>
+                        <li><a href="#">查看参数</a>|<a href="#">查看参数</a>|<a href="#">查看参数</a>|<a href="#">查看参数</a></li>
+                        <li><a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a></li>
+                        <li><a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a></li>
+                        <li>
+                            <!-- 空 -->
+                        </li>
+                        <li>
+                            <!-- 空 -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="maincontent">
+                <div class="idea divclass" id="d1">
+                    <h2>内容发布</h2>
+                </div>
+                <form action="/admin/preview" method="post" enctype="multipart/form-data">
+                    <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
+                        所属专题 &nbsp;
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        内容标题 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" value="{{.Title}}"> <span style="margin-left: 2em;color: gray">还可输入<span style="color:red">40</span>个字符</span>
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        拟&emsp;&emsp;稿 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="creator" value="{{.Creator}}">
+                    </div>
+                    <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
+                        审&emsp;&emsp;核 <span style="color: red ">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 10em; " type="text " name="assessor"  value="{{.Assessor}}">
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        签&emsp;&emsp;发 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="{{.Signature}}">
+                    </div>
+                    <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
+                        内容来源 <span style="color: red ">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 20em; " type="text " name="from"  value="{{.From}}">
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        标题图片 &nbsp;
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 22em;" type="file" name="upfile" value="{{.Pic}}">
+                        <button style="height:40px;line-height: 38px;width:80px;margin-left:2em;background-color: #fc8114;color:white;vertical-align: middle;">上传</button>
+                    </div>
+                    <div class="idea " id="d3" style="padding:0;border: 1px solid #aaa;border:none; margin-bottom: 10px">
+                        <div style="margin: 0 auto">
+                            <script id="editor" name="content" type="text/plain" style="width:1024px;height:500px;">
+                            	{{.Content}}
+                            </script>
+                        </div>
+                        <button style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px">预览</button>
+                        <input type="submit" name="预览" value="预览">
+                    </div>
+                </form>
+            </div>
+            <div id="footer">
+                <p id="p2">
+                    <a style="color: #636161;font-size: 0.8em;" target="_blank" title="府谷县公安局交警大队">府谷县公安局交警大队版权所有 保留一切权利</a>
+                    <a target="_blank"></a>
+                </p>
+            </div>
+        </div>
+        <script type="text/javascript" charset="utf-8" src="/js/ku/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="/js/ku/editor_api.js">
+        </script>
+        <script src="/js/ku/avalon.js"></script>
+        <script src="/js/houtaifabu.js"></script>
+    </body>
+    <script type="text/javascript">
+    UE.getEditor('editor');
+    </script>
+
+</html>
+{{end}}
