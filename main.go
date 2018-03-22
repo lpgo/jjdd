@@ -153,6 +153,9 @@ func main() {
 	admin.GET("/page/modify_directory", modifyDirectoryPage)
 
 	admin.GET("/page/saveRota", saveRotaPage)
+	admin.GET("/page/add_link", addLinkPage)
+	admin.GET("/page/link_list", linkListPage)
+	admin.GET("/page/modify_link", modifyLinkPage)
 
 	/*----------------操作--------*/
 	//文章
@@ -183,6 +186,13 @@ func main() {
 	//值班表
 	admin.Any("/saveRota", saveRota)
 
+	//链接
+	admin.Any("/addLink", addLink)
+	admin.Any("/getLink", getLinkList)
+	admin.Any("/getLinkListByDepName", getLinkListByDepName)
+	admin.Any("/delLink", delLink)
+	admin.Any("/modifyLink", modifyLink)
+
 	e.Any("/getDirectoryByname1", getDirectoryByName)
 	e.Any("/searchDirectoryByName", searchDirectoryByName)
 	e.Any("/searchDirectoryByJob", searchDirectoryByJob)
@@ -206,6 +216,22 @@ func main() {
 	//e.Post("/mch", weixin.MchServer)
 	e.Start(":80")
 
+}
+
+func addLink(c echo.Context) error {
+	link := db.Link{
+		Id:       bson.NewObjectId(),
+		Name:     c.FormValue("linkName"),
+		Url:      c.FormValue("url"),
+		Category: c.FormValue("category"),
+		Order:    service.GetLinksCount(c.FormValue("category")) + 1,
+	}
+	if err := db.Add("link", link); err != nil {
+		log.Println(err)
+		return MyRedirect(c, "/error.html")
+	} else {
+		return MyRedirect(c, "/admin/page/link_list")
+	}
 }
 
 func addUser(c echo.Context) error {
@@ -305,6 +331,15 @@ func delDep(c echo.Context) error {
 
 func delDirectory(c echo.Context) error {
 	if err := service.DelDirectory(c.QueryParam("id")); err != nil {
+		log.Println(err)
+		return err
+	} else {
+		return c.NoContent(http.StatusOK)
+	}
+}
+
+func delLink(c echo.Context) error {
+	if err := service.DelLink(c.QueryParam("id")); err != nil {
 		log.Println(err)
 		return err
 	} else {
@@ -465,9 +500,20 @@ func saveRotaPage(c echo.Context) error {
 	return c.Render(http.StatusOK, "rota", map[string]db.Any{"User": user, "First": !have, "Rota": rota})
 }
 
+func addLinkPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"User": user})
+}
+
+func linkListPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.Render(http.StatusOK, "linklist", map[string]db.Any{"User": user})
+}
+
 func indexPage(c echo.Context) error {
 	rota, _ := service.GetRota()
-	return c.Render(http.StatusOK, "index", rota)
+	links := service.GetLinks()
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"rota": rota, "links": links})
 }
 
 func directoryPage(c echo.Context) error {
@@ -519,6 +565,11 @@ func modifyDirectoryPage(c echo.Context) error {
 	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Deps": deps, "Name": c.QueryParam("name"), "DepName": c.QueryParam("dep"), "Job": c.QueryParam("job"), "Tel": c.QueryParam("tel"), "Phone": c.QueryParam("phone")})
 }
 
+func modifyLinkPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name"), "Category": c.QueryParam("category"), "Url": c.QueryParam("url")})
+}
+
 func depListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	return c.Render(http.StatusOK, "deplist", map[string]db.Any{"User": user})
@@ -562,17 +613,7 @@ func modifyUser(c echo.Context) error {
 }
 
 func modifyDep(c echo.Context) error {
-
-	if order, err := strconv.Atoi(c.FormValue("sort")); err != nil {
-		log.Println(err)
-		return errors.New("排序必需为数字")
-	} else {
-
-		if err := db.UpdateById("department", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("depname")}}); err != nil {
-			log.Println(err)
-			return err
-		}
-
+	if order, err := strconv.Atoi(c.FormValue("sort")); err == nil {
 		count := service.GetDepsCount()
 		var oldDep db.Department
 		if err := db.GetById("department", c.FormValue("id"), &oldDep); err != nil {
@@ -589,23 +630,16 @@ func modifyDep(c echo.Context) error {
 			db.UpdateByCond("department", bson.M{"order": bson.M{"$gte": order}}, bson.M{"$inc": bson.M{"order": 1}})
 			db.UpdateById("department", c.FormValue("id"), bson.M{"$set": bson.M{"order": order}})
 		}
-
-		return directoryListPage(c)
-
 	}
+	if err := db.UpdateById("department", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("depname")}}); err != nil {
+		log.Println(err)
+		return err
+	}
+	return directoryListPage(c)
 }
 
 func modifyDirectory(c echo.Context) error {
-	if order, err := strconv.Atoi(c.FormValue("sort")); err != nil {
-		log.Println(err)
-		return errors.New("排序必需为数字")
-	} else {
-
-		if err := db.UpdateById("directory", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("directoryName"), "dep": c.FormValue("dep"), "job": c.FormValue("job"), "tel": c.FormValue("tel"), "phone": c.FormValue("phone")}}); err != nil {
-			log.Println(err)
-			return err
-		}
-
+	if order, err := strconv.Atoi(c.FormValue("sort")); err == nil {
 		count := service.GetDirectorysCount(c.FormValue("dep"))
 		var oldDir db.Directory
 		if err := db.GetById("directory", c.FormValue("id"), &oldDir); err != nil {
@@ -622,9 +656,37 @@ func modifyDirectory(c echo.Context) error {
 			db.UpdateById("directory", c.FormValue("id"), bson.M{"$set": bson.M{"order": order}})
 		}
 
-		return MyRedirect(c, "/admin/page/dep_list")
-
 	}
+	if err := db.UpdateById("directory", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("directoryName"), "dep": c.FormValue("dep"), "job": c.FormValue("job"), "tel": c.FormValue("tel"), "phone": c.FormValue("phone")}}); err != nil {
+		log.Println(err)
+		return err
+	}
+	return MyRedirect(c, "/admin/page/dep_list")
+}
+
+func modifyLink(c echo.Context) error {
+	if order, err := strconv.Atoi(c.FormValue("sort")); err == nil {
+		count := service.GetLinksCount(c.FormValue("category"))
+		var oldDir db.Link
+		if err := db.GetById("link", c.FormValue("id"), &oldDir); err != nil {
+			log.Println(err)
+			return err
+		}
+
+		if order >= count {
+			db.UpdateByCond("link", bson.M{"category": c.FormValue("category"), "order": bson.M{"$gt": oldDir.Order}}, bson.M{"$inc": bson.M{"order": -1}})
+			db.UpdateById("link", c.FormValue("id"), bson.M{"$set": bson.M{"order": count}})
+		} else if order > 0 { //
+			db.UpdateByCond("link", bson.M{"category": c.FormValue("category"), "order": bson.M{"$gt": oldDir.Order}}, bson.M{"$inc": bson.M{"order": -1}})
+			db.UpdateByCond("link", bson.M{"category": c.FormValue("category"), "order": bson.M{"$gte": order}}, bson.M{"$inc": bson.M{"order": 1}})
+			db.UpdateById("link", c.FormValue("id"), bson.M{"$set": bson.M{"order": order}})
+		}
+	}
+	if err := db.UpdateById("link", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("linkName"), "category": c.FormValue("category"), "url": c.FormValue("url")}}); err != nil {
+		log.Println(err)
+		return err
+	}
+	return MyRedirect(c, "/admin/page/link_list")
 }
 
 func userListPage(c echo.Context) error {
@@ -659,6 +721,12 @@ func getDirectoryList(c echo.Context) error {
 
 }
 
+func getLinkList(c echo.Context) error {
+
+	return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetLinksByName(c.QueryParam("searchValue"))})
+
+}
+
 func getDirectoryListByDepName(c echo.Context) error {
 	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
 		return err
@@ -667,9 +735,26 @@ func getDirectoryListByDepName(c echo.Context) error {
 	}
 }
 
+func getLinkListByDepName(c echo.Context) error {
+	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
+		return err
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetLinksByDep(c.QueryParam("depName"), page), "count": service.GetLinksCount(c.QueryParam("depName"))})
+	}
+}
+
 func getDirectoryByName(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
 	if err := db.FindManyOrder1("directory", bson.M{"dep": c.QueryParam("depName")}, "order", 0, &deps); err != nil {
+		log.Println(err)
+		return err
+	}
+	return c.JSON(http.StatusOK, map[string]db.Any{"data": deps})
+}
+
+func getLinkByName(c echo.Context) error {
+	var deps []db.Link = make([]db.Link, 5)
+	if err := db.FindManyOrder1("link", bson.M{"category": c.QueryParam("depName")}, "order", 0, &deps); err != nil {
 		log.Println(err)
 		return err
 	}

@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Õþ¸®ÍøÕ¾Ä£°å</title>
+<title>府谷交警</title>
 <meta name="keywords" content="Õþ¸®·½°¸">
 <meta name="description" content="">
 <link rel="stylesheet" type="text/css" href="css/common.css">
@@ -23,7 +23,24 @@
 <script type="text/javascript" src="js/jquery1.42.min.js"></script>
 <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
 <script type="text/javascript" src="js/DD_belatedPNG.js"></script>
-
+<script type="text/javascript">
+function nTabs(thisObj,Num){
+if(thisObj.className == "active")return;
+var tabObj = thisObj.parentNode.id;
+var tabList = document.getElementById(tabObj).getElementsByTagName("li");
+for(i=0; i <tabList.length; i++)
+{
+if (i == Num)
+{
+thisObj.className = "active"; 
+document.getElementById(tabObj+"_Content"+i).style.display = "block";
+}else{
+tabList[i].className = "normal"; 
+document.getElementById(tabObj+"_Content"+i).style.display = "none";
+}
+} 
+}
+</script>
 
 <!--[if IE 6]>
 <script src="DD_belatedPNG.js"></script>
@@ -422,6 +439,7 @@ if(i==c){i =0;}
               <tr >
                 <td colspan="3" style=" background-color: #ececec;padding-bottom: 0.7em;padding-top: 0.7em;font-size: 20px;font-weight: bold;line-height: 1.3em;">星期五<br>2017年12月29日 </td>
               </tr>
+              <%with .rota%>
               <tr>
                 <td>值班领导</td>
                 <td><%.Lingdao%></td>
@@ -469,7 +487,8 @@ if(i==c){i =0;}
               <tr>
                 <td >值班电话</td>
                 <td colspan="2"><%.Tel%></td>
-              </tr>                     
+              </tr> 
+              <%end%>                    
             </table>
           </div>
         </div>
@@ -968,90 +987,46 @@ if(i==c){i =0;}
         </div>
       </div>
     </div>
+    <style type="text/css">
+    .TabContent{
+      height: 200px;width: 100%;
+    }
+   </style>
     <!--  µÚÆß°æ   ÓÑÇéÁ´½Ó -->
     <div class="linkTab fl">
       <div class="TabTitle" style="background: none">
-        <div class="tit">ÓÑÇéÁ´½Ó</div>
         <ul id="Tab9">
-          <li class="active" onmouseover="nTabs(this,0);"><a href="#" class="l1">ÏØÖ±¸÷µ¥Î»</a></li>
-          <li class="normal" onmouseover="nTabs(this,1);"><a href="#" class="l1">ÏØÈË´ó</a></li>
-          <li class="normal" onmouseover="nTabs(this,2);"><a href="#" class="l1">ÏçÕò½ÖµÀ</a></li>
+          <li class="active" onmouseover="nTabs(this,0);"><a href="#" class="l1">1</a></li>
+          <li class="normal" onmouseover="nTabs(this,1);"><a href="#" class="l1">2</a></li>
+          <li class="normal" onmouseover="nTabs(this,2);"><a href="#" class="l1">3</a></li>
         </ul>
       </div>
       <div class="TabContent">
         <div id="Tab9_Content0" style="display: block;">
           <ul class="friendLink">
-            <li><a href="#60" target="_blank">Õþ¸®²¿ÃÅ</a></li>
-            <li><a href="#61" target="_blank">Õþ¸®²¿ÃÅ</a></li>
-            <li><a href="#1" target="_blank">½»Í¨¾Ö</a></li>
-            <li><a href="#" target="_blank">·öÆ¶°ì</a></li>
-            <li><a href="#" target="_blank">²ÆÕþ¾Ö</a></li>
-            <li><a href="#" target="_blank">¹æ»®¾Ö</a></li>
-            <li><a href="#" target="_blank">Í³¼Æ¾Ö</a></li>
-            <li><a href="#" target="_blank">ÈËÉç¾Ö</a></li>
-            <li><a href="#" target="_blank">ÎÀÉú¾Ö</a></li>
-            <li><a href="#" target="_blank">°²¼à¾Ö</a></li>
-            <li><a href="#" target="_blank">ÉÌÎñ¾Ö</a></li>
-            <li><a href="#" target="_blank">·¢¸ÄÎ¯</a></li>
-            <li><a href="#" target="_blank">»·±£¾Ö</a></li>
-            <li><a href="#" target="_blank">Ë¾·¨²¿</a></li>
-            <li><a href="#" target="_blank">²ÆÕþ²¿</a></li>
-            <li><a href="#" target="_blank">¹úÍÁ×ÊÔ´²¿</a></li>
-            <li><a href="#" target="_blank">½»Í¨ÔËÊä²¿</a></li>
-            <li><a href="#" target="_blank">Ë®Àû²¿</a></li>
-            <li><a href="#" target="_blank">Ë®Àû²¿</a></li>
-            <li><a href="#" target="_blank">²ÆÕþ²¿</a></li>
-            <li><a href="#" target="_blank">Ë¾·¨²¿</a></li>
-            <li><a href="#" target="_blank">Ë¾·¨²¿</a></li>
+            <%range .links%>
+            <%if eq .Category "1"%>
+            <li><a href="<%.Url%>" target="_blank"><%.Name%></a></li>
+            <%end%>
+            <%end%>
           </ul>
         </div>
         <div id="Tab9_Content1" class="none" style="display: none;">
           <ul class="friendLink">
-            <li><a href="#">Õþ¸®°ì¹«Ìü2</a></li>
+            <%range .links%>
+            <%if eq .Category "2"%>
+            <li><a href="<%.Url%>" target="_blank"><%.Name%></a></li>
+            <%end%>
+            <%end%>
           </ul>
         </div>
         <div id="Tab9_Content2" class="none" style="display: none;">
           <ul class="friendLink">
-            <li><a href="#">Õþ¸®°ì¹«Ìü3</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
-            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <%range .links%>
+            <%if eq .Category "3"%>
+            <li><a href="<%.Url%>" target="_blank"><%.Name%></a></li>
+            <%end%>
+            <%end%>
           </ul>
         </div>
       </div>

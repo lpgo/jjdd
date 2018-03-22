@@ -7,6 +7,16 @@ import (
 	"time"
 )
 
+//链接
+type Link struct {
+	Id       bson.ObjectId `bson:"_id" json:"id"`
+	Name     string        `bson:"name" json:"name"`
+	Url      string        `bson:"url" json:"url"`
+	Category string        `bson:"category" json:"category"`
+	Order    int           `bson:"order" json:"order"`
+	IsHidden bool          `bson:"ishidden" json:"ishidden"`
+}
+
 //值班表
 type Rota struct {
 	Lingdao string   `bson:"lingdao" json:"lingdao"`

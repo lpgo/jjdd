@@ -99,9 +99,25 @@ func GetDirectorysByName(name string) []db.Directory {
 	return deps
 }
 
+func GetLinksByName(name string) []db.Link {
+	var deps = make([]db.Link, 15)
+	if err := db.GetAllByOrder("link", bson.M{"name": bson.M{"$regex": bson.RegEx{Pattern: name, Options: "ixs"}}}, &deps); err != nil {
+		log.Println(err)
+	}
+	return deps
+}
+
 func GetDirectorysByDep(dep string, page int) []db.Directory {
 	var deps = make([]db.Directory, 15)
 	if err := db.FindPartOrder("directory", bson.M{"dep": dep}, (page-1)*15, 15, &deps, "order"); err != nil {
+		log.Println(err)
+	}
+	return deps
+}
+
+func GetLinksByDep(dep string, page int) []db.Link {
+	var deps = make([]db.Link, 15)
+	if err := db.FindPartOrder("link", bson.M{"category": dep}, (page-1)*15, 15, &deps, "order"); err != nil {
 		log.Println(err)
 	}
 	return deps
@@ -117,6 +133,15 @@ func GetRota() (db.Rota, bool) {
 	}
 }
 
+func GetLinks() []db.Link {
+	var links []db.Link
+	if err := db.GetAll("link", &links); nil != err {
+		log.Println(err)
+
+	}
+	return links
+}
+
 func DelUser(id string) error {
 	return db.Delete("user", id)
 }
@@ -129,6 +154,16 @@ func DelDirectory(id string) error {
 	}
 	db.UpdateByCond("directory", bson.M{"dep": oldDep.Department, "order": bson.M{"$gt": oldDep.Order}}, bson.M{"$inc": bson.M{"order": -1}})
 	return db.Delete("directory", id)
+}
+
+func DelLink(id string) error {
+	var oldDep db.Link
+	if err := db.GetById("link", id, &oldDep); err != nil {
+		log.Println(err)
+		return err
+	}
+	db.UpdateByCond("link", bson.M{"category": oldDep.Category, "order": bson.M{"$gt": oldDep.Order}}, bson.M{"$inc": bson.M{"order": -1}})
+	return db.Delete("link", id)
 }
 
 func DelDep(id string) error {
@@ -149,4 +184,7 @@ func GetDepsCount() int {
 }
 func GetDirectorysCount(dep string) int {
 	return db.GetCount("directory", bson.M{"dep": dep})
+}
+func GetLinksCount(c string) int {
+	return db.GetCount("link", bson.M{"category": c})
 }
