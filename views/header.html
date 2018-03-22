@@ -1,0 +1,13 @@
+<%define "header" %>
+<div id="header_index">
+    <h1><a href="/index.html" title="" style="float:left;"></a></h1>
+    <div id="searchui">
+        <span style="color: white">&emsp;<%.User.Department%>&emsp;&emsp;</span><span style="color: white" id="time"></span><a href="/admin/loginOut" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
+    </div>
+    <script type="text/javascript">
+    var element = document.getElementById('time');
+    var d = new Date();
+    element.innerHTML = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+    </script>
+</div>
+<%end%>

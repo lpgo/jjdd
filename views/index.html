@@ -1,11 +1,1099 @@
-{{define "index"}}
+﻿<% define "index" %>
+<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Õþ¸®ÍøÕ¾Ä£°å</title>
+<meta name="keywords" content="Õþ¸®·½°¸">
+<meta name="description" content="">
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/label.css">
+<link href="css/index.css" type="text/css" rel="stylesheet">
+<link href="css/index1.css" type="text/css" rel="stylesheet">
+
+<script type="text/javascript" src="js/config.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/zh-cn.js"></script>
+<script type="text/javascript" src="js/zh-cn(1).js"></script>
+<script type="text/javascript" src="js/jquery1.42.min.js"></script>
+<script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript" src="js/DD_belatedPNG.js"></script>
+
+
+<!--[if IE 6]>
+<script src="DD_belatedPNG.js"></script>
+<script>
+  DD_belatedPNG.fix('#logopic img');
+  DD_belatedPNG.fix('.phoneicon');
+</script>
+<![endif]-->
 </head>
 <body>
-	
+<div id="header">
+  <div class="banner">
+    <div id="play_9647">
+      <ul class="clearfix">
+        <li style="display: block; z-index: 10;"><a href=""><img src="/images/navpic - 副本.jpg" width="100%" height="570"></a></li>
+      </ul>
+      <ul class="jsNav" id="jsNav_9647">
+        <li class="over">1</li>
+      </ul>
+    </div>
+  
+</div>
+  <div class="head_logo wp_inner">
+    <div style="font-size: 1.1em;color: white;display: inline-block;float: left;">府谷县公安局交警大队欢迎您！</div>
+    <div style="display: inline-block;float: right;color: white;font-size: 1.1em;">
+      <span>旧版回顾</span>
+      <span>|</span>
+      <span>设为首页</span>
+       <span>|</span>
+      <span>站内搜索</span>
+    </div>
+    <div style="display: inline-block;clear: both;"></div>
+    <div class="logo" style="width: 117px;margin-top: 77px;margin-left: -188px;"><a id="logopic" href="#"><img style="width: 163%;" src="images/guohui.png"></a></div>
+    <div class="logo" style="margin-top: 105px;margin-left: 42px; width: 334px;margin-left: -20px"><a id="logopic" href="#"><img style=" width: 178%;" src="images/dongtai.gif"></a></div>
+    <div class="head_right">
+      <!--<div class="search_form">-->
+        <!--<form action="search" target="_blank" method="get" name="form1" id="form1">-->
+          <!--<input type="text" value="" class="keyword" id="keyword" name="keyword">-->
+          <!--<input type="submit" class="submitbtn" value="" id="button" name="button">-->
+        <!--</form>-->
+      <!--</div>-->
+    </div>
+  </div>
+</div>
+<div id="nav">
+  <!---->
+  <div class="zuo" id="transobjzuo"></div>
+  <div class="you" id="transobjyou"></div>
+  <div class="nav_menu clearfix">
+    <ul id="menu_nav">
+      <li class=""><a href="#" target="" class="nav1 phoneicon" style="text-decoration: none!important;color: white;font-size: 18px">网站首页</a> </li>
+      <li class=""><a href="743.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav2 phoneicon">大队概括</a>
+      </li>
+      <li class=""><a href="735.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav3 phoneicon">文件简报</a>
+      </li>
+      <li class=""><a href="788.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav4 phoneicon">党建队建</a> </li>
+      <li class=""><a href="index.php/opinion-main" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav5 phoneicon">交管动态</a> </li>
+      <li class=""><a href="734.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav6 phoneicon">学习园地</a>
+      </li>
+      <li class=""><a href="1116.shtml" style="text-decoration: none!important;color: white;font-size: 18px" target="" class="nav7 phoneicon">数据报送</a> </li>
+    </ul>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+//**show_edit**//            
+init_labelshows('header_t');
+//**menu**//
+$('#menu_nav li>dl').hide();
+$('#menu_nav li:first').addClass('over');
+$('#menu_nav li').each(function () {
+$(this).hover(
+function(){
+$('#menu_nav li').removeClass();
+$('#menu_nav li>dl').hide();
+$(this).addClass('over');
+$(this).find('dl').show();
+$(this).find('dl').css({left:parseInt($(this).position().left) + 'px'});
+},
+function(){
+$(this).find('dl').hide();
+}
+)
+});
+})
+$(".toggleCode").each(function(){
+var code = $(this).find('.codeDiv');
+$(this).hover(function() {
+code.show();
+}, function() {
+code.hide();
+});
+})
+</script>
+<div id="content" class="container">
+  <div class="news" style="padding-top: 10px">
+    <div class="special fl" style="margin-top: 0px;margin-bottom: 1px;line-height: 80px;font-size:45px;color:red;font-weight: bold;height:92px;text-align: center;"> 
+        中央经济会议习近平主持会议
+    </div>
+    <div class="news-tp fl">
+      <div class="focus">
+
+        <div id="play_9609">
+          <ul>
+            <li class="playShow"> <a href="855.shtml" target="_blank" style="display: inline;"><img src="images/fe79b58695e1ba5f.jpg" alt="ÊÐ×¡½¨Î¯²Î¼ÓÇìÔªµ©ÍòÈË½¡¿µÅÜ"></a> <a href="481.shtml" target="_blank" style="display: none;"><img src="images/6a3ea8964b3fa6db.jpg" alt="¹ãÖÝÊÐ²ÐÁª×éÖ¯ËÄ³¡ÌØÊâ½ÌÓýÑ§Ð£¿ª·ÅÈÕ"></a> <a href="1106.shtml" target="_blank" style="display: none;"><img src="images/265cf0371c34ca09.jpg" alt="[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü"></a> <a href="1150.shtml" target="_blank" style="display: none;"><img src="images/e9c61dfc82219da8.jpg" alt="¸ßÒÎ¹Å´å"></a> </li>
+            <li class="playBg"></li>
+            <li class="playText">ÊÐ×¡½¨Î¯²Î¼ÓÇìÔªµ©ÍòÈË½¡¿µÅÜ</li>
+            <li class="playNum"></li>
+          </ul>
+        </div>
+        <script type="text/javascript">
+(function(){
+var playdiv = $('#play_9609');
+var t = i = 0, c = clas("playShow").find('a').size();
+for(ii=1;ii<=c;ii++){
+clas("playNum").append('<a>'+ii+'</a>');
+}
+showImg();
+clas('playNum').find('a').click(function(){
+i =   clas('playNum').find('a').index(this);
+showImg();                                     
+});
+t = setInterval(showImg, 5000);
+playdiv.hover( function(){ clearInterval(t);}, function(){ t = setInterval(showImg, 5000);});
+function clas(className){
+return playdiv.find('.'+className);
+}
+function showImg(){
+clas('playNum').find('a').eq(i).siblings().css({"background":"#D7D6D7",'color':'#000'}).end().css({"background":"#FFD116",'color':'#A8471C'});
+clas("playText").html(clas("playShow").find('a').eq(i).find('img').attr('alt'));
+clas("playShow").find('a').eq(i).siblings().hide().end().fadeIn(1200);
+
+i++;
+if(i==c){i =0;}
+}
+
+})();
+</script> 
+      </div>
+    </div>
+    <div class="news-box fr">
+      <div class="newTab" id="tab1">
+        <div class="TabTitle" style="background: none">
+          <ul id="Tab0">
+            <li class="active" onmouseover="nTabs(this,0);"><a style="font-size: 18px;font-weight: bold;" href="#">交管要闻</a></li>
+            <li><input type="" name="" style="height:40px;width: 256px;margin-left:10px;margin-top:5px;padding-left: 10px;
+    padding-right: 10px;font-size: 18px;border: 1px solid #1d7ad5;"></li>
+            <li><a class="phoneicon" style="background:url(/images/search1.png) no-repeat;height: 50px;width: 50px;cursor: pointer;float: right;background-position: 0 10px"></a></li>
+          </ul>
+        </div>
+        <div class="TabContent">
+          <div id="Tab0_Content0" style="display: block;">
+            <div class="newList">
+              <ul class="infolist11" style="font-size:15px;color:#595959;">
+                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">Ä³Ä³Õò½éÉÜ</a> </li>
+                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ</a> </li>
+                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/22</span><a href="1186.shtml" target="_blank" title="¹ãÖÝÊÐ²ÐÁª×éÖ¯ËÄ³¡ÌØÊâ½ÌÓýÑ§Ð£¿ª·ÅÈÕ">¹ãÖÝÊÐ²ÐÁª×éÖ¯ËÄ³¡ÌØÊâ½ÌÓýÑ§Ð£¿ª·ÅÈÕ</a> </li>
+                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2015/11/12</span><a href="1106.shtml" target="_blank" title="[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü">[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü</a> </li>
+                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2014/04/01</span><a href="956.shtml" target="_blank" title="³þÐÛÊÐÕþ¸®»ð°Ñ½Ú½ÚÇì»î¶¯">³þÐÛÊÐÕþ¸®»ð°Ñ½Ú½ÚÇì»î¶¯</a> </li>
+                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2012/03/15</span><a href="914.shtml" target="_blank" title="Ä³Ä³Õ¾ÈºÖ÷Õ¾ÍÆËÍÄÚÈÝ¸øËùÓÐ·ÖÕ¾">Ä³Ä³Õ¾ÈºÖ÷Õ¾ÍÆËÍÄÚÈÝ¸øËùÓÐ·ÖÕ¾</a> </li>
+                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2012/03/15</span><a href="913.shtml" target="_blank" title="Ä³Ä³Õþ¸®·½°¸·ÖÕ¾ÍÆËÍÊý¾Ýµ½Ö÷Õ¾">Ä³Ä³Õþ¸®·½°¸·ÖÕ¾ÍÆËÍÊý¾Ýµ½Ö÷Õ¾</a> </li>
+                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2014/01/14</span><a href="879.shtml" target="_blank" title="ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½°²ÓæÒµÊ¾·¶ÏØ¡±">ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½°²ÓæÒµÊ¾·¶ÏØ¡±</a> </li>
+                <li class="clear"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--      µÚ¶þ°æ    ×¨Ìâ    -->
+    <div class="special fl"> <a href="#" target="_blank" title="" style="text-decoration:none;"><img width="1094" height="95" border="none" alt="" src="images/fd09c719d235df9a.jpg"></a> </div>
+    <!--      µÚ¶þ°æ    ×ÊÑ¶    -->
+    <div class="information">
+      <div class="information-left fl">
+          <div class="information-box" style="overflow:hidden;">
+          <div class="boxTab fl boxtitle" id="tab2" style="border-right: none;">
+            <div class="TabTitle boxtitle">
+              <ul id="Tab2">
+                <li class="active" onmouseover="nTabs(this,0);"><a href="#">文件简报</a></li>
+              </ul>
+            </div>
+            <div class="TabContent" style="border-right: none;height: 237px;">
+              <div id="Tab2_Content0" style="display: block;">
+                <div class="box-list">
+                  <ul class="infolist11" style="font-size:15px;color:#595959;">
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/27</span><a href="1244.shtml" target="_blank" title="²âÊÔÄÚÈÝ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1201.shtml" target="_blank" title="2011ÄêÆÎÌïÊÐº£Ñó»·¾³×´¿ö¹«±¨">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1202.shtml" target="_blank" title="ÀÏÕÅ0335×Ô¼º·¢µÃ²âÊÔÉ¾³ý">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+
+                    <li class="clear"></li>
+                  </ul>
+                </div>
+              </div>
+            
+              <div id="Tab2_Content2" class="none" style="display: none;">
+                <div class="box-list"></div>
+                <div class="box-more"></div>
+              </div>
+            </div>
+          </div>
+          <div class="boxTab fr" id="tab3" style="width: 426px">
+           
+            
+
+        <div class="slideTxtBox">
+              <div class="hd TabTitle" style="background: none" >
+                <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
+                <span class="arrow"><a class="next"></a><a class="prev"></a></span>
+
+                <ul style="float:right;margin-right: 0.4em;">
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                </ul>
+              </div>
+              <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank" style="position: relative;"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;中国打破了世界软件巨头规则&nbsp;<img style="position: absolute;top: -3px" src="images/new.gif"></a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank" style="position: relative;"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;中国打破了世界软件巨头规则&nbsp;<img style="position: absolute;top: -3px" src="images/new.gif"></a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank" style="position: relative;"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;中国打破了世界软件巨头规则&nbsp;<img style="position: absolute;top: -3px" src="images/new.gif"></a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank" style="position: relative;"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;中国打破了世界软件巨头规则&nbsp;<img style="position: absolute;top: -3px" src="images/new.gif"></a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;学英语送ipad2,45天突破听说</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;学外语，上北外！</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                   <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                </ul>
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+                 <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+              </div>
+       </div>
+<!--             <script type="text/javascript">jQuery(".slideTxtBox1")slide({effect:"leftLoop"});</script>
+ -->    </div><!-- sideMenu End -->
+
+              <script type="text/javascript">
+                jQuery(".sideMenu").slide({
+                  titCell:"h3", //鼠标触发对象
+                  targetCell:"ul", //与titCell一一对应，第n个titCell控制第n个targetCell的显示隐藏
+                  effect:"slideDown", //targetCell下拉效果
+                  delayTime:0 , //效果时间
+                  triggerTime:150, //鼠标延迟触发时间（默认150）
+                  defaultPlay:true,//默认是否执行效果（默认true）
+                  returnDefault:true //鼠标从.sideMen移走后返回默认状态（默认false）
+                  });
+              </script>
+              <div id="Tab3_Content1" class="none" style="display: none">
+                <div class="box-list">
+                  <ul class="infolist11" style="font-size:15px;color:#595959;">
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2015/06/26</span><a href="1073.shtml" target="_blank" title="2014ÄêµÚÈý¼¾¶È±ãÃñºô½ÐÖÐÐÄ12345ÏµÍ³ÓâÆÚÇé¿ö¶½²éÍ¨±¨ ">2014ÄêµÚÈý¼¾¶È±ãÃñºô½ÐÖÐÐÄ12345ÏµÍ³ÓâÆÚÇé</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2013/07/04</span><a href="1020.shtml" target="_blank" title="²âÊÔ¹úÍÁÌüÕ¾ÈºÏµÍ³ÍÆËÍÄÚÈÝµ½ÏÂÊô·ÖÕ¾">²âÊÔ¹úÍÁÌüÕ¾ÈºÏµÍ³ÍÆËÍÄÚÈÝµ½ÏÂÊô·ÖÕ¾</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2011/03/17</span><a href="485.shtml" target="_blank" title="99999999999999999999999999999">99999999999999999999999999999</a> </li>
+                    <li class="clear"></li>
+                  </ul>
+                </div>
+                <div class="box-more"><a href="#">¸ü¶à&gt;&gt;</a></div>
+              </div>
+              <div id="Tab3_Content2" class="none" style="display: none;">
+                <div class="box-list"></div>
+                <div class="box-more"></div>
+              </div>
+            </div>
+        <div class="information-box2" style="overflow:hidden;margin-top:20px;">
+          <div class="boxTab fl" id="tab2" style="border-right: none;">
+            <div class="TabTitle boxtitle">
+              <ul id="Tab2">
+                <li class="active " onmouseover="nTabs(this,0);"><a href="#">党建队建</a></li>
+              </ul>
+            </div>
+            <div class="TabContent" style="border-right: none;height: 237px;">
+              <div id="Tab2_Content0" style="display: block;">
+                <div class="box-list">
+                  <ul class="infolist11" style="font-size:15px;color:#595959;">
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/27</span><a href="1244.shtml" target="_blank" title="²âÊÔÄÚÈÝ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1201.shtml" target="_blank" title="2011ÄêÆÎÌïÊÐº£Ñó»·¾³×´¿ö¹«±¨">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1202.shtml" target="_blank" title="ÀÏÕÅ0335×Ô¼º·¢µÃ²âÊÔÉ¾³ý">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+
+                    <li class="clear"></li>
+                  </ul>
+                </div>
+              </div>
+            
+              <div id="Tab2_Content2" class="none" style="display: none;">
+                <div class="box-list"></div>
+                <div class="box-more"></div>
+              </div>
+            </div>
+          </div>
+          <div class="boxTab fr" id="tab3" style="width: 426px">
+           
+  
+        <div class="slideTxtBox">
+              <div class="hd TabTitle"  style="background: none"  >
+                <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
+                <span class="arrow"><a class="next"></a><a class="prev"></a></span>
+
+                <ul style="float:right;margin-right: 0.4em;">
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                </ul>
+              </div>
+              <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">中国打破了世界软件巨头规则</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">口语：会说中文就能说英语！</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">农场摘菜不如在线学外语好玩</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学英语送ipad2,45天突破听说</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                   <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                </ul>
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                <li class="clear"></li>
+               </ul>
+                 <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                  </ul>
+                </div>
+           </div>
+        </div>
+            </div>
+          </div>
+        </div>
+   
+      <div class="information-right fr">
+        <div class="boxNew">
+          <div class="bt3"> <span class="tit">今日值班</span> <span class="more"></span> </div>
+          <div class="new-bc">
+            <table id="zhibanbiao">
+              <tr >
+                <td colspan="3" style=" background-color: #ececec;padding-bottom: 0.7em;padding-top: 0.7em;font-size: 20px;font-weight: bold;line-height: 1.3em;">星期五<br>2017年12月29日 </td>
+              </tr>
+              <tr>
+                <td>值班领导</td>
+                <td><%.Lingdao%></td>
+              </tr>
+               <tr>
+                <td>带班组长</td>
+                <td><%.Zuzhang%></td>
+              </tr>
+               <tr>
+                <td rowspan="2">处警人员</td>
+                <%range $k,$v := .Chujing%>
+                  <td><%$v%></td>
+                  <%if Two $k%>
+                    </tr>
+                    <tr>
+                  <%end%>
+                <%end%>
+               <tr>
+                <td rowspan="3">值班人员</td>
+                <%range $k,$v := .Zhiban%>
+                  <td><%$v%></td>
+                  <%if Two $k%>
+                    </tr>
+                    <tr>
+                  <%end%>
+                <%end%>
+               <tr>
+                <td rowspan="2">备勤人员</td>
+                <%range $k,$v := .Beiqing%>
+                  <td><%$v%></td>
+                  <%if Two $k%>
+                    </tr>
+                    <tr>
+                  <%end%>
+                <%end%>
+               <tr>
+                <td rowspan="3">接警人员</td>
+                <%range $k,$v := .Jiejing%>
+                  <td><%$v%></td>
+                  <%if Two $k%>
+                    </tr>
+                    <tr>
+                  <%end%>
+                <%end%>
+              <tr>
+                <td >值班电话</td>
+                <td colspan="2"><%.Tel%></td>
+              </tr>                     
+            </table>
+          </div>
+        </div>
+      </div>
+    <!-- 专项行动 -->
+
+    <div class="fl subject">
+
+    <div class="picMarquee-left">
+    
+      <div class="bd" style="">
+        <ul class="picList">
+          <li>
+            <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/2f5f890281e9e957.jpg" /></a></div>
+          </li>
+          <li>
+            <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/23f66242516cc9a8.jpg" /></a></div>
+          </li>
+          <li>
+            <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/fb69c86cefaeeb24.jpg" /></a></div>
+          </li>
+          <li>
+            <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/2f5f890281e9e957.jpg" /></a></div>
+          </li>
+          <li>
+            <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/23f66242516cc9a8.jpg" /></a></div>
+          </li>
+          <li>
+            <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/fb69c86cefaeeb24.jpg" /></a></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+    jQuery(".picMarquee-left").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:3,interTime:50});
+    </script>
+    </div>
+
+ <div class="information">
+      <div class="information-left fl">
+          <div class="information-box" style="overflow:hidden;">
+          <div class="boxTab fl" id="tab2" style="border-right: none;">
+            <div class="TabTitle boxtitle">
+              <ul id="Tab2">
+                <li class="active" onmouseover="nTabs(this,0);"><a href="#">交管动态</a></li>
+              </ul>
+            </div>
+            <div class="TabContent" style="border-right: none;height: 237px;">
+              <div id="Tab2_Content0" style="display: block;">
+                <div class="box-list">
+                  <ul class="infolist11" style="font-size:15px;color:#595959;">
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/27</span><a href="1244.shtml" target="_blank" title="²âÊÔÄÚÈÝ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1201.shtml" target="_blank" title="2011ÄêÆÎÌïÊÐº£Ñó»·¾³×´¿ö¹«±¨">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1202.shtml" target="_blank" title="ÀÏÕÅ0335×Ô¼º·¢µÃ²âÊÔÉ¾³ý">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+
+                    <li class="clear"></li>
+                  </ul>
+                </div>
+              </div>
+            
+              <div id="Tab2_Content2" class="none" style="display: none;">
+                <div class="box-list"></div>
+                <div class="box-more"></div>
+              </div>
+            </div>
+          </div>
+          <div class="boxTab fr" id="tab3" style="width: 426px">
+           
+            
+
+        <div class="slideTxtBox">
+              <div class="hd TabTitle"   style="background: none" >
+                <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
+                <span class="arrow"><a class="next"></a><a class="prev"></a></span>
+
+                <ul style="float:right;margin-right: 0.4em;">
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                </ul>
+              </div>
+              <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">中国打破了世界软件巨头规则</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">口语：会说中文就能说英语！</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">农场摘菜不如在线学外语好玩</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学英语送ipad2,45天突破听说</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                   <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                </ul>
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+                 <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+              </div>
+       </div>
+     </div><!-- sideMenu End -->
+
+ 
+              <div id="Tab3_Content1" class="none" style="display: none">
+                <div class="box-list">
+                  <ul class="infolist11" style="font-size:15px;color:#595959;">
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2015/06/26</span><a href="1073.shtml" target="_blank" title="2014ÄêµÚÈý¼¾¶È±ãÃñºô½ÐÖÐÐÄ12345ÏµÍ³ÓâÆÚÇé¿ö¶½²éÍ¨±¨ ">2014ÄêµÚÈý¼¾¶È±ãÃñºô½ÐÖÐÐÄ12345ÏµÍ³ÓâÆÚÇé</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2013/07/04</span><a href="1020.shtml" target="_blank" title="²âÊÔ¹úÍÁÌüÕ¾ÈºÏµÍ³ÍÆËÍÄÚÈÝµ½ÏÂÊô·ÖÕ¾">²âÊÔ¹úÍÁÌüÕ¾ÈºÏµÍ³ÍÆËÍÄÚÈÝµ½ÏÂÊô·ÖÕ¾</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2011/03/17</span><a href="485.shtml" target="_blank" title="99999999999999999999999999999">99999999999999999999999999999</a> </li>
+                    <li class="clear"></li>
+                  </ul>
+                </div>
+                <div class="box-more"><a href="#">¸ü¶à&gt;&gt;</a></div>
+              </div>
+              <div id="Tab3_Content2" class="none" style="display: none;">
+                <div class="box-list"></div>
+                <div class="box-more"></div>
+              </div>
+            </div>
+        <div class="information-box2" style="overflow:hidden;margin-top:20px;">
+          <div class="boxTab fl" id="tab2" style="border-right: none;">
+            <div class="TabTitle boxtitle">
+              <ul id="Tab2">
+                <li class="active" onmouseover="nTabs(this,0);"><a href="#">学习园地</a></li>
+              </ul>
+            </div>
+            <div class="TabContent" style="border-right: none;height: 237px;">
+              <div id="Tab2_Content0" style="display: block;">
+                <div class="box-list">
+                  <ul class="infolist11" style="font-size:15px;color:#595959;">
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/27</span><a href="1244.shtml" target="_blank" title="²âÊÔÄÚÈÝ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1201.shtml" target="_blank" title="2011ÄêÆÎÌïÊÐº£Ñó»·¾³×´¿ö¹«±¨">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1202.shtml" target="_blank" title="ÀÏÕÅ0335×Ô¼º·¢µÃ²âÊÔÉ¾³ý">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+
+                    <li class="clear"></li>
+                  </ul>
+                </div>
+              </div>
+            
+              <div id="Tab2_Content2" class="none" style="display: none;">
+                <div class="box-list"></div>
+                <div class="box-more"></div>
+              </div>
+            </div>
+          </div>
+          <div class="boxTab fr" id="tab3" style="width: 426px">
+           
+
+
+        <div class="slideTxtBox">
+              <div class="hd TabTitle"  style="background: none" >
+                <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
+                <span class="arrow"><a class="next"></a><a class="prev"></a></span>
+
+                <ul style="float:right;margin-right: 0.4em;">
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                  <li>教育</li>
+                </ul>
+              </div>
+              <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">中国打破了世界软件巨头规则</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">口语：会说中文就能说英语！</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">农场摘菜不如在线学外语好玩</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学英语送ipad2,45天突破听说</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                   <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                </ul>
+                <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+                 <ul  class="infolist11" style="font-size:15px;color:#595959;">
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+                  <li><span   class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+                  <li><span  class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+
+                    <li class="clear"></li>
+                </ul>
+              </div>
+       </div>
+            <script type="text/javascript">jQuery(".slideTxtBox").slide({delayTime:0});</script>
+    </div><!-- sideMenu End -->
+
+              
+              <div id="Tab3_Content1" class="none" style="display: none">
+                <div class="box-list">
+                  <ul class="infolist11" style="font-size:15px;color:#595959;">
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2015/06/26</span><a href="1073.shtml" target="_blank" title="2014ÄêµÚÈý¼¾¶È±ãÃñºô½ÐÖÐÐÄ12345ÏµÍ³ÓâÆÚÇé¿ö¶½²éÍ¨±¨ ">2014ÄêµÚÈý¼¾¶È±ãÃñºô½ÐÖÐÐÄ12345ÏµÍ³ÓâÆÚÇé</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2013/07/04</span><a href="1020.shtml" target="_blank" title="²âÊÔ¹úÍÁÌüÕ¾ÈºÏµÍ³ÍÆËÍÄÚÈÝµ½ÏÂÊô·ÖÕ¾">²âÊÔ¹úÍÁÌüÕ¾ÈºÏµÍ³ÍÆËÍÄÚÈÝµ½ÏÂÊô·ÖÕ¾</a> </li>
+                    <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2011/03/17</span><a href="485.shtml" target="_blank" title="99999999999999999999999999999">99999999999999999999999999999</a> </li>
+                    <li class="clear"></li>
+                  </ul>
+                </div>
+                <div class="box-more"><a href="#">¸ü¶à&gt;&gt;</a></div>
+              </div>
+              <div id="Tab3_Content2" class="none" style="display: none;">
+                <div class="box-list"></div>
+                <div class="box-more"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+   
+      <div class="information-right fr">
+        <div class="boxNew">
+          <div class="bt3" style="text-align: center;"> <span class="tit" style="padding-left: 46PX;cursor: pointer;">站内导航</span> <span class="tit" style="padding-left: 39PX;color: #3488e6;cursor: pointer;">稿件统计</span></div>
+          <div class="new-bc" style="padding-bottom: 10px;height: 244px;">
+            <table id="zhanneidaohang" style="border: none;">
+              <tr>
+                <td style="background-color:#fb6e52;"><img style="padding-bottom: 2px" src="images/peopleicon.png"> <br>用户登录</td>
+                <td  style="background-color:#28bc9c "><img style="padding-bottom: 2px" src="images/tongxunlu.png"> <br>通讯录</td>
+              </tr>
+              <tr>
+                <td  style="background-color:#f59026 "><img style="padding-bottom: 2px" src="images/shuju.png"><br> 数据报送</td>
+                <td  style="background-color:#8ab436 "><img style="padding-bottom: 2px" src="images/xiazai.png"><br>软件下载</td>
+              </tr>
+              <tr>
+                <td  style="background-color:#90c0f9 "><img style="padding-bottom: 2px" src="images/search.png"><br>搜索引擎</td>
+                <td  style="background-color:#f9455a "><img style="padding-bottom: 2px" src="images/oapingtai.png"><br>OA平台</td>
+              </tr>
+            </table> 
+                      </div>
+
+            <!-- <div class="new-bc" style="padding-bottom: 10px;height: 244px;overflow: scroll;">
+
+            <table id="gaojiantongjibiao" style="width: 100%;text-align: center;font-size: 12px">
+              <tr>
+                <th>序号</th>
+                <th>部&emsp;&emsp;门</th>
+                <th>发布数量</th>
+                <th>采用数量</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+        <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>三道沟中队</td>
+                <td>50</td>
+                <td>40</td>
+              </tr>
+            </table>
+          </div> -->
+        </div>
+         <div class="boxNew" style="margin-top: 22px">
+          <div class="bt3" style="text-align: center;"> <span class="tit" style="padding-left: 46PX;cursor: pointer;">站内导航</span> <span class="tit" style="padding-left: 39PX;cursor: pointer;">稿件统计</span></div>
+          <div class="new-bc" style="padding-bottom: 10px;padding-top: 13px">
+            <table id="duchatongji" style="width: 100%;text-align: center;font-size: 12px">
+              
+              
+              <tr>
+                <td>第九期</td>
+                <td class="title">三道沟中队</td>
+
+              </tr>
+                <tr>
+                <td>第九期</td>
+                <td class="title">三道沟中队</td>
+
+              </tr>
+                <tr>
+                <td>第九期</td>
+                <td class="title">三道沟中队</td>
+
+              </tr>
+                <tr>
+                <td>第九期</td>
+                <td class="title">三道沟中队</td>
+
+              </tr>
+                <tr>
+                <td>第九期</td>
+                <td class="title">三道沟中队</td>
+
+              </tr>
+                <tr>
+                <td>第九期</td>
+                <td class="title">三道沟中队</td>
+
+              </tr>
+                <tr>
+                <td>第九期</td>
+                <td class="title">三道沟中队</td>
+
+              </tr>
+
+            </table>
+          </div>
+        </div>
+  
+      </div>
+    <!--  µÚÁù°æ   ÷ÈÁ¦Ä³Ä³ -->
+    <div class="mlyl fl">
+      <div class="mlyl-bt"> <span class="tit">新闻图片</span> <span class="more"></span> </div>
+      <div class="mlyl-neir">
+        <div class="layer" style="height:150px;width:1094px;overflow:hidden" id="pingpaibox_9550">
+          <div id="scroll_9550" style="width:800%">
+            <ul class="label_pic_ul" id="pingpai_9550" style="float:left;height:150px;">
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1214.shtml" target="_blank" title="ÐãÓìÇø£ºº£²úÆ·¼Ó¹¤ÒµÍÆ¶¯º£Ñó¾­¼Ã·¢Õ¹"><img width="150" height="150" alt="ÐãÓìÇø£ºº£²úÆ·¼Ó¹¤ÒµÍÆ¶¯º£Ñó¾­¼Ã·¢Õ¹" onload="this.height=this.width-30" src="images/9186741127ba9c41.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1214.shtml" target="_blank" title="ÐãÓìÇø£ºº£²úÆ·¼Ó¹¤ÒµÍÆ¶¯º£Ñó¾­¼Ã·¢Õ¹">ÐãÓìÇø£ºº£²úÆ·¼Ó¹¤Òµ</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1213.shtml" target="_blank" title="¹ØÓÚ×éÖ¯Éê±¨2011Äê¶È½­ËÕÊ¡¡°Ñï×Ó±­¡±ÓÅÖÊ¹¤³ÌµÄÍ¨Öª"><img width="150" height="120" alt="¹ØÓÚ×éÖ¯Éê±¨2011Äê¶È½­ËÕÊ¡¡°Ñï×Ó±­¡±ÓÅÖÊ¹¤³ÌµÄÍ¨Öª" onload="this.height=this.width-30" src="images/2934faaa1c64b73b.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1213.shtml" target="_blank" title="¹ØÓÚ×éÖ¯Éê±¨2011Äê¶È½­ËÕÊ¡¡°Ñï×Ó±­¡±ÓÅÖÊ¹¤³ÌµÄÍ¨Öª">¹ØÓÚ×éÖ¯Éê±¨2011Äê¶È</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1219.shtml" target="_blank" title="[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü"><img width="150" height="120" alt="[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü" onload="this.height=this.width-30" src="images/265cf0371c34ca09.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1219.shtml" target="_blank" title="[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü">[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2Íò</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1215.shtml" target="_blank" title="ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½°²ÓæÒµÊ¾·¶ÏØ¡±"><img width="150" height="120" alt="ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½°²ÓæÒµÊ¾·¶ÏØ¡±" onload="this.height=this.width-30" src="images/265cf0371c34ca09.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1215.shtml" target="_blank" title="ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½°²ÓæÒµÊ¾·¶ÏØ¡±">ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1152.shtml" target="_blank" title="Íò·ðÉ½"><img width="150" height="120" alt="Íò·ðÉ½" onload="this.height=this.width-30" src="images/669900ca0087b03f.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1152.shtml" target="_blank" title="Íò·ðÉ½">Íò·ðÉ½</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1180.shtml" target="_blank" title="ôÙôÎ½Ú"><img width="150" height="120" alt="ôÙôÎ½Ú" onload="this.height=this.width-30" src="images/144cd69eb8b0dfd9.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1180.shtml" target="_blank" title="ôÙôÎ½Ú">ôÙôÎ½Ú</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1179.shtml" target="_blank" title="ÊÀ½ç¸è»á"><img width="150" height="120" alt="ÊÀ½ç¸è»á" onload="this.height=this.width-30" src="images/10a987073e3d9257.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1179.shtml" target="_blank" title="ÊÀ½ç¸è»á">ÊÀ½ç¸è»á</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1178.shtml" target="_blank" title="Ãñ¼ä»æ»­"><img width="150" height="120" alt="Ãñ¼ä»æ»­" onload="this.height=this.width-30" src="images/36e09e862be3ed79.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1178.shtml" target="_blank" title="Ãñ¼ä»æ»­">Ãñ¼ä»æ»­</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1154.shtml" target="_blank" title="Ãñ¼ä»æ»­"><img width="150" height="120" alt="Ãñ¼ä»æ»­" onload="this.height=this.width-30" src="images/36e09e862be3ed79.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1154.shtml" target="_blank" title="Ãñ¼ä»æ»­">Ãñ¼ä»æ»­</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1156.shtml" target="_blank" title="ôÙôÎ½Ú"><img width="150" height="120" alt="ôÙôÎ½Ú" onload="this.height=this.width-30" src="images/144cd69eb8b0dfd9.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1156.shtml" target="_blank" title="ôÙôÎ½Ú">ôÙôÎ½Ú</a></p>
+              </li>
+            </ul>
+            <ul class="fleft" id="pingpaicopy_9550" style="float:left;height:150px;">
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1214.shtml" target="_blank" title="ÐãÓìÇø£ºº£²úÆ·¼Ó¹¤ÒµÍÆ¶¯º£Ñó¾­¼Ã·¢Õ¹"><img width="150" height="150" alt="ÐãÓìÇø£ºº£²úÆ·¼Ó¹¤ÒµÍÆ¶¯º£Ñó¾­¼Ã·¢Õ¹" onload="this.height=this.width-30" src="images/9186741127ba9c41.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1214.shtml" target="_blank" title="ÐãÓìÇø£ºº£²úÆ·¼Ó¹¤ÒµÍÆ¶¯º£Ñó¾­¼Ã·¢Õ¹">ÐãÓìÇø£ºº£²úÆ·¼Ó¹¤Òµ</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1213.shtml" target="_blank" title="¹ØÓÚ×éÖ¯Éê±¨2011Äê¶È½­ËÕÊ¡¡°Ñï×Ó±­¡±ÓÅÖÊ¹¤³ÌµÄÍ¨Öª"><img width="150" height="120" alt="¹ØÓÚ×éÖ¯Éê±¨2011Äê¶È½­ËÕÊ¡¡°Ñï×Ó±­¡±ÓÅÖÊ¹¤³ÌµÄÍ¨Öª" onload="this.height=this.width-30" src="images/2934faaa1c64b73b.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1213.shtml" target="_blank" title="¹ØÓÚ×éÖ¯Éê±¨2011Äê¶È½­ËÕÊ¡¡°Ñï×Ó±­¡±ÓÅÖÊ¹¤³ÌµÄÍ¨Öª">¹ØÓÚ×éÖ¯Éê±¨2011Äê¶È</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1219.shtml" target="_blank" title="[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü"><img width="150" height="120" alt="[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü" onload="this.height=this.width-30" src="images/265cf0371c34ca09.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1219.shtml" target="_blank" title="[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2ÍòÔ±¹¤Ñ²ÓÎÈç¿ñ»¶½Ú ÐûÊÄÕäÏ§ÉúÃü">[Õþ¸®²¿ÃÅ22]¸»Ê¿¿µ2Íò</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1215.shtml" target="_blank" title="ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½°²ÓæÒµÊ¾·¶ÏØ¡±"><img width="150" height="120" alt="ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½°²ÓæÒµÊ¾·¶ÏØ¡±" onload="this.height=this.width-30" src="images/265cf0371c34ca09.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1215.shtml" target="_blank" title="ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½°²ÓæÒµÊ¾·¶ÏØ¡±">ÐãÓìÇø£ºÈÙâß¡°È«¹úÆ½</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1152.shtml" target="_blank" title="Íò·ðÉ½"><img width="150" height="120" alt="Íò·ðÉ½" onload="this.height=this.width-30" src="images/669900ca0087b03f.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1152.shtml" target="_blank" title="Íò·ðÉ½">Íò·ðÉ½</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1180.shtml" target="_blank" title="ôÙôÎ½Ú"><img width="150" height="120" alt="ôÙôÎ½Ú" onload="this.height=this.width-30" src="images/144cd69eb8b0dfd9.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1180.shtml" target="_blank" title="ôÙôÎ½Ú">ôÙôÎ½Ú</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1179.shtml" target="_blank" title="ÊÀ½ç¸è»á"><img width="150" height="120" alt="ÊÀ½ç¸è»á" onload="this.height=this.width-30" src="images/10a987073e3d9257.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1179.shtml" target="_blank" title="ÊÀ½ç¸è»á">ÊÀ½ç¸è»á</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1178.shtml" target="_blank" title="Ãñ¼ä»æ»­"><img width="150" height="120" alt="Ãñ¼ä»æ»­" onload="this.height=this.width-30" src="images/36e09e862be3ed79.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1178.shtml" target="_blank" title="Ãñ¼ä»æ»­">Ãñ¼ä»æ»­</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1154.shtml" target="_blank" title="Ãñ¼ä»æ»­"><img width="150" height="120" alt="Ãñ¼ä»æ»­" onload="this.height=this.width-30" src="images/36e09e862be3ed79.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1154.shtml" target="_blank" title="Ãñ¼ä»æ»­">Ãñ¼ä»æ»­</a></p>
+              </li>
+              <li style="float:left;display:inline-block; margin-right:5px"> <a href="1156.shtml" target="_blank" title="ôÙôÎ½Ú"><img width="150" height="120" alt="ôÙôÎ½Ú" onload="this.height=this.width-30" src="images/144cd69eb8b0dfd9.jpg"></a>
+                <p class="label_pic_title2 center" style="width:150px;"><a href="1156.shtml" target="_blank" title="ôÙôÎ½Ú">ôÙôÎ½Ú</a></p>
+              </li>
+            </ul>
+          </div>
+          <script type="text/javascript">
+                (function(){
+                $('#pingpaicopy_9550').html($('#pingpai_9550').html());
+                var MyMar=setInterval(Marquee,20); 
+                $('#scroll_9550').hover( function(){ clearInterval(MyMar) }, function(){ MyMar=setInterval(Marquee,20) } );
+                function Marquee(){var tabs=$('#pingpaibox_9550')[0], tabs1=$('#pingpai_9550')[0],tabs2=$('#pingpaicopy_9550')[0];
+                if(tabs2.offsetWidth-tabs.scrollLeft<=0)tabs.scrollLeft-= tabs1.offsetWidth;else{tabs.scrollLeft++;}
+                $('#tabs').html(tabs.scrollLeft);
+                $('#tabs1').html(tabs1.offsetWidth);
+                $('#tabs2').html(tabs2.offsetWidth);
+                }
+                })()
+          </script> 
+        </div>
+      </div>
+    </div>
+    <!--  µÚÆß°æ   ÓÑÇéÁ´½Ó -->
+    <div class="linkTab fl">
+      <div class="TabTitle" style="background: none">
+        <div class="tit">ÓÑÇéÁ´½Ó</div>
+        <ul id="Tab9">
+          <li class="active" onmouseover="nTabs(this,0);"><a href="#" class="l1">ÏØÖ±¸÷µ¥Î»</a></li>
+          <li class="normal" onmouseover="nTabs(this,1);"><a href="#" class="l1">ÏØÈË´ó</a></li>
+          <li class="normal" onmouseover="nTabs(this,2);"><a href="#" class="l1">ÏçÕò½ÖµÀ</a></li>
+        </ul>
+      </div>
+      <div class="TabContent">
+        <div id="Tab9_Content0" style="display: block;">
+          <ul class="friendLink">
+            <li><a href="#60" target="_blank">Õþ¸®²¿ÃÅ</a></li>
+            <li><a href="#61" target="_blank">Õþ¸®²¿ÃÅ</a></li>
+            <li><a href="#1" target="_blank">½»Í¨¾Ö</a></li>
+            <li><a href="#" target="_blank">·öÆ¶°ì</a></li>
+            <li><a href="#" target="_blank">²ÆÕþ¾Ö</a></li>
+            <li><a href="#" target="_blank">¹æ»®¾Ö</a></li>
+            <li><a href="#" target="_blank">Í³¼Æ¾Ö</a></li>
+            <li><a href="#" target="_blank">ÈËÉç¾Ö</a></li>
+            <li><a href="#" target="_blank">ÎÀÉú¾Ö</a></li>
+            <li><a href="#" target="_blank">°²¼à¾Ö</a></li>
+            <li><a href="#" target="_blank">ÉÌÎñ¾Ö</a></li>
+            <li><a href="#" target="_blank">·¢¸ÄÎ¯</a></li>
+            <li><a href="#" target="_blank">»·±£¾Ö</a></li>
+            <li><a href="#" target="_blank">Ë¾·¨²¿</a></li>
+            <li><a href="#" target="_blank">²ÆÕþ²¿</a></li>
+            <li><a href="#" target="_blank">¹úÍÁ×ÊÔ´²¿</a></li>
+            <li><a href="#" target="_blank">½»Í¨ÔËÊä²¿</a></li>
+            <li><a href="#" target="_blank">Ë®Àû²¿</a></li>
+            <li><a href="#" target="_blank">Ë®Àû²¿</a></li>
+            <li><a href="#" target="_blank">²ÆÕþ²¿</a></li>
+            <li><a href="#" target="_blank">Ë¾·¨²¿</a></li>
+            <li><a href="#" target="_blank">Ë¾·¨²¿</a></li>
+          </ul>
+        </div>
+        <div id="Tab9_Content1" class="none" style="display: none;">
+          <ul class="friendLink">
+            <li><a href="#">Õþ¸®°ì¹«Ìü2</a></li>
+          </ul>
+        </div>
+        <div id="Tab9_Content2" class="none" style="display: none;">
+          <ul class="friendLink">
+            <li><a href="#">Õþ¸®°ì¹«Ìü3</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+            <li><a href="#">Õþ¸®°ì¹«Ìü</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script language="javascript">
+$(document).ready(function(){
+MoveTabs('tab_1',0,'mouseover');
+MoveTabs('tab_2',0,'mouseover');
+MoveTabs('tab_3',0,'mouseover');
+MoveTabs('tab_4',0,'mouseover');
+MoveTabs('tab_5',0,'mouseover');
+MoveTabs('tab_6',0,'mouseover');
+});
+</script>
+
+</div>
+</div>
+<div id="footer">
+  <div class="wp_inner">
+    <div class="foot">
+      <div class="foot1 fl"> <span id="_ideConac"> <a href="#" target="_blank"><img id="imgConac" vspace="0" hspace="0" border="0" src="images/red.png" data-bd-imgshare-binded="1"></a> </span> </div>
+      <div class="foot2 fl">
+        <div class="footnav"><a href="#">ÍøÕ¾µØÍ¼</a><span>|</span><a href="#">ÍøÕ¾µØÍ¼</a><span>|</span><a href="#">ÍøÕ¾µØÍ¼</a><span>|</span><a href="#">ÍøÕ¾µØÍ¼</a><span>|</span><a href="#">ÍøÕ¾µØÍ¼</a></div>
+        <div class="footext"> Ö÷°ìµ¥Î»£ºÄ³Ä³ÏØÈËÃñÕþ¸®¡¡³Ð°ìµ¥Î»£ºÄ³Ä³ÏØµç×ÓÕþÎñÐÅÏ¢ÖÐÐÄ¡¡¼¼ÊõÖ§³Ö£º24H <br>
+          ±¸°¸±àºÅ£ºÊñICP±¸14000601ºÅ ÁªÏµµç»°£º0817-7777777¡¡ ÓÊÏäµØÖ·£ºnanchong@live.cn </div>
+      </div>
+      <div class="foot3 fl" style="padding-bottom: ">
+        <div class="qrcode fl"> <a href="#" target="_blank" title="" style="text-decoration:none;"><img width="86" height="86" border="none" alt="" src="images/0353d3ed7d1bfdc2.jpg"></a> </div>
+        <div class="qrcode fr"> <a href="#" target="_blank" title="" style="text-decoration:none;"><img width="86" height="86" border="none" alt="" src="images/0353d3ed7d1bfdc2.jpg"></a> </div>
+      </div>
+      <br>
+     <!--  <div class="clear"></div>
+      <div class="foot4">
+
+      <span id="_span_jiucuo"><img onclick="Link(&#39;&#39;)" style="margin:0;border:0;cursor: pointer;" src="images/jiucuo.png"></span>
+      </div> -->
+    </div>
+    <div id="footer_login" style="text-align:center;clear:both;font-size:14px;height: 3em;"></div>
+  </div>
+</div>
 </body>
 </html>
-{{end}}  
+<%end%>

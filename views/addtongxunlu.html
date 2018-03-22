@@ -1,0 +1,194 @@
+﻿<%define "adddirectory"%>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>府谷交警内网后台管理程序</title>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="府谷交警 内网">
+    <link rel="stylesheet" type="text/css" href="/css/houtai.css">
+    <link rel="stylesheet" type="text/css" href="/js/webuploader/webuploader.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta http-equiv="imagetoolbar" content="false">
+    <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
+   
+    <!--[if IE 6]>
+<script src="DD_belatedPNG.js"></script>
+<script>
+  DD_belatedPNG.fix('.phoneicon');
+</script>
+<![endif]-->
+
+    <body ms-controller="fugujiaojing" id="homefirst">
+        <div id="wrapper">
+                        <%template "header" .%>
+
+            <div id="navfirst">
+                <div class="navBar">
+                    <ul class="nav clearfix">
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">网站首页</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m on">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">大队概括</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">查看参数</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">基础效果</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">扩展效果</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">SuperSlide</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">大话主席</a></h3>
+                        </li>
+                    </ul>
+                    <ul class="subNav">
+                        <li>你好，欢迎来到府谷交警管理后台！</li>
+                        <li></li>
+                        <li></li>
+                        <li><a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a></li>
+                        <li><a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a></li>
+                        <li>
+                            <!-- 空 -->
+                        </li>
+                        <li>
+                            <!-- 空 -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+             <script type="text/javascript">
+                jQuery(".navBar").slide({ titCell:".nav .m", mainCell:".subNav", delayTime:0, triggerTime:0,returnDefault:true });
+
+            </script>
+            <div id="maincontent">
+            
+
+            </div>
+                <div class="idea divclass" id="d1">
+                    <%if .Update%>
+                    <h2>修改通讯录</h2>
+                    <%else%>
+                    <h2>增加通讯录</h2>
+                    <%end%>
+                </div>
+                <form action="<%if .Update%>/admin/modifyDirectory<%else%>/admin/addDirectory<%end%>" method="post" name="dep"  onsubmit="return CheckPost();">
+
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        姓&emsp;名<span style="color: red">*</span>
+                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="directoryName" value="<%.Name%>"> 
+                    </div> 
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        部&emsp;门<span style="color: red">*</span>
+                        
+                        <%range $i,$v := .Deps%>
+                            <%if $.Update%>
+                                <%if eq $v.Name $.DepName%>
+                                    <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" checked="checked"><%.Name%>
+                                <%else%>
+                                    <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" ><%.Name%>
+                                <%end%>
+                            <%else%>
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" ><%.Name%>
+                            <%end%>
+                        <%end%>
+                       
+                    </div> 
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        职&emsp;位<span style="color: white">*</span>
+                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="job" value="<%.Job%>"> 
+                    </div> 
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        固&emsp;话<span style="color: white">*</span>
+                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="tel" value="<%.Tel%>"> 
+                    </div> 
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        手&emsp;机<span style="color: red">*</span>
+                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="phone" value="<%.Phone%>"> 
+                    </div> 
+                    <%if .Update%>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        排&emsp;序<span style="color: white">*</span>
+                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="sort" value=""> 
+                    </div>
+                    <input type="hidden" name="id" value="<%.Id%>">
+                    <%end%>
+                   
+                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
+                    &emsp;&emsp;
+                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/directory_list'">
+
+                </form>
+            </div>
+            <div id="footer " style="text-align: center;">
+                        <p id="p2 " style="margin-left: 0;margin-top: 200px">
+                            <a style="color: #636161;font-size: 0.8em; " target="_blank " title="府谷县公安局交警大队 ">府谷县公安局交警大队版权所有 保留一切权利</a>
+                            <a target="_blank "></a>
+                        </p>
+                     </div>
+        </div>
+        
+        <script type="text/javascript" charset="utf-8"  src="/js/ku/avalon.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="/js/houtaifabu.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="/js/webuploader/webuploader.js"></script>
+
+</body>
+    <script type="text/javascript">
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm,'');
+    }
+
+     function CheckPost ()
+	   {  
+        dep.directoryName.value=myTrim(dep.directoryName.value);
+        dep.dep.value=myTrim(dep.dep.value);
+        dep.phone.value=myTrim(dep.phone.value);
+        dep.job.value=myTrim(dep.job.value);
+        dep.tel.value=myTrim(dep.tel.value);
+
+        if (myTrim(dep.directoryName.value) == "")
+          {
+              alert("请填写姓名！");
+              dep.directoryName.focus();
+              return false;
+          }
+	    if (myTrim(dep.dep.value) == "")
+          {
+              alert("请选择部门！");
+              return false;
+          }
+           if (myTrim(dep.phone.value) == "")
+          {
+              alert("请填写手机号！");
+              dep.phone.focus();
+              return false;
+          }
+           if (myTrim(dep.phone.value).length !=11)
+          {
+              alert("请填写正确的手机位数！");
+              dep.phone.focus();
+              return false;
+          }
+	     return true;
+	   }
+    </script>
+
+</html>
+<%end%>

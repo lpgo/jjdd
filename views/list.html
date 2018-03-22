@@ -1,0 +1,541 @@
+﻿<%define "list"%>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>政府网站模板</title>
+    <meta name="keywords" content="政府方案">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/label.css">
+    <link href="/css/index.css" type="text/css" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/config.js"></script>
+    <script type="text/javascript" src="/js/util.js"></script>
+    <script type="text/javascript" src="/js/zh-cn.js"></script>
+    <script type="text/javascript" src="/js/zh-cn(1).js"></script>
+
+    <script type="text/javascript">
+        function nTabs(thisObj, Num) {
+            if (thisObj.className == "active") return;
+            var tabObj = thisObj.parentNode.id;
+            var tabList = document.getElementById(tabObj).getElementsByTagName("li");
+            for (i = 0; i < tabList.length; i++) {
+                if (i == Num) {
+                    thisObj.className = "active";
+                    document.getElementById(tabObj + "_Content" + i).style.display = "block";
+                } else {
+                    tabList[i].className = "normal";
+                    document.getElementById(tabObj + "_Content" + i).style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        #play_9647 { width:100%;position: relative;z-index: -2;margin:0 auto;}
+        #play_9647 .clearfix li { display: none; position: absolute; overflow: hidden; width:100%; height:570px;}
+        #play_9647 .clearfix li img {margin: auto; width:100%; height:570px; overflow: hidden; }
+        #play_9647 .jsNav { position:absolute;right:700px;bottom:240px;z-index:999;display:none;}
+        #play_9647 .jsNav li { background-color:#b8eff4;cursor:pointer; display: inline-block; float: left; height:
+        10px; line-height: 0; margin-left: 5px; text-indent: -9999px; width: 40px; z-index: 999; }
+        #play_9647 .jsNav li.over { background-color:#FFF; z-index: 999;}
+    </style>
+    <style type="text/css">
+    #play_9609 {
+        margin: 0;
+        float: left;
+        width: 570px;
+        height: 350px;
+        overflow: hidden;
+        border: #ccc 1px solid;
+    }
+
+    #play_9609 .playShow {
+        height: 350px;
+    }
+
+    #play_9609 .playBg {
+        margin: 0;
+        float: left;
+        margin-top: -30px;
+        z-index: 1;
+        filter: alpha(opacity=70);
+        opacity: 0.7;
+        width: 570px;
+        position: absolute;
+        height: 30px;
+        background: #000;
+    }
+
+    #play_9609 .playText {
+        margin: 0;
+        float: left;
+        text-indent: 10px;
+        width: 570px;
+        margin-top: -30px;
+        z-index: 2;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 30px;
+        overflow: hidden;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    #play_9609 .playNum {
+        width: 570px;
+        overflow: hidden;
+        margin: -30px 5px 0 0px;
+        z-index: 3;
+        text-align: right;
+        position: absolute;
+        height: 25px;
+    }
+
+    #play_9609 .playNum a {
+        margin: 5px 2px;
+        width: 15px;
+        height: 15px;
+        font-size: 14px;
+        display: inline-block;
+        font-weight: bold;
+        line-height: 15px;
+        cursor: pointer;
+        color: #000;
+        background: #D7D6D7;
+        text-align: center;
+    }
+
+    #play_9609 .playShow img {
+        width: 570px;
+        height: 350px;
+    }
+    </style>
+    <style type="text/css">
+        object, embed {
+            -webkit-animation-duration: .001s;
+            -webkit-animation-name: playerInserted;
+            -ms-animation-duration: .001s;
+            -ms-animation-name: playerInserted;
+            -o-animation-duration: .001s;
+            -o-animation-name: playerInserted;
+            animation-duration: .001s;
+            animation-name: playerInserted;
+        }
+
+        @-webkit-keyframes playerInserted {
+            from {
+                opacity: 0.99;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-ms-keyframes playerInserted {
+            from {
+                opacity: 0.99;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes playerInserted {
+            from {
+                opacity: 0.99;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes playerInserted {
+            from {
+                opacity: 0.99;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div class="head_top">
+        <div class="wp_inner">
+            <div class="headz fl">
+                <div class="fl">欢迎您访问某某县人民政府网！</div>
+                <div class="fl" id="header_t"> <span id="header_login" class="user-login"><span id="login_info"
+                                                                                                style="display:none"><span
+                        style="margin-left:0px;"><a href="#"><font color="#0000ff"><b class="username"></b></font></a>&nbsp;<a
+                        class="rolename"></a> 欢迎您回来！&nbsp;<a href="#"><font color="#FF7F04"><b>会员中心</b></font></a> <a
+                        href="#" style="display:none" target="_blank"><font color="red">你有新信息(<u
+                        class="new_messages"></u>)</font></a> <a href="#" onclick="return ajax_logout()">安全退出</a></span></span><span
+                        id="login_link"><a href="#">注册</a> | <a href="#">登录</a></span>
+          
+          </span></div>
+            </div>
+            <div class="head_dh fr">
+                <ul>
+                    <li class="toggleCode"><a class="phone" href="javascript:void(0)">手机版</a>
+                        <div class="codeDiv" style="display: none;"></div>
+                    </li>
+                    <li><span>|</span><a class="each_item goh"
+                                         onclick="this.style.behavior=&#39;url(#default#homepage)&#39;;this.setHomePage(&#39;lanse&#39;);"
+                                         href="javascript:void(0)">设为首页</a></li>
+                    <li><span>|</span><a class="each_item collect"
+                                         onclick="try{window.external.AddFavorite(&#39;lanse&#39;, &#39;#&#39;);}catch(e){window.sidebar.addPanel(&#39;#&#39;, &#39;lanse&#39;, &#39;&#39;);}"
+                                         href="javascript:alert('请按Ctrl+D组合键收藏');">收藏本站</a></li>
+                    <li><span>|</span><a class="cont" href="#" target="_blank">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="banner">
+        <div id="play_9647">
+            <ul class="clearfix">
+                <li style="display: block; z-index: 10;"><a href=""><img src="/images/indextop.jpg" width="100%"
+                                                                         height="570"></a></li>
+            </ul>
+            <ul class="jsNav" id="jsNav_9647">
+                <li class="over">1</li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            (function () {
+                var num = $("#jsNav_9647 li").length;
+                $("#play_9647 ul li:first").css("display", "block");
+                $("#jsNav_9647 li:first").addClass("over");
+                var curr = 0;
+                $("#jsNav_9647 li").each(function (i) {
+                    $(this).click(function () {
+                        curr = i;
+                        $("#play_9647 ul li").eq(i).css("z-index", "10").siblings("li").css("z-index", "1");
+                        $("#play_9647 ul li").eq(i).fadeIn(1500).siblings("li").fadeOut(1500);
+                        $(this).siblings("li").removeClass("over").end().addClass("over");
+                        return false;
+                    });
+                });
+//自动翻
+                var timer = setInterval(function () {
+                    todo = (curr + 1) % num;
+                    $("#jsNav_9647 li").eq(todo).click();
+                }, 9000);
+
+//鼠标悬停在触发器上时停止自动翻
+                $("#jsNav_9647 li").hover(
+                    function () {
+                        clearInterval(timer);
+                    },
+                    function () {
+                        timer = setInterval(function () {
+                            todo = (curr + 1) % num;
+                            $("#jsNav_9647 li").eq(todo).click();
+                        }, 5000);
+                    }
+                );
+            })();
+        </script>
+    </div>
+    <div class="head_logo wp_inner">
+        <div class="logo"><a href="#"><img src="/images/logo.png"></a></div>
+        <div class="head_right">
+            <div class="search_form">
+                <form action="search" target="_blank" method="get" name="form1" id="form1">
+                    <input type="text" value="" class="keyword" id="keyword" name="keyword">
+                    <input type="submit" class="submitbtn" value="" id="button" name="button">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="nav">
+    <div class="zuo"></div>
+    <div class="you"></div>
+    <div class="nav_menu clearfix">
+        <ul id="menu_nav">
+            <li class=""><a href="#" target="" class="nav1">首 页</a></li>
+            <li class=""><a href="743.shtml" target="" class="nav2">政府介绍</a>
+                <dl style="display: none; left: 162px;">
+                    <dt><a href="1039.shtml" target="">政府概况</a></dt>
+                    <dt><a href="746.shtml" target="">经济发展与投资</a></dt>
+                    <dt><a href="1040.shtml" target="">自然地理</a></dt>
+                    <dt><a href="745.shtml" target="">城市名片</a></dt>
+                    <dt><a href="1003.shtml" target="">文化教育</a></dt>
+                    <dt><a href="1041.shtml" target="">城市大事记</a></dt>
+                </dl>
+            </li>
+            <li class=""><a href="735.shtml" target="" class="nav3">政务公开</a>
+                <dl style="display: none; left: 324px;">
+                    <dt><a href="1035.shtml" target="_blank">信息公开指南</a></dt>
+                    <dt><a href="773.shtml" target="_blank">领导之窗</a></dt>
+                    <dt><a href="707.shtml" target="_blank">信息公开目录</a></dt>
+                    <dt><a href="784.shtml" target="_blank">部门乡镇信息公开</a></dt>
+                    <dt><a href="#" target="_blank">依申请信息公开</a></dt>
+                    <dt><a href="#" target="_blank">信息公开年报</a></dt>
+                    <dt><a href="740.shtml" target="_blank">信息公开负责机构</a></dt>
+                    <dt><a href="8.shtml" target="_blank">政务公开评议</a></dt>
+                </dl>
+            </li>
+            <li class=""><a href="788.shtml" target="" class="nav4">办事服务</a></li>
+            <li class=""><a href="index.php/opinion-main" target="" class="nav5">网络问政</a></li>
+            <li class=""><a href="734.shtml" target="" class="nav6">招商投资</a>
+                <dl style="display: none; left: 810px;">
+                    <dt><a href="986.shtml" target="">招商资讯</a></dt>
+                    <dt><a href="767.shtml" target="">招商项目</a></dt>
+                    <dt><a href="983.shtml" target="">工业园区</a></dt>
+                    <dt><a href="766.shtml" target="">投资指南</a></dt>
+                    <dt><a href="971.shtml" target="">历年项目</a></dt>
+                    <dt><a href="768.shtml" target="">服务部门</a></dt>
+                    <dt><a href="984.shtml" target="">企业风采</a></dt>
+                </dl>
+            </li>
+            <li class=""><a href="1116.shtml" target="" class="nav7">某某旅游</a></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+//**show_edit**//                      
+        init_labelshows('header_t');
+//**menu**//
+        $('#menu_nav li>dl').hide();
+        $('#menu_nav li:first').addClass('over');
+        $('#menu_nav li').each(function () {
+            $(this).hover(
+                function () {
+                    $('#menu_nav li').removeClass();
+                    $('#menu_nav li>dl').hide();
+                    $(this).addClass('over');
+                    $(this).find('dl').show();
+                    $(this).find('dl').css({left: parseInt($(this).position().left) + 'px'});
+                },
+                function () {
+                    $(this).find('dl').hide();
+                }
+            )
+        });
+    })
+    $(".toggleCode").each(function () {
+        var code = $(this).find('.codeDiv');
+        $(this).hover(function () {
+            code.show();
+        }, function () {
+            code.hide();
+        });
+    })
+</script>
+
+
+<div id="content" class="container"> <!--中间内容部分-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <div class="nav mtop">您的位置：
+        <a href="#">首页</a>
+        &gt;&gt; <a href="1116.shtml">一线传真</a>
+        &gt;&gt; <a href="1241.shtml">一线传真</a>
+        &gt;&gt; <a href="1242.shtml">一线传真</a>
+    </div>
+    <div class="govMain">
+        <div class="dt_left">
+            <div class="left_nav">
+                <div class="head10"><span class="title16"><a href="1241.shtml">一线传真</a></span></div>
+                <div class="main3" style="padding:10px 10px 60px 10px;">
+                    <ul class="menu_list_1" id="left_nav_url">
+                        <li class="cid_1241 ">
+                            <dt><a href="1241.shtml">一线传真</a></dt>
+                            <!--  <dl style="display:block;">
+                             <dd><a href="1242.shtml">旅游动态</a></dd>
+                             <dd><a href="1246.shtml">旅游视频</a></dd>
+                             <dd><a href="1243.shtml">旅游公告</a></dd>
+                             <dd><a href="1244.shtml">旅游帮助</a></dd>
+                             </dl>   -->
+                        </li>
+                        <li class="cid_1218 ">
+                            <dt><a href="1218.shtml">一线传真</a></dt>
+                            <dl style="display:none">
+                                <dd><a href="1230.shtml">旅游景点</a></dd>
+                                <dd><a href="1231.shtml">生态景点</a></dd>
+                                <dd><a href="1232.shtml">民俗景点</a></dd>
+                            </dl>
+                        </li>
+                        <li class="cid_1221 ">
+                            <dt><a href="1221.shtml">一线传真</a></dt>
+                        </li>
+                        <li class="cid_1219 ">
+                            <dt><a href="1219.shtml">一线传真</a></dt>
+                            <dl style="display:none">
+                                <dd><a href="1224.shtml">老字号</a></dd>
+                                <dd><a href="1225.shtml">本土小吃</a></dd>
+                                <dd><a href="1226.shtml">特色餐馆</a></dd>
+                            </dl>
+                        </li>
+                        <li class="cid_1220 ">
+                            <dt><a href="1220.shtml">一线传真</a></dt>
+                            <dl style="display:none">
+                                <dd><a href="1227.shtml">星级酒店</a></dd>
+                                <dd><a href="1228.shtml">商务酒店</a></dd>
+                                <dd><a href="1229.shtml">经济酒店</a></dd>
+                            </dl>
+                        </li>
+                        <li class="cid_1222 ">
+                            <dt><a href="1222.shtml">一线传真</a></dt>
+                            <dl style="display:none">
+                                <dd><a href="1233.shtml">本县特产</a></dd>
+                                <dd><a href="1234.shtml">旅游商品</a></dd>
+                                <dd><a href="1235.shtml">大型商场</a></dd>
+                                <dd><a href="1236.shtml">购物街区</a></dd>
+                            </dl>
+                        </li>
+                        <li class="cid_1223 ">
+                            <dt><a href="1223.shtml">一线传真</a></dt>
+                            <dl style="display:none">
+                                <dd><a href="1237.shtml">KTV</a></dd>
+                                <dd><a href="1238.shtml">休闲保健</a></dd>
+                                <dd><a href="1239.shtml">演艺吧</a></dd>
+                                <dd><a href="1240.shtml">酒吧</a></dd>
+                            </dl>
+                        </li>
+                        <li class="cid_1245 ">
+                            <dt><a href="1245.shtml">一线传真</a></dt>
+                        </li>
+
+                    </ul>
+                    <script type="text/javascript">
+                        (function () {
+                            $('#left_nav_url dt').click(function () {
+                                $(this).parent().parent().find('dl').hide('normal');
+                                if ($(this).nextAll('dl').css('display') == 'none') $(this).nextAll('dl').slideDown("normal"); else $(this).nextAll('dl').slideUp("normal");
+                            });
+                        })()
+                    </script>
+                </div>
+            </div>
+            <div class="mtop6 mtpic">
+
+            </div>
+            <div class="mtop6 mtpic">
+
+            </div>
+        </div>
+        <div class="dt_right">
+            <div class="border1">
+                <div class="head11">
+                    <span class="title19">一线传真</span>
+                </div>
+                <div class="main1">
+                    <ul class="label_ul_b">
+                        <br>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <br>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li> <li class="label_arrow_1" style=";">
+                        <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                    </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <br>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+                        <li class="label_arrow_1" style=";">
+                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        </li>
+
+                        <li class="clear"></li>
+                    </ul>
+                    <div class="mtop pages" id="page">
+                        19条
+                        1/1页
+                        <a class="s1 s3">首页</a>
+                        <a class="s1 s3">&lt;&lt;</a>
+                        <a class="s1 s3">上一页</a>
+                        <span class="s1">1</span>
+                        <a class="s1 s3">下一页</a>
+                        <a class="s1 s3">&gt;&gt;</a>
+                        <a class="s1 s3">末页</a>
+                        <input type="text" style="width: 2em;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.15em;vertical-align: bottom">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+
+
+<div id="footer">
+    <div class="wp_inner">
+        <div class="foot">
+            <div class="foot1 fl"><span id="_ideConac"> <a href="#" target="_blank"><img id="imgConac" vspace="0"
+                                                                                         hspace="0" border="0"
+                                                                                         src="/images/red.png"
+                                                                                         data-bd-imgshare-binded="1"></a> </span>
+            </div>
+            <div class="foot2 fl">
+                <div class="footnav"><a href="#">网站地图</a><span>|</span><a href="#">网站地图</a><span>|</span><a href="#">网站地图</a><span>|</span><a
+                        href="#">网站地图</a><span>|</span><a href="#">网站地图</a></div>
+                <div class="footext"> 主办单位：某某县人民政府　承办单位：某某县电子政务信息中心　技术支持：24H <br>
+                    备案编号：蜀ICP备14000601号 联系电话：0817-7777777　 邮箱地址：nanchong@live.cn
+                </div>
+            </div>
+            <div class="foot3 fl">
+                <div class="qrcode fl"><a href="#" target="_blank" title="" style="text-decoration:none;"><img
+                        width="86" height="86" border="none" alt="" src="/images/0353d3ed7d1bfdc2.jpg"></a></div>
+                <div class="qrcode fr"><a href="#" target="_blank" title="" style="text-decoration:none;"><img
+                        width="86" height="86" border="none" alt="" src="/images/0353d3ed7d1bfdc2.jpg"></a></div>
+            </div>
+            <div class="clear"></div>
+            <div class="foot4">
+
+                <span id="_span_jiucuo"><img onclick="Link(&#39;&#39;)" style="margin:0;border:0;cursor: pointer;"
+                                             src="/images/jiucuo.png"></span>
+            </div>
+        </div>
+        <div id="footer_login" style="text-align:center;clear:both;font-size:14px;"></div>
+    </div>
+</div>
+</body>
+</html>
+<%end%>

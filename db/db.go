@@ -72,12 +72,37 @@ func FindMany(collection string, condition Any, dataPointer Any) error {
 	return WitchCollection(collection, query)
 }
 
+func FindPart(collection string, condition Any, skip, limit int, dataPointer Any) error {
+	query := func(c *mgo.Collection) error {
+		return c.Find(condition).Skip(skip).Limit(limit).All(dataPointer)
+	}
+	return WitchCollection(collection, query)
+}
+
+func FindPartOrder(collection string, condition Any, skip, limit int, dataPointer Any, order string) error {
+	query := func(c *mgo.Collection) error {
+		return c.Find(condition).Sort(order).Skip(skip).Limit(limit).All(dataPointer)
+	}
+	return WitchCollection(collection, query)
+}
+
 func FindManyOrder(collection string, condition Any, order string, limit int, dataPointer Any) error {
 	query := func(c *mgo.Collection) error {
 		if limit == 0 {
 			return c.Find(condition).Sort("-" + order).All(dataPointer)
 		} else {
 			return c.Find(condition).Sort("-" + order).Limit(limit).All(dataPointer)
+		}
+	}
+	return WitchCollection(collection, query)
+}
+
+func FindManyOrder1(collection string, condition Any, order string, limit int, dataPointer Any) error {
+	query := func(c *mgo.Collection) error {
+		if limit == 0 {
+			return c.Find(condition).Sort(order).All(dataPointer)
+		} else {
+			return c.Find(condition).Sort(order).Limit(limit).All(dataPointer)
 		}
 	}
 	return WitchCollection(collection, query)
@@ -113,9 +138,36 @@ func UpdateById(collection string, id string, data Any) error {
 
 func UpdateByCond(collection string, cond Any, data Any) error {
 	update := func(c *mgo.Collection) error {
+		_, err := c.UpdateAll(cond, data)
+		return err
+	}
+	return WitchCollection(collection, update)
+}
+
+func UpdateOneByCond(collection string, cond Any, data Any) error {
+	update := func(c *mgo.Collection) error {
 		return c.Update(cond, data)
 	}
 	return WitchCollection(collection, update)
+}
+
+func Upsert(collection string, data Any) error {
+	update := func(c *mgo.Collection) error {
+		_, err := c.Upsert(nil, data)
+		return err
+	}
+	return WitchCollection(collection, update)
+}
+
+func GetCount(collection string, condition Any) int {
+	result := 0
+	query := func(c *mgo.Collection) error {
+		var err error
+		result, err = c.Find(condition).Count()
+		return err
+	}
+	WitchCollection(collection, query)
+	return result
 }
 
 func GetId() int64 {

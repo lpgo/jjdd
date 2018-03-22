@@ -1,0 +1,214 @@
+﻿<%define "rota"%>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>府谷交警内网后台管理程序</title>
+    <meta name="description" content="府谷交警 内网">
+    <link rel="stylesheet" type="text/css" href="/css/houtai.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta http-equiv="imagetoolbar" content="false">
+    <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery1.42.min.js">
+    </script>
+    <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
+    <!--[if IE 6]>
+<script src="DD_belatedPNG.js"></script>
+<script>
+  DD_belatedPNG.fix('.phoneicon');
+</script>
+<![endif]-->
+
+    <body ms-controller="fugujiaojing" id="homefirst">
+        <div id="wrapper">
+            <%template "header" .%>
+            <div id="navfirst">
+                <div class="navBar">
+                    <ul class="nav clearfix">
+                        <li class="m on">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">网站首页</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">如何使用</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">查看参数</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">基础效果</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">扩展效果</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">SuperSlide</a></h3>
+                        </li>
+                        <li class="s">|</li>
+                        <li class="m">
+                            <h3><a target="_blank" href="http://www.superslide2.com/">大话主席</a></h3>
+                        </li>
+                    </ul>
+                    <ul class="subNav">
+                        <li>你好，欢迎来到“大话主席”网站！</li>
+                        <li><a href="#">如何使用</a>|<a href="#">如何使用</a>|<a href="#">如何使用</a>|<a href="#">如何使用</a></li>
+                        <li><a href="#">查看参数</a>|<a href="#">查看参数</a>|<a href="#">查看参数</a>|<a href="#">查看参数</a></li>
+                        <li><a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a></li>
+                        <li><a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a></li>
+                        <li>
+                            <!-- 空 -->
+                        </li>
+                        <li>
+                            <!-- 空 -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="maincontent">
+                <div class="idea divclass" id="d1">
+                    <h2>值班表设置</h2>
+                </div>
+                
+                <div class="idea divclass" id="d3" style="padding:0;border: 1px solid #aaa;border-top: none;margin-bottom: 10px">
+            <form method="post" action="/admin/saveRota">
+                 <input style="float: right;margin: 1em;height: 3em;line-height: 2em;color: white;background-color: #006CE8;padding: 4px 6px" type="submit" value="保存修改" >
+                 <div style="clear: both;"></div>
+            <table id="zhibanbiao">
+              <tr >
+                <td colspan="3" style=" background-color: #ececec;padding-bottom: 0.7em;padding-top: 0.7em;font-size: 20px;font-weight: bold;line-height: 1.3em;">星期五<br>2017年12月29日 </td>
+              </tr>
+              <%if .First%>
+              <tr>
+                <td style="width: 20%">值班领导</td>
+                <td ><input class="editTd" type="text" name="lingdao" > </td>
+              </tr>
+               <tr>
+                <td>带班组长</td>
+                <td ><input class="editTd" type="text" name="zuzhang" > </td>
+              </tr>
+               <tr>
+                <td rowspan="2">处警人员</td>
+                <td ><input class="editTd" type="text" name="chujing" > </td>
+                <td ><input class="editTd" type="text" name="chujing" > </td>
+              </tr>
+              <tr>
+                <td ><input class="editTd" type="text" name="chujing" > </td>
+                <td ><input class="editTd" type="text" name="chujing" > </td>
+
+              </tr>
+               <tr>
+                <td rowspan="3">值班人员</td>
+                <td ><input class="editTd" type="text" name="zhiban" > </td>
+                <td ><input class="editTd" type="text" name="zhiban" > </td>
+              </tr>
+              <tr>
+                <td ><input class="editTd" type="text" name="zhiban" > </td>
+                <td ><input class="editTd" type="text" name="zhiban" > </td>
+              </tr>
+              <tr>
+                <td ><input class="editTd" type="text" name="zhiban" > </td>
+                <td ><input class="editTd" type="text" name="zhiban" > </td>
+              </tr>
+               <tr>
+                <td rowspan="2">备勤人员</td>
+                <td ><input class="editTd" type="text" name="beiqing" > </td>
+                <td ><input class="editTd" type="text" name="beiqing" > </td>
+              </tr>
+              <tr>
+                <td ><input class="editTd" type="text" name="beiqing" > </td>
+                <td ><input class="editTd" type="text" name="beiqing" > </td>
+              </tr>
+               <tr>
+                <td rowspan="3">接警人员</td>
+                <td ><input class="editTd" type="text" name="jiejing" > </td>
+                <td ><input class="editTd" type="text" name="jiejing" > </td>
+              </tr>
+              <tr>
+                <td ><input class="editTd" type="text" name="jiejing" > </td>
+                <td ><input class="editTd" type="text" name="jiejing" > </td>
+              </tr>
+              <tr>
+                <td ><input class="editTd" type="text" name="jiejing" > </td>
+                <td ><input class="editTd" type="text" name="jiejing" > </td>
+              </tr>  
+              <tr>
+                <td >值班电话</td>
+                <td colspan="2"><input class="editTd" type="text" name="tel" > </td>
+              </tr>
+              <%else%>
+                <tr>
+                <td style="width: 20%">值班领导</td>
+                <td ><input class="editTd" type="text" name="lingdao" value="<%.Rota.Lingdao%>"> </td>
+              </tr>
+               <tr>
+                <td>带班组长</td>
+                <td ><input class="editTd" type="text" name="zuzhang" value="<%.Rota.Zuzhang%>"> </td>
+              </tr>
+               <tr>
+                <td rowspan="2">处警人员</td>
+                <%range $k,$v := .Rota.Chujing%>
+                  <td ><input class="editTd" type="text" name="chujing" value="<%$v%>"> </td>
+                  <%if Two $k%>
+                    </tr>
+                    <tr>
+                  <%end%>
+                <%end%>
+               <tr>
+                <td rowspan="3">值班人员</td>
+                <%range $k,$v := .Rota.Zhiban%>
+                  <td ><input class="editTd" type="text" name="zhiban" value="<%$v%>"> </td>
+                  <%if Two $k%>
+                    </tr>
+                    <tr>
+                  <%end%>
+                <%end%>
+               <tr>
+                <td rowspan="2">备勤人员</td>
+                <%range $k,$v := .Rota.Beiqing%>
+                  <td ><input class="editTd" type="text" name="beiqing" value="<%$v%>"> </td>
+                  <%if Two $k%>
+                    </tr>
+                    <tr>
+                  <%end%>
+                <%end%>
+               <tr>
+                <td rowspan="3">接警人员</td>
+                <%range $k,$v := .Rota.Jiejing%>
+                  <td ><input class="editTd" type="text" name="jiejing" value="<%$v%>"> </td>
+                  <%if Two $k%>
+                    </tr>
+                    <tr>
+                  <%end%>
+                <%end%> 
+              <tr>
+                <td >值班电话</td>
+                <td colspan="2"><input class="editTd" type="text" name="tel" value="<%.Rota.Tel%>"> </td>
+              </tr>
+              <%end%>                    
+            </table>
+                         </form>       
+
+                </div>
+                      <div id="footer ">
+                        <p id="p2 ">
+                            <a style="color: #636161;font-size: 0.8em; " target="_blank " title="府谷县公安局交警大队 ">府谷县公安局交警大队版权所有 保留一切权利</a>
+                            <a target="_blank "></a>
+                        </p>
+                     </div>
+                </div>
+               
+            </div>
+    </body>
+    <style type="text/css">
+        #zhibanbiao{border:1px solid #eeeeee;width: 60%;margin: 0 auto; text-align: center;color: #333333;font-size: 15px}
+        #zhibanbiao td{border:1px solid #eeeeee!important;padding: 0.2em;padding-top: 5px;padding-bottom: 5px;height: 3em;line-height: 3em;}
+        .editTd{
+            background-color: #d6ffe2;color: black;cursor: pointer;width: 100%;height: 100%;padding: 0px 6px;text-align: center;
+        }
+    </style>
+</html>
+<%end%>

@@ -1,4 +1,4 @@
-﻿ <%define "preview"%>
+﻿ <%define "hongtou"%>
 <!DOCTYPE html>
 <html>
 
@@ -371,20 +371,46 @@
         </script>
         <div class="nav mtop">
             <a href="#">首页</a> &gt;&gt; <a href="1116.shtml">旅游频道</a> &gt;&gt; <a href="1241.shtml">旅游资讯</a> &gt;&gt; <a href="1242.shtml">旅游动态</a> &gt;&gt; 详细内容
+            <div style="display: inline-block;float: right;">
+                 <a style="border: 1px solid #449d44;padding: 6px 18px;background-color: #449d44;color: white;text-decoration: none; " href="/admin/publish">确认保存</a>
+                 <a style="border: 1px solid #c9302c;padding: 6px 18px;background-color: #c9302c;color: white;text-decoration: none; " href="/admin/page/publish">取消保存</a>
+            </div>
+           
         </div>
         <div class="govMain">
             <div class="news_border ht">
                 <div class="main" id="leftbox" style="padding: 20px 20px;">
-                    <div class="news_left_side">
+                    <div class="news_left_side" style="background:url(/images/hongtou.jpg) no-repeat;background-position: 0 42px">
                         <!--startprint1-->
                         <!--打印内容开始-->
-                        <div class="intr_title"><%.Article.Title%></div>
-                        <div class="ht_date" style="text-align:center;font-size:14px;color:#666;">发布：2016-03-25&nbsp;来源：&nbsp; 作者：&nbsp; 浏览量：<span class="item_views">29</span>&nbsp;<span id="operation" style="display: none; cursor: pointer;color:#087cf3">操作&gt;&gt;</span></div>
+                        <table style="font-size:14px;color:#666;margin: 0 auto;">
+                          <tr>  
+                            <td>拟稿:</td>
+                            <td>王东</td>
+                            <td>&emsp;</td>
+                            <td>审核:</td>
+                            <td>刘鹏</td>
+                            <td>&emsp;</td>
+                            <td>签发:</td>
+                            <td>杜树彪</td>
+                            <td>&emsp;</td>
+                            <td>来源:</td>
+                            <td>政办室</td>
+                            <td>&emsp;</td>
+                            <td>发布时间:</td>
+                            <td>2018-1-8&nbsp;15:13:43</td>
+                            <td>&emsp;</td>
+                            <td>浏览次数:</td>
+                            <td>446次</td>
+                          </tr>
+                        </table>
+                        <div style="padding-top: 230px;text-align: center;font-size: 20px;font-family: '仿宋'">府公交&nbsp;﹝2017﹞&nbsp;245号</div>
+                        <div class="intr_title" style="padding-top: 158px;color: #000;">{{.title}}</div>
                         <div class="conTxt">
-                            <%.Article.Content%>
+                            {{.content}}
                         </div>
                         <div class="clear"></div>
-                        <!--
+                        
                         <div style="border: 1px solid #e6e4e4;margin: 10px 10px">
                             <div style="background-color: #dcdada;height: 20px;padding: 10px 10px;font-size: 1.1em;line-height: 20px;color: #555555">文件签收</div>
                             <style>
@@ -432,22 +458,23 @@
                                 <button style="height: 2.4em;width: 4em;margin-right: 1em;background-color: #087cf3;color: white;outline: none">签收</button>
                             </div>
                         </div>
-                        -->
+                        
                         <div class="xxnr">
                         </div>
                         <!--打印内容结束-->
                         <!--endprint1-->
                         <div class="xxfz">
                             <div class="fl">
-                             
-                                
-                                <%if .Auditing%>
-                                <button onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass'">审核通过</button>
-                                <button onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass'">不通过</button>
-                                <%else%>
-                                <a href="/admin/publish">save</a>
-                                <a href="/admin/page/publish">back</a>
-                                <%end%>
+                                <a href="javascript:;" onclick="javascript:preview(1)">[打印文章]</a>
+                                <a href="javascript:;" onclick="alert('请使用键盘Ctrl+D组合键进行收藏');">[添加收藏]</a>
+                            </div>
+                        </div>
+                        <div class="pager">
+                            <div><strong><font color="red">上一篇：</font></strong>
+                                <a href="1202.shtml" title="老张0335自己发得测试删除">老张0335自己发得测试删除</a>
+                            </div>
+                            <div><strong><font color="red">下一篇：</font></strong>
+                                <a href="1200.shtml" title="我市17家重大火灾隐患单位被挂牌督办">我市17家重大火灾隐患单位被挂牌督...</a>
                             </div>
                         </div>
                     </div>

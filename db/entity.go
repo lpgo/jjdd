@@ -7,12 +7,44 @@ import (
 	"time"
 )
 
-//用户
-type User struct {
+//值班表
+type Rota struct {
+	Lingdao string   `bson:"lingdao" json:"lingdao"`
+	Zuzhang string   `bson:"zuzhang" json:"zuzhang"`
+	Chujing []string `bson:"chujing" json:"chujing"`
+	Zhiban  []string `bson:"zhiban" json:"zhiban"`
+	Beiqing []string `bson:"beiqing" json:"beiqing"`
+	Jiejing []string `bson:"jiejing" json:"jiejing"`
+	Tel     string   `bson:"tel" json:"tel"`
+}
+
+//通讯录
+type Directory struct {
+	Id         bson.ObjectId `bson:"_id" json:"id"`
+	Name       string        `bson:"name" json:"name"`
+	Department string        `bson:"dep" json:"dep"`
+	Job        string        `bson:"job" json:"job"`
+	Phone      string        `bson:"phone" json:"phone"`
+	Tel        string        `bson:"tel" json:"tel"`
+	Order      int           `bson:"order" json:"order"`
+	IsHidden   bool          `bson:"ishidden" json:"ishidden"`
+}
+
+type Department struct {
 	Id       bson.ObjectId `bson:"_id" json:"id"`
 	Name     string        `bson:"name" json:"name"`
-	Password string        `bson:"pwd" json:"-"`
-	Role     string        `bson:"role" json:"role"`
+	Order    int           `bson:"order" json:"order"`
+	IsHidden bool          `bson:"ishidden" json:"ishidden"`
+}
+
+//用户
+type User struct {
+	Id         bson.ObjectId `bson:"_id" json:"id"`
+	Name       string        `bson:"name" json:"name"`
+	Password   string        `bson:"pwd" json:"-"`
+	Role       string        `bson:"role" json:"role"`
+	Department string        `bson:"dep" json:"dep"`
+	IsHidden   bool          `bson:"ishidden" json:"ishidden"`
 }
 
 type Article struct {
@@ -29,6 +61,7 @@ type Article struct {
 	Subject    string        `bson:"subject" json:"subject"`
 	IsAuditing bool          `bson:"isAuditing" json:"isAuditing"`
 	Hits       int64         `bson:"hits" json:"hits"`
+	IsHidden   bool          `bson:"ishidden" json:"ishidden"`
 }
 
 func ArticleFromMap(data map[string]Any) Article {
