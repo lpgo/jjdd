@@ -1,5 +1,5 @@
-﻿<%define "adddirectory"%>
-<!DOCTYPE html xmlns="http://www.w3.org/1999/xhtml">
+﻿<%define "setarticle"%>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <title>府谷交警内网后台管理程序</title>
@@ -9,7 +9,7 @@
     <meta name="description" content="府谷交警 内网">
     <link rel="stylesheet" type="text/css" href="/css/houtai.css">
     <link rel="stylesheet" type="text/css" href="/js/webuploader/webuploader.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
     <meta http-equiv="Content-Language" content="zh-cn">
     <meta http-equiv="imagetoolbar" content="false">
     <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
@@ -82,61 +82,42 @@
 
             </div>
                 <div class="idea divclass" id="d1">
-                    <%if .Update%>
-                    <h2>修改通讯录</h2>
-                    <%else%>
-                    <h2>增加通讯录</h2>
-                    <%end%>
+                    <h2>设定</h2>
+                   
                 </div>
-                <form action="<%if .Update%>/admin/modifyDirectory<%else%>/admin/addDirectory<%end%>" method="post" name="dep"  onsubmit="return CheckPost();">
+                <form action="/admin/setArticle" method="post" name="setarticle"  onsubmit="return CheckPost();">
 
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        姓&emsp;名<span style="color: red">*</span>
-                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="directoryName" value="<%.Name%>"> 
-                    </div> 
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        部&emsp;门<span style="color: red">*</span>
-                        
-                        <%range $i,$v := .Deps%>
-                            <%if $.Update%>
-                                <%if eq $v.Name $.DepName%>
-                                    <input style="vertical-align: middle; margin-left: 2em;" checked="checked"type="radio" name="dep" value="<%.Name%>" checked="checked"><%.Name%>
-                                <%else%>
-                                    <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" ><%.Name%>
-                                <%end%>
-                            <%else%>
-                                <%if eq $i 0%>
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" checked="checked"><%.Name%>
-                                <%else%>
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" ><%.Name%>
-                                <%end%>
-                            <%end%>
-                        <%end%>
-                       
-                    </div> 
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        职&emsp;位<span style="color: white">*</span>
-                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="job" value="<%.Job%>"> 
-                    </div> 
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        固&emsp;话<span style="color: white">*</span>
-                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="tel" value="<%.Tel%>"> 
-                    </div> 
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        手&emsp;机<span style="color: red">*</span>
-                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="phone" value="<%.Phone%>"> 
-                    </div> 
-                    <%if .Update%>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        排&emsp;序<span style="color: white">*</span>
-                        <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="sort" value=""> 
+                        头条新闻<span style="color: white">*</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="isHot"  value="true" <%if .Article.IsHot%>checked='checked'<%end%>>
                     </div>
-                    <input type="hidden" name="id" value="<%.Id%>">
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        交管要闻<span style="color: white">*</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="isTraffic" value="true" <%if .Article.IsTraffic%>checked='checked'<%end%>>
+                    </div> 
+                    <%if .Article.Pic%>
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        图片新闻<span style="color: white">*</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="isImage" value="true" <%if .Article.IsImage%>checked='checked'<%end%>>
+                    </div>
                     <%end%>
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        移动文章<span style="color: white">*</span>
+                         <select style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" >
+                            <option value="通知通报" <%if eq .Article.Category "通知通报"%>selected='selected'<%end%>>通知通报</option>
+                             <option value="文件" <%if eq .Article.Category "文件"%>selected='selected'<%end%>>文件</option>
+                            <option value="检查" <%if eq .Article.Category "检查"%>selected='selected'<%end%>>检查</option>
+                            <option value="你好" <%if eq .Article.Category "你好"%>selected='selected'<%end%>>你好</option>
+
+                         </select>
+                    </div>    
+                    
+                    <input type="hidden" name="id" value="<%call .Hex .Article.Id%>">
+                   
                    
                     <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
                     &emsp;&emsp;
-                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/directory_list'">
+                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/admin'">
 
                 </form>
             </div>

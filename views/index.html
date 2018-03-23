@@ -138,7 +138,7 @@ code.hide();
 <div id="content" class="container">
   <div class="news" style="padding-top: 10px">
     <div class="special fl" style="margin-top: 0px;margin-bottom: 1px;line-height: 80px;font-size:45px;color:red;font-weight: bold;height:92px;text-align: center;"> 
-        中央经济会议习近平主持会议
+        <a href="/showArticle?id=<%call .Hex .hotArticle.Id%>" style="color: red"><%.hotArticle.Title%></a>
     </div>
     <div class="news-tp fl">
       <div class="focus">
@@ -442,11 +442,11 @@ if(i==c){i =0;}
               <%with .rota%>
               <tr>
                 <td>值班领导</td>
-                <td><%.Lingdao%></td>
+                <td colspan="2"><%.Lingdao%></td>
               </tr>
                <tr>
                 <td>带班组长</td>
-                <td><%.Zuzhang%></td>
+                <td colspan="2"><%.Zuzhang%></td>
               </tr>
                <tr>
                 <td rowspan="2">处警人员</td>

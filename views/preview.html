@@ -354,6 +354,18 @@
         });
     })
     </script>
+    <style type="text/css">
+        .buttonl{
+            height: 40px;
+            line-height: 38px;
+            width: 80px;
+            background-color: #fc8114;
+            color: white;
+            vertical-align: middle;
+            margin-bottom: 1em;
+            border: none;
+        }
+    </style>
     <div id="content" class="container">
         <link rel="stylesheet" type="text/css" href="/css/style1.css">
         <script type="text/javascript" src="/js/item.js"></script>
@@ -378,6 +390,19 @@
                     <div class="news_left_side">
                         <!--startprint1-->
                         <!--打印内容开始-->
+                        <div class="xxfz" style="margin: 0;height: 49px">
+                            <div class="fl">
+                                <%if not .Show%>
+                                    <%if .Auditing%>
+                                    <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass'">审核通过</button>
+                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass'">不通过</button>
+                                    <%else%>
+                                    <button class="buttonl"  style="background-color: #27a9f4;"   onclick="window.location.href='/admin/publish'">保存文章</button>
+                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish'">返回编辑</button>
+                                    <%end%>
+                                <%end%>
+                            </div>
+                        </div>
                         <div class="intr_title"><%.Article.Title%></div>
                         <div class="ht_date" style="text-align:center;font-size:14px;color:#666;">发布：2016-03-25&nbsp;来源：&nbsp; 作者：&nbsp; 浏览量：<span class="item_views">29</span>&nbsp;<span id="operation" style="display: none; cursor: pointer;color:#087cf3">操作&gt;&gt;</span></div>
                         <div class="conTxt">
@@ -434,21 +459,6 @@
                         </div>
                         -->
                         <div class="xxnr">
-                        </div>
-                        <!--打印内容结束-->
-                        <!--endprint1-->
-                        <div class="xxfz">
-                            <div class="fl">
-                             
-                                
-                                <%if .Auditing%>
-                                <button onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass'">审核通过</button>
-                                <button onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass'">不通过</button>
-                                <%else%>
-                                <a href="/admin/publish">save</a>
-                                <a href="/admin/page/publish">back</a>
-                                <%end%>
-                            </div>
                         </div>
                     </div>
                 </div>

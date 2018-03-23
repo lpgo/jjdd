@@ -142,6 +142,14 @@ func GetLinks() []db.Link {
 	return links
 }
 
+func GetHotArticle() db.Article {
+	var article db.Article
+	if err := db.FindOne("article", bson.M{"isHot": true}, &article); err != nil {
+		log.Println(err)
+	}
+	return article
+}
+
 func DelUser(id string) error {
 	return db.Delete("user", id)
 }

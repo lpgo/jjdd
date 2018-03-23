@@ -93,6 +93,16 @@ func apiGroup(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
+func noCache(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		header := c.Response().Header()
+		header["Pragma"] = []string{"no-cache"}
+		header["Cache-Control"] = []string{"no-cache"}
+		header["Expires"] = []string{"0"}
+		return next(c)
+	}
+}
+
 func okGroup(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		return next(c)
@@ -124,6 +134,7 @@ func main() {
 		AllowOrigins:     []string{"http://localhost"},
 		AllowCredentials: true,
 	}))
+	e.Use(noCache)
 
 	//Session控制
 	e.Use(sessionHandler)
@@ -140,6 +151,8 @@ func main() {
 	admin.GET("/page/hongtou", hongtouPage)
 	admin.GET("/page/admin", adminPage)
 	admin.GET("/page/modifyPage", modifyArticlePage)
+	admin.GET("/page/set_article", setArticlePage)
+
 	admin.GET("/page/add_user", addUserPage)
 	admin.GET("/page/user_list", userListPage)
 	admin.GET("/page/modify_user", modifyUserPage)
@@ -166,6 +179,7 @@ func main() {
 	admin.Any("/delArticle", delArticle)
 	admin.Any("/auditing", auditingArticle)
 	admin.Any("/modify", modifyArticle)
+	admin.Any("/setArticle", setArticle)
 	//用户
 	admin.Any("/addUser", addUser)
 	admin.Any("/getUserList", getUserList)
@@ -198,6 +212,7 @@ func main() {
 	e.Any("/searchDirectoryByJob", searchDirectoryByJob)
 	e.Any("/searchDirectoryByTel", searchDirectoryByTel)
 	e.Any("/searchDirectoryByPhone", searchDirectoryByPhone)
+	e.Any("/showArticle", showArticleById)
 
 	e.GET("/directory", directoryPage)
 	e.GET("/", indexPage)
@@ -391,7 +406,7 @@ func previewArticle(c echo.Context) error {
 		Id:        bson.NewObjectId(),
 	}
 	c.(*CustomContext).SetSession("article", article)
-	return c.Render(http.StatusOK, "preview", article)
+	return c.Render(http.StatusOK, "preview", map[string]db.Any{"Auditing": false, "Article": article})
 }
 
 func previewArticleById(c echo.Context) error {
@@ -401,6 +416,16 @@ func previewArticleById(c echo.Context) error {
 		return err
 	} else {
 		return c.Render(http.StatusOK, "preview", map[string]db.Any{"Auditing": true, "Article": article})
+	}
+}
+
+func showArticleById(c echo.Context) error {
+	var article db.Article
+	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
+		log.Println(err)
+		return err
+	} else {
+		return c.Render(http.StatusOK, "preview", map[string]db.Any{"Show": true, "Article": article})
 	}
 }
 
@@ -421,7 +446,7 @@ func publishArticle(c echo.Context) error {
 		log.Println(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
-		return c.String(http.StatusOK, "add ok")
+		return MyRedirect(c, "/admin/page/admin")
 	}
 }
 
@@ -461,6 +486,36 @@ func modifyArticle(c echo.Context) error {
 
 }
 
+func setArticle(c echo.Context) error {
+	update := bson.M{"category": c.FormValue("category")}
+	if c.FormValue("isHot") != "" {
+		update["isHot"] = true
+	} else {
+		update["isHot"] = false
+	}
+	if c.FormValue("isImage") != "" {
+		update["isImage"] = true
+	} else {
+		update["isImage"] = false
+	}
+	if c.FormValue("isTraffic") != "" {
+		update["isTraffic"] = true
+	} else {
+		update["isTraffic"] = false
+	}
+
+	if update["isHot"].(bool) {
+		db.UpdateByCond("article", bson.M{"isHot": true}, bson.M{"$set": bson.M{"isHot": false}})
+	}
+
+	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": update}); err != nil {
+		log.Println(err)
+		return err
+	} else {
+		return MyRedirect(c, "/admin/page/admin")
+	}
+}
+
 func login(c echo.Context) error {
 	if user := service.LoginByName(c.FormValue("name"), c.FormValue("pwd")); user != nil {
 		c.(*CustomContext).SetSession("user", user)
@@ -471,7 +526,8 @@ func login(c echo.Context) error {
 }
 
 func publishPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": false, "Article": c.(*CustomContext).GetSession("article")})
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": false, "Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category")})
 }
 
 func publishHongtouPage(c echo.Context) error {
@@ -494,6 +550,18 @@ func adminPage(c echo.Context) error {
 	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user})
 }
 
+func setArticlePage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+
+	var article db.Article
+	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
+		log.Println(err)
+		return err
+	}
+
+	return c.Render(http.StatusOK, "setarticle", map[string]db.Any{"User": user, "Id": c.QueryParam("id"), "Article": article})
+}
+
 func saveRotaPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	rota, have := service.GetRota()
@@ -513,7 +581,8 @@ func linkListPage(c echo.Context) error {
 func indexPage(c echo.Context) error {
 	rota, _ := service.GetRota()
 	links := service.GetLinks()
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"rota": rota, "links": links})
+	hotArticle := service.GetHotArticle()
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"rota": rota, "links": links, "hotArticle": hotArticle})
 }
 
 func directoryPage(c echo.Context) error {
