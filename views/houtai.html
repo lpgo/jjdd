@@ -41,7 +41,7 @@
                         </li>
                         <li class="s">|</li>
                         <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">基础效果</a></h3>
+                            <h3><a target="_blank" href="/admin/page/publish_hongtou?action=create&category=普通">发布红头</a></h3>
                         </li>
                         <li class="s">|</li>
                         <li class="m">
@@ -77,7 +77,7 @@
                 </div>
                 <div class="idea divclass" id="d1" style="padding-top: 10px">
                     <div style="display: inline-block;float: left;">
-                        <button class="buttonl" onclick="window.location.href='/admin/page/publish?category=交管动态'">新增</button>
+                        <button class="buttonl" onclick="window.location.href='/admin/page/publish?category=交管动态&action=create'">新增</button>
                     </div>
                     <div style="display: inline-block;float: right;">
                         <input id="sousuoname" style="vertical-align: middle; margin-left: 50em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" ms-duplex="@sousuovalue">
@@ -102,7 +102,18 @@
                         <div class="cleardiv" style="width: 10%;float: left;text-align: center;">{{(@page-1)*@pagemeiye+$index+1}}</div>
                         <div class="cleardiv" style="width: 25%;float: left;">
                             <img style="margin-right: 2px" :visible="el.isHot"  src="/images/tou.jpg"><img style="margin-right: 2px" :visible="el.isTraffic" src="/images/yao.jpg"><img :visible="el.isImage" src="/images/tu.jpg">{{el.title}}</div>
-                        <div class="cleardiv" style="width: 15%;float: left;text-align: center;"><span ms-if="!el.ishidden" style="color: white">.</span> <span ms-if="el.ishidden"><a style="color: blue;font-weight:bold;" ms-attr="{href:'/admin/previewById?id='+ el.id}"  :visible="!el.isAuditing">审核 &emsp;</a><a style="color: red;font-weight:bold;" ms-attr="{href:'/admin/previewById?id='+ el.id}"  :visible="el.isAuditing">撤销审核 &emsp;</a><a style="color: #5cb85c;" ms-attr="{href:'/admin/page/set_article?id='+ el.id}" :visible="el.isAuditing">设定 &emsp;</a> &emsp;<a  style="color: #d9534f" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  <a :visible="!el.isAuditing" style="color: #f0ad4e" ms-attr="{href:'/admin/page/modifyPage?id='+ el.id}" >修改</a></span></div>
+                        <div class="cleardiv" style="width: 15%;float: left;text-align: center;"><span ms-if="!el.ishidden" style="color: white">.</span> <span ms-if="el.ishidden"><a style="color: blue;font-weight:bold;" ms-attr="{href:'/admin/previewById?id='+ el.id}"  :visible="!el.isAuditing&&!el.isRed">审核 &emsp;</a>
+
+                            <a style="color: blue;font-weight:bold;" ms-attr="{href:'/admin/previewHongtouById?id='+ el.id}"  :visible="!el.isAuditing&&el.isRed">审核 &emsp;</a>
+
+                            <a style="color: red;font-weight:bold;" ms-attr="{href:'/admin/previewById?id='+ el.id}"  :visible="el.isAuditing&&!el.isRed">撤销审核 &emsp;</a>
+
+                            <a style="color: red;font-weight:bold;" ms-attr="{href:'/admin/previewHongtouById?id='+ el.id}"  :visible="el.isAuditing&&el.isRed">撤销审核 &emsp;</a>
+
+                            <a style="color: #5cb85c;" ms-attr="{href:'/admin/page/set_article?id='+ el.id}" :visible="el.isAuditing">设定 &emsp;</a> &emsp;<a  style="color: #d9534f" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  
+                            <a :visible="!el.isAuditing&&!el.isRed" style="color: #f0ad4e" ms-attr="{href:'/admin/page/modifyPage?id='+ el.id}" >修改</a>
+                            <a :visible="!el.isAuditing&&el.isRed" style="color: #f0ad4e" ms-attr="{href:'/admin/page/modifyHongtouPage?id='+ el.id}" >修改</a>
+                            </span></div>
                             <div class="cleardiv" style="width: 20%;float: left;">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</div>
                             <div class="cleardiv" style="width: 10%;float: left;">{{el.from}}</div>
                             <div class="cleardiv" style="width: 10%;float: left;">{{el.category}}</div>

@@ -390,25 +390,34 @@
                     <div class="news_left_side">
                         <!--startprint1-->
                         <!--打印内容开始-->
+                        <%if not .Show%>
                         <div class="xxfz" style="margin: 0;height: 49px">
                             <div class="fl">
-                                <%if not .Show%>
                                     <%if .Auditing%>
                                     <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass'">审核通过</button>
                                     <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass'">不通过</button>
                                     <%else%>
                                     <button class="buttonl"  style="background-color: #27a9f4;"   onclick="window.location.href='/admin/publish'">保存文章</button>
-                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish'">返回编辑</button>
+                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish?action=edit&category=<%.Article.Category%>'">返回编辑</button>
                                     <%end%>
-                                <%end%>
                             </div>
                         </div>
-                        <div class="intr_title"><%.Article.Title%></div>
-                        <div class="ht_date" style="text-align:center;font-size:14px;color:#666;">发布：2016-03-25&nbsp;来源：&nbsp; 作者：&nbsp; 浏览量：<span class="item_views">29</span>&nbsp;<span id="operation" style="display: none; cursor: pointer;color:#087cf3">操作&gt;&gt;</span></div>
+                        <%end%>
+
+                        <div class="intr_title" style="color: #136dc6"><%.Article.Title%></div>
+                        <div class="ht_date" style="text-align:center;font-size:14px;color:#666;border-bottom: #0071cf 2px solid;padding-bottom: 11px">发布时间：<span id="time"></span>&nbsp;&nbsp;&nbsp;&nbsp;来源：<%.Article.From%> &nbsp;&nbsp;&nbsp;&nbsp;作者：<%.Article.Creator%> &nbsp;&nbsp;&nbsp;&nbsp;浏览量：<span class="item_views"><%.Article.Hits%></span>
+                        </div>
                         <div class="conTxt">
+                        	<br>
                             <%.Article.Content%>
                         </div>
                         <div class="clear"></div>
+                        <script type="text/javascript">
+                        	var str=<%.Article.Time%>;
+                        	var d=new Date(str);
+                        	str=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+""+"&nbsp;&nbsp;"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                            document.getElementById('time').innerHTML=str;
+                        </script>
                         <!--
                         <div style="border: 1px solid #e6e4e4;margin: 10px 10px">
                             <div style="background-color: #dcdada;height: 20px;padding: 10px 10px;font-size: 1.1em;line-height: 20px;color: #555555">文件签收</div>
@@ -458,10 +467,32 @@
                             </div>
                         </div>
                         -->
-                        <div class="xxnr">
+                        
+                        <%if .Show%>
+                        <div class="xxfz">
+                            <div class="fl">
+                                <a href="javascript:;" onclick="javascript:print()">[打印文章]</a>
+                                <a href="javascript:;" onclick="_addFavorite()">[添加收藏]</a>
+                            </div>
+
                         </div>
+
+                    	<div class="pager">
+                            <div><strong><font color="red">上一篇：</font></strong>
+                                <%if .Pre%>
+                                <a href="/showArticle?id=<%call .Hex .Pre.Id%>" title="<%.Pre.Title%>"><%.Pre.Title%></a>
+                                <%else%>没有了<%end%>
+                            </div>
+                            <div><strong><font color="red">下一篇：</font></strong>
+                                <%if .Next%>
+                                <a href="/showArticle?id=<%call .Hex .Next.Id%>" title="<%.Next.Title%>"><%.Next.Title%></a>
+                                <%else%>没有了<%end%>
+                            </div>
+                        </div>
+                       <div class="clear"></div>
+
+                        <%end%>
                     </div>
-                </div>
             </div>
         </div>
         <div class="clear"></div>
@@ -492,6 +523,31 @@
     </form>
 
 </body>
-
+	<script type="text/javascript">
+		function _addFavorite() {
+      var url = window.location;
+      var title = document.title;
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.indexOf("360se") > -1) {
+          alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
+      }
+      else if (ua.indexOf("msie 8") > -1) {
+          window.external.AddToFavoritesBar(url, title); //IE8
+      }
+      else if (document.all) {//IE类浏览器
+        try{
+         window.external.addFavorite(url, title);
+        }catch(e){
+         alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+        }
+      }
+      else if (window.sidebar) {//firfox等浏览器；
+          window.sidebar.addPanel(title, url, "");
+      }
+      else {
+          alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+      }
+  }    
+	</script>
 </html>
 <%end%>

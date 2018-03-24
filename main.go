@@ -151,6 +151,7 @@ func main() {
 	admin.GET("/page/hongtou", hongtouPage)
 	admin.GET("/page/admin", adminPage)
 	admin.GET("/page/modifyPage", modifyArticlePage)
+	admin.GET("/page/modifyHongtouPage", modifyHongtouArticlePage)
 	admin.GET("/page/set_article", setArticlePage)
 
 	admin.GET("/page/add_user", addUserPage)
@@ -174,7 +175,9 @@ func main() {
 	//文章
 	admin.Any("/publish", publishArticle)
 	admin.Any("/preview", previewArticle)
+	admin.Any("/previewHongtou", previewHongtouArticle)
 	admin.Any("/previewById", previewArticleById)
+	admin.Any("/previewHongtouById", previewHongtouArticleById)
 	admin.Any("/getArticles", getArticles)
 	admin.Any("/delArticle", delArticle)
 	admin.Any("/auditing", auditingArticle)
@@ -213,6 +216,7 @@ func main() {
 	e.Any("/searchDirectoryByTel", searchDirectoryByTel)
 	e.Any("/searchDirectoryByPhone", searchDirectoryByPhone)
 	e.Any("/showArticle", showArticleById)
+	e.Any("/showHongtouArticle", showHongtouArticleById)
 
 	e.GET("/directory", directoryPage)
 	e.GET("/", indexPage)
@@ -409,6 +413,32 @@ func previewArticle(c echo.Context) error {
 	return c.Render(http.StatusOK, "preview", map[string]db.Any{"Auditing": false, "Article": article})
 }
 
+//发布时预览
+func previewHongtouArticle(c echo.Context) error {
+
+	article := db.Article{
+		Subject:   c.FormValue("subject"),
+		Title:     c.FormValue("title"),
+		Creator:   c.FormValue("creator"),
+		Assessor:  c.FormValue("assessor"),
+		Signature: c.FormValue("signature"),
+		From:      c.FormValue("from"),
+		Content:   template.HTML(c.FormValue("content")),
+		Category:  c.FormValue("category"),
+		Year:      c.FormValue("year"),
+		No:        c.FormValue("no"),
+		IsRed:     true,
+		Id:        bson.NewObjectId(),
+	}
+
+	if c.FormValue("needSign") == "true" {
+		article.NeedSign = true
+	}
+
+	c.(*CustomContext).SetSession("article", article)
+	return c.Render(http.StatusOK, "hongtou", map[string]db.Any{"Auditing": false, "Article": article})
+}
+
 func previewArticleById(c echo.Context) error {
 	var article db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
@@ -419,14 +449,72 @@ func previewArticleById(c echo.Context) error {
 	}
 }
 
-func showArticleById(c echo.Context) error {
+func previewHongtouArticleById(c echo.Context) error {
 	var article db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
 		log.Println(err)
 		return err
 	} else {
-		return c.Render(http.StatusOK, "preview", map[string]db.Any{"Show": true, "Article": article})
+		return c.Render(http.StatusOK, "hongtou", map[string]db.Any{"Auditing": true, "Article": article})
 	}
+}
+
+func showArticleById(c echo.Context) error {
+	var article db.Article
+	var pre, next []db.Article
+	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
+		log.Println(err)
+		return err
+	}
+
+	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"isRed": false, "$lt": article.Time}}, "time", 1, &pre); err != nil {
+		log.Println(err)
+		return err
+	}
+	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"isRed": false, "$gt": article.Time}}, "time", 1, &next); err != nil {
+		log.Println(err)
+		return err
+	}
+
+	data := map[string]db.Any{"Show": true, "Article": article}
+	if len(pre) == 1 {
+		data["Pre"] = pre[0]
+	}
+	if len(next) == 1 {
+		data["Next"] = next[0]
+	}
+
+	return c.Render(http.StatusOK, "preview", data)
+}
+
+func showHongtouArticleById(c echo.Context) error {
+	var article db.Article
+	var pre, next []db.Article
+	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
+		log.Println(err)
+		return err
+	}
+
+	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
+	if err := db.FindManyOrder("article", bson.M{"isRed": true, "time": bson.M{"$lt": article.Time}}, "time", 1, &pre); err != nil {
+		log.Println(err)
+		return err
+	}
+	if err := db.FindManyOrder1("article", bson.M{"isRed": true, "time": bson.M{"$gt": article.Time}}, "time", 1, &next); err != nil {
+		log.Println(err)
+		return err
+	}
+
+	data := map[string]db.Any{"Show": true, "Article": article}
+	if len(pre) == 1 {
+		data["Pre"] = pre[0]
+	}
+	if len(next) == 1 {
+		data["Next"] = next[0]
+	}
+
+	return c.Render(http.StatusOK, "hongtou", data)
 }
 
 func modifyArticlePage(c echo.Context) error {
@@ -436,6 +524,16 @@ func modifyArticlePage(c echo.Context) error {
 		return err
 	} else {
 		return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": true, "Article": article})
+	}
+}
+
+func modifyHongtouArticlePage(c echo.Context) error {
+	var article db.Article
+	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
+		log.Println(err)
+		return err
+	} else {
+		return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"Modify": true, "Article": article})
 	}
 }
 
@@ -474,10 +572,18 @@ func modifyArticle(c echo.Context) error {
 		Content:   template.HTML(c.FormValue("content")),
 		Category:  c.FormValue("category"),
 		Pic:       c.FormValue("pic"),
+		Year:      c.FormValue("year"),
+		No:        c.FormValue("no"),
+	}
+
+	if c.FormValue("needSign") == "true" {
+		article.NeedSign = true
+	} else {
+		article.NeedSign = false
 	}
 
 	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
-		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic}}); err != nil {
+		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No}}); err != nil {
 		log.Println(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
@@ -527,11 +633,26 @@ func login(c echo.Context) error {
 
 func publishPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": false, "Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category")})
+	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category")}
+	if c.QueryParam("action") == "edit" {
+		data["Edit"] = true
+	}
+	if c.QueryParam("action") == "create" {
+		data["Create"] = true
+	}
+	return c.Render(http.StatusOK, "publish", data)
 }
 
 func publishHongtouPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "publish_hongtou", c.(*CustomContext).GetSession("article"))
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category")}
+	if c.QueryParam("action") == "edit" {
+		data["Edit"] = true
+	}
+	if c.QueryParam("action") == "create" {
+		data["Create"] = true
+	}
+	return c.Render(http.StatusOK, "publish_hongtou", data)
 }
 
 func previewPage(c echo.Context) error {
@@ -582,7 +703,8 @@ func indexPage(c echo.Context) error {
 	rota, _ := service.GetRota()
 	links := service.GetLinks()
 	hotArticle := service.GetHotArticle()
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"rota": rota, "links": links, "hotArticle": hotArticle})
+	imageArticles := service.GetImageArticles()
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"rota": rota, "links": links, "hotArticle": hotArticle, "imageArticles": imageArticles})
 }
 
 func directoryPage(c echo.Context) error {

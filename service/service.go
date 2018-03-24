@@ -150,6 +150,14 @@ func GetHotArticle() db.Article {
 	return article
 }
 
+func GetImageArticles() []db.Article {
+	var articles = make([]db.Article, 20)
+	if err := db.FindManyOrder("article", bson.M{"isImage": true}, "time", 20, &articles); err != nil {
+		log.Println(err)
+	}
+	return articles
+}
+
 func DelUser(id string) error {
 	return db.Delete("user", id)
 }

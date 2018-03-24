@@ -77,9 +77,18 @@
             </div>
             <div id="maincontent">
                 <div class="idea divclass" id="d1">
+                   <%if .Modify%>
+                    <h2>内容修改</h2>
+                    <%else%>
                     <h2>内容发布</h2>
+                    <%end%>
                 </div>
-                <form action="/admin/preview" method="post" enctype="multipart/form-data">
+
+               
+                    <%if .Modify%>
+                    <form action="/admin/modify" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="<%call .Hex .Article.Id%>">
+                    <input type="hidden" name="category" value="<%.Article.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
@@ -89,45 +98,153 @@
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
-                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;">
+                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" <%if .Article.NeedSign%>checked='checked'<%end%> value="true">
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" value="{{.Title}}"> <span style="margin-left: 2em;color: gray">还可输入<span style="color:red">40</span>个字符</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" value="<%.Article.Title%>"> <span style="margin-left: 2em;color: gray">还可输入<span style="color:red">40</span>个字符</span>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         拟&emsp;&emsp;稿 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="creator" value="{{.Creator}}">
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="creator" value="<%.Article.Creator%>">
                     </div>
                     <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
                         审&emsp;&emsp;核 <span style="color: red ">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 10em; " type="text " name="assessor"  value="{{.Assessor}}">
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 10em; " type="text " name="assessor"  value="<%.Article.Assessor%>">
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         签&emsp;&emsp;发 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="{{.Signature}}">
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="<%.Article.Signature%>">
                     </div>
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         发文年号 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="{{.Signature}}">
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="year" value="<%.Article.Year%>">
                     </div>
                      <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         发文序号 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="{{.Signature}}">
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
                     </div>
                     <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
                         内容来源 <span style="color: red ">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 20em; " type="text " name="from"  value="{{.From}}">
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 20em; " type="text " name="from"  value="<%.Article.From%>">
                     </div>
-                   
+                    
                     <div class="idea " id="d3" style="padding:0;border: 1px solid #aaa;border:none; margin-bottom: 10px">
                         <div style="margin: 0 auto">
                             <script id="editor" name="content" type="text/plain" style="width:1024px;height:500px;">
-                            	{{.Content}}
+                                <%.Article.Content%>
+                            </script>
+                        </div>
+                        <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="预览" value="修改">
+
+                    </div>
+                    <%end%>
+                    <%if .Create%>
+                    <form action="/admin/previewHongtou" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="category" value="<%.Category%>">
+                    <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
+                        所属专题 &nbsp;
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        是否签收 &nbsp;
+                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" value="true">
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        内容标题 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" > 
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        拟&emsp;&emsp;稿 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="creator" value="">
+                    </div>
+                    <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
+                        审&emsp;&emsp;核 <span style="color: red ">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 10em; " type="text " name="assessor"  value="">
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        签&emsp;&emsp;发 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="">
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        发文年号 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="year" value="">
+                    </div>
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        发文序号 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="">
+                    </div>
+                    <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
+                        内容来源 <span style="color: red ">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 20em; " type="text " name="from"  value="">
+                    </div>
+                    <div class="idea " id="d3" style="padding:0;border: 1px solid #aaa;border:none; margin-bottom: 10px">
+                        <div style="margin: 0 auto">
+                            <script id="editor" name="content" type="text/plain" style="width:1024px;height:500px;">
+                               
                             </script>
                         </div>
                         <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="预览" value="预览">
+
                     </div>
+                    <%end%>
+                    <%if .Edit%>
+                    <form action="/admin/previewHongtou" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="category" value="<%.Article.Category%>">
+                    <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
+                        所属专题 &nbsp;
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        是否签收 &nbsp;
+                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" <%if .Article.NeedSign%>checked='checked'<%end%> value="true">
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        内容标题 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" value="<%.Article.Title%>"> 
+<!--                         <span style="margin-left: 2em;color: gray">还可输入<span style="color:red">40</span>个字符</span>
+ -->                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        拟&emsp;&emsp;稿 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="creator" value="<%.Article.Creator%>">
+                    </div>
+                    <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
+                        审&emsp;&emsp;核 <span style="color: red ">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 10em; " type="text " name="assessor"  value="<%.Article.Assessor%>">
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        签&emsp;&emsp;发 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="<%.Article.Signature%>">
+                    </div>
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        发文年号 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="year" value="<%.Article.Year%>">
+                    </div>
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        发文序号 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
+                    </div>
+                    <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
+                        内容来源 <span style="color: red ">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 20em; " type="text " name="from"  value="<%.Article.From%>">
+                    </div>
+                    
+                    <div class="idea " id="d3" style="padding:0;border: 1px solid #aaa;border:none; margin-bottom: 10px">
+                        <div style="margin: 0 auto">
+                            <script id="editor" name="content" type="text/plain" style="width:1024px;height:500px;">
+                                <%.Article.Content%>
+                            </script>
+                        </div>
+                        <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="预览" value="预览">
+
+                    </div>
+                    <%end%>
                 </form>
             </div>
             <div id="footer">

@@ -59,22 +59,27 @@ type User struct {
 
 type Article struct {
 	Id         bson.ObjectId `bson:"_id" json:"id"`
-	Title      string        `bson:"title" json:"title"`
-	Creator    string        `bson:"creator" json:"creator"`     //拟稿人
-	Assessor   string        `bson:"assessor" json:"assessor"`   //审核人
-	Signature  string        `bson:"signature" json:"signature"` //签发人
-	From       string        `bson:"from" json:"from"`           //来源
-	Pic        string        `bson:"pic" json:"pic"`             //标题图片
-	Content    template.HTML `bson:"content" json:"content"`
-	Time       time.Time     `bson:"time" json:"time"`
+	Title      string        `bson:"title" json:"title"`           //标题
+	Creator    string        `bson:"creator" json:"creator"`       //拟稿人
+	Assessor   string        `bson:"assessor" json:"assessor"`     //审核人
+	Signature  string        `bson:"signature" json:"signature"`   //签发人
+	From       string        `bson:"from" json:"from"`             //来源
+	Pic        string        `bson:"pic" json:"pic"`               //标题图片
+	Content    template.HTML `bson:"content" json:"content"`       //内容
+	Time       time.Time     `bson:"time" json:"time"`             //发表时间
 	Category   string        `bson:"category" json:"category"`     //分类(移动文章)
 	Subject    string        `bson:"subject" json:"subject"`       //专题
 	IsHot      bool          `bson:"isHot" json:"isHot"`           //头条要闻
 	IsImage    bool          `bson:"isImage" json:"isImage"`       //图片新闻
 	IsTraffic  bool          `bson:"isTraffic" json:"isTraffic"`   //交管要闻
+	IsRed      bool          `bson:"isRed" json:"isRed"`           //红头文件
 	IsAuditing bool          `bson:"isAuditing" json:"isAuditing"` //是否审核
-	Hits       int64         `bson:"hits" json:"hits"`
-	IsHidden   bool          `bson:"ishidden" json:"ishidden"`
+	Hits       int64         `bson:"hits" json:"hits"`             //点击量
+	NeedSign   bool          `bson:"needSign" json:"needSign"`     //是否签收
+	Year       string        `bson:"year" json:"year"`             //发文年号
+	No         string        `bson:"no" json:"no"`                 //发文序号
+
+	IsHidden bool `bson:"ishidden" json:"ishidden"`
 }
 
 func ArticleFromMap(data map[string]Any) Article {
