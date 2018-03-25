@@ -91,6 +91,14 @@ func GetDepsByPage(page int) []db.Department {
 	return deps
 }
 
+func GetAllDeps() []db.Department {
+	var deps = make([]db.Department, 10)
+	if err := db.GetAll("department", &deps); err != nil {
+		log.Println(err)
+	}
+	return deps
+}
+
 func GetDirectorysByName(name string) []db.Directory {
 	var deps = make([]db.Directory, 15)
 	if err := db.GetAllByOrder("directory", bson.M{"name": bson.M{"$regex": bson.RegEx{Pattern: name, Options: "ixs"}}}, &deps); err != nil {
@@ -190,6 +198,18 @@ func DelDep(id string) error {
 	}
 	db.UpdateByCond("department", bson.M{"order": bson.M{"$gt": oldDep.Order}}, bson.M{"$inc": bson.M{"order": -1}})
 	return db.Delete("department", id)
+}
+
+func SignArticle(id, dep string) error {
+	if err := db.UpdateById("article", id, bson.M{"$pull": bson.M{"unSign": dep}}); err != nil {
+		log.Println(err)
+		return err
+	}
+	if err := db.UpdateById("article", id, bson.M{"$addToSet": bson.M{"signed": dep}}); err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
 }
 
 func GetUsersCount() int {

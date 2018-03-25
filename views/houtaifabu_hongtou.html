@@ -23,58 +23,7 @@
 
     <body ms-controller="fugujiaojing" id="homefirst">
         <div id="wrapper">
-            <div id="header_index">
-                <h1><a href="/index.html" title="w3school 在线教程" style="float:left;"></a></h1>
-                <div id="searchui">
-                    <span style="color: white">2017年11月22日  &emsp;<span >王东</span><a href="" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
-                </div>
-            </div>
-            <div id="navfirst">
-                <div class="navBar">
-                    <ul class="nav clearfix">
-                        <li class="m on">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">网站首页</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">如何使用</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">查看参数</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">基础效果</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">扩展效果</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">SuperSlide</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">大话主席</a></h3>
-                        </li>
-                    </ul>
-                    <ul class="subNav">
-                        <li>你好，欢迎来到“大话主席”网站！</li>
-                        <li><a href="#">如何使用</a>|<a href="#">如何使用</a>|<a href="#">如何使用</a>|<a href="#">如何使用</a></li>
-                        <li><a href="#">查看参数</a>|<a href="#">查看参数</a>|<a href="#">查看参数</a>|<a href="#">查看参数</a></li>
-                        <li><a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a></li>
-                        <li><a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a></li>
-                        <li>
-                            <!-- 空 -->
-                        </li>
-                        <li>
-                            <!-- 空 -->
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <%template "header" .%>
             <div id="maincontent">
                 <div class="idea divclass" id="d1">
                    <%if .Modify%>
@@ -86,7 +35,7 @@
 
                
                     <%if .Modify%>
-                    <form action="/admin/modify" method="post" enctype="multipart/form-data">
+                    <form action="/admin/modify" method="post" enctype="multipart/form-data"   onsubmit="return CheckPost();">
                     <input type="hidden" name="id" value="<%call .Hex .Article.Id%>">
                     <input type="hidden" name="category" value="<%.Article.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
@@ -140,7 +89,7 @@
                     </div>
                     <%end%>
                     <%if .Create%>
-                    <form action="/admin/previewHongtou" method="post" enctype="multipart/form-data">
+                    <form action="/admin/previewHongtou" method="post" enctype="multipart/form-data"   onsubmit="return CheckPost();">
                     <input type="hidden" name="category" value="<%.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
@@ -262,6 +211,68 @@
     </body>
     <script type="text/javascript">
     UE.getEditor('editor');
+
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm,'');
+    }
+
+    function CheckPost ()
+       {  
+        dep.title.value=myTrim(dep.title.value);
+        dep.creator.value=myTrim(dep.creator.value);
+        dep.assessor.value=myTrim(dep.assessor.value);
+        dep.signature.value=myTrim(dep.signature.value);
+        dep.from.value=myTrim(dep.from.value);
+        dep.year.value=myTrim(dep.year.value);
+        dep.no.value=myTrim(dep.no.value);
+
+
+          if (myTrim(dep.year.value) == "")
+          {
+              alert("请填写发文年号！");
+              dep.year.focus();
+              return false;
+          }
+          if (myTrim(dep.no.value) == "")
+          {
+              alert("请填写发文序号！");
+              dep.no.focus();
+              return false;
+          }
+
+        if (myTrim(dep.title.value) == "")
+          {
+              alert("请填写文章标题！");
+              dep.title.focus();
+              return false;
+          }
+        if (myTrim(dep.creator.value) == "")
+          {
+              alert("请填写拟稿人！");
+              dep.creator.focus();
+              return false;
+          }
+           if (myTrim(dep.assessor.value) == "")
+          {
+              alert("请填写审核人！");
+              dep.assessor.focus();
+              return false;
+          }
+           if (myTrim(dep.signature.value).length == "")
+          {
+              alert("请填写签发人！");
+              dep.signature.focus();
+              return false;
+          }
+           if (myTrim(dep.from.value).length == "")
+          {
+              alert("请填写内容来源！");
+              dep.from.focus();
+              return false;
+          }
+         return true;
+       }
+
     </script>
 
 </html>

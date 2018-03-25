@@ -78,6 +78,8 @@ type Article struct {
 	NeedSign   bool          `bson:"needSign" json:"needSign"`     //是否签收
 	Year       string        `bson:"year" json:"year"`             //发文年号
 	No         string        `bson:"no" json:"no"`                 //发文序号
+	Signed     []string      `bson:"signed" json:"signed"`         //已签收
+	UnSign     []string      `bson:"unSign" json:"unSign"`         //未签收
 
 	IsHidden bool `bson:"ishidden" json:"ishidden"`
 }

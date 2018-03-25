@@ -427,7 +427,7 @@
                             <%.Article.Content%>
                         </div>
                         <div class="clear"></div>
-                        
+                        <%if .Show%>
                         <div style="border: 1px solid #e6e4e4;margin: 10px 10px">
                             <div style="background-color: #dcdada;height: 20px;padding: 10px 10px;font-size: 1.1em;line-height: 20px;color: #555555">文件签收</div>
                             <style>
@@ -439,40 +439,31 @@
                             <table style="width: 100%;padding-top: 1em;padding-bottom: 1em" id="qianshou">
                                 <tr>
                                     <td style="color: green">已签收:</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
+                                    <%range $i,$v := .Article.Signed%>
+                                    <td><%$v%></td>
+                                    <%if Ten $i %>
+                                        </tr>
+                                        <tr>
+                                    <%end%>
+                                    <%end%>
                                 </tr>
                                 <tr>
                                     <td style="border: none!important;">&emsp;</td>
                                 </tr>
                                 <tr>
                                     <td style="color: red">未签收:</td>
-                                    </td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
-                                    <td>府谷大队</td>
+                                    <%range .Article.UnSign%>
+                                    <td><%.%></td>
+                                    <%end%>
                                 </tr>
                             </table>
                             <div style="margin: 5px 5px;background-color: #e6e4e4;text-align: right;padding-top: 6px;padding-bottom: 6px;">
-                                <input type="text" value="请输入用户名" style="padding-left: 1em;padding-right:1em;color: #aaaaaa;width: 6em;height: 2em;line-height:2em;">
-                                <input type="text" value="请输入密码" style="padding-left: 1em;padding-right:1em;color: #aaaaaa;width: 6em;height: 2em;line-height:2em;">
-                                <button style="height: 2.4em;width: 4em;margin-right: 1em;background-color: #087cf3;color: white;outline: none">签收</button>
+                                <form action="/signArticle" method="post">
+                                    <input type="text" value="请输入用户名" style="padding-left: 1em;padding-right:1em;color: #aaaaaa;width: 6em;height: 2em;line-height:2em;" name="name">
+                                    <input type="password" value="请输入密码" style="padding-left: 1em;padding-right:1em;color: #aaaaaa;width: 6em;height: 2em;line-height:2em;" name="pwd">
+                                    <input type="submit" style="height: 2.4em;width: 4em;margin-right: 1em;background-color: #087cf3;color: white;outline: none" value="签收">
+                                    <input type="hidden" name="id" value="<%call .Hex .Article.Id%>">
+                                </form>
                             </div>
                         </div>
                         
@@ -480,7 +471,7 @@
                         </div>
                         <!--打印内容结束-->
                         <!--endprint1-->
-                        <%if .Show%>
+                        
                         <div class="xxfz">
                             <div class="fl">
                                 <a href="javascript:;" onclick="javascript:print()">[打印文章]</a>
@@ -492,12 +483,12 @@
                         <div class="pager">
                             <div><strong><font color="red">上一篇：</font></strong>
                                 <%if .Pre%>
-                                <a href="/showArticle?id=<%call .Hex .Pre.Id%>" title="<%.Pre.Title%>"><%.Pre.Title%></a>
+                                <a href="/showHongtouArticle?id=<%call .Hex .Pre.Id%>" title="<%.Pre.Title%>"><%.Pre.Title%></a>
                                 <%else%>没有了<%end%>
                             </div>
                             <div><strong><font color="red">下一篇：</font></strong>
                                 <%if .Next%>
-                                <a href="/showArticle?id=<%call .Hex .Next.Id%>" title="<%.Next.Title%>"><%.Next.Title%></a>
+                                <a href="/showHongtouArticle?id=<%call .Hex .Next.Id%>" title="<%.Next.Title%>"><%.Next.Title%></a>
                                 <%else%>没有了<%end%>
                             </div>
                         </div>

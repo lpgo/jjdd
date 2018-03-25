@@ -62,6 +62,12 @@ func (session *Session) PutValue(key string, value interface{}) {
 	defer session.mu.Unlock()
 }
 
+func (session *Session) Destroy() {
+	session.mu.Lock()
+	delete(context, session.GetId())
+	defer session.mu.Unlock()
+}
+
 func newSession(c echo.Context) *Session {
 	id := getSessionId()
 	cookie := new(http.Cookie)

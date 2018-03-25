@@ -134,11 +134,21 @@
         </script>
         <div id="content" class="container">
             <div class="news" style="padding-top: 10px">
-                <div class="special fl" style="margin-top: 0px;margin-bottom: 1px;line-height: 80px;font-size:45px;color:red;font-weight: bold;height:92px;text-align: center;">
+
+                 <div class="special fl" id="headtou" style="margin-top: 0px;margin-bottom: 1px;line-height: 80px;font-size: 34px;color: red;font-weight: bold;height: 92px;text-align: center;padding-left: 168px;padding-right: 168px;overflow: hidden;width: 800px;">
                     <a href="/showArticle?id=<%call .Hex .hotArticle.Id%>" style="color: red">
                         <%.hotArticle.Title%>
                     </a>
                 </div>
+                <script type="text/javascript">
+                    if('<%.hotArticle.Title%>'.length<17){
+                         $("#headtou").css("font-size","45px");
+                    }else{
+                         $("#headtou").css("font-size","34px");
+                    }
+                   
+                </script>
+            
                 <div class="news-tp fl">
                     <div class="focus">
                         <div id="play_9609">

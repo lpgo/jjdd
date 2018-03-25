@@ -1,13 +1,62 @@
 <%define "header" %>
-<div id="header_index">
-    <h1><a href="/index.html" title="" style="float:left;"></a></h1>
-    <div id="searchui">
-        <span style="color: white">&emsp;<%.User.Department%>&emsp;&emsp;</span><span style="color: white" id="time"></span><a href="/admin/loginOut" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
+    <div id="header_index">
+        <h1><a href="/index.html" title="" style="float:left;"></a></h1>
+        <div id="searchui">
+            <span style="color: white">&emsp;<%.User.Department%>&emsp;&emsp;</span><span style="color: white" id="time"></span><a href="/admin/logout" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
+        </div>
+        <script type="text/javascript">
+        var element = document.getElementById('time');
+        var d = new Date();
+        element.innerHTML = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+        </script>
+    </div>
+    <div id="navfirst">
+        <div class="navBar">
+            <ul class="nav clearfix">
+                <li class="m">
+                    <h3><a target="_blank" href="/">网站首页</a></h3>
+                </li>
+                <li class="s">|</li>
+                <li class="m on">
+                    <h3><a target="_blank" href="/admin/page/admin">文章管理</a></h3>
+                </li>
+                <li class="s">|</li>
+                <li class="m">
+                    <h3><a target="_blank" href="/admin/page/user_list">用户管理</a></h3>
+                </li>
+                <li class="s">|</li>
+                <li class="m">
+                    <h3><a target="_blank" href="/admin/page/dep_list">部门管理</a></h3>
+                </li>
+                <li class="s">|</li>
+                <li class="m">
+                    <h3><a target="_blank" href="/admin/page/directory_list">通讯录管理</a></h3>
+                </li>
+                <li class="s">|</li>
+                <li class="m">
+                    <h3><a target="_blank" href="/admin/page/link_list">链接管理</a></h3>
+                </li>
+                <li class="s">|</li>
+                <li class="m">
+                    <h3><a target="_blank" href="/admin/page/saveRota">值班管理</a></h3>
+                </li>
+            </ul>
+            <ul class="subNav">
+                <li>你好，欢迎来到府谷交警管理后台！</li>
+                <li><a href="/admin/page/publish_hongtou?action=create&category=红头文件">发布红头文件</a></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li>
+                    <!-- 空 -->
+                </li>
+                <li>
+                    <!-- 空 -->
+                </li>
+            </ul>
+        </div>
     </div>
     <script type="text/javascript">
-    var element = document.getElementById('time');
-    var d = new Date();
-    element.innerHTML = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+    jQuery(".navBar").slide({ titCell: ".nav .m", mainCell: ".subNav", delayTime: 0, triggerTime: 0, returnDefault: true });
     </script>
-</div>
-<%end%>
+    <%end%>

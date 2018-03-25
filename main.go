@@ -119,6 +119,7 @@ func main() {
 
 	funmap := make(template.FuncMap, 1)
 	funmap["Two"] = Two
+	funmap["Ten"] = Ten
 	temp.Funcs(funmap)
 	t := &Template{
 		templates: template.Must(temp.ParseGlob("views/*.html")),
@@ -210,6 +211,8 @@ func main() {
 	admin.Any("/delLink", delLink)
 	admin.Any("/modifyLink", modifyLink)
 
+	admin.Any("/logout", logout)
+
 	e.Any("/getDirectoryByname1", getDirectoryByName)
 	e.Any("/searchDirectoryByName", searchDirectoryByName)
 	e.Any("/searchDirectoryByJob", searchDirectoryByJob)
@@ -217,6 +220,7 @@ func main() {
 	e.Any("/searchDirectoryByPhone", searchDirectoryByPhone)
 	e.Any("/showArticle", showArticleById)
 	e.Any("/showHongtouArticle", showHongtouArticleById)
+	e.Any("/signArticle", signArticle)
 
 	e.GET("/directory", directoryPage)
 	e.GET("/", indexPage)
@@ -468,11 +472,11 @@ func showArticleById(c echo.Context) error {
 	}
 
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"isRed": false, "$lt": article.Time}}, "time", 1, &pre); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false}, "time", 1, &pre); err != nil {
 		log.Println(err)
 		return err
 	}
-	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"isRed": false, "$gt": article.Time}}, "time", 1, &next); err != nil {
+	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": false}, "time", 1, &next); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -497,11 +501,11 @@ func showHongtouArticleById(c echo.Context) error {
 	}
 
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
-	if err := db.FindManyOrder("article", bson.M{"isRed": true, "time": bson.M{"$lt": article.Time}}, "time", 1, &pre); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true}, "time", 1, &pre); err != nil {
 		log.Println(err)
 		return err
 	}
-	if err := db.FindManyOrder1("article", bson.M{"isRed": true, "time": bson.M{"$gt": article.Time}}, "time", 1, &next); err != nil {
+	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": true}, "time", 1, &next); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -515,6 +519,19 @@ func showHongtouArticleById(c echo.Context) error {
 	}
 
 	return c.Render(http.StatusOK, "hongtou", data)
+}
+
+//签收红头文件
+func signArticle(c echo.Context) error {
+	user := service.LoginByName(c.FormValue("name"), c.FormValue("pwd"))
+	if user == nil {
+		return MyRedirect(c, "/error.html")
+	}
+	if err := service.SignArticle(c.FormValue("id"), user.Department); err != nil {
+		return MyRedirect(c, "/error.html")
+	} else {
+		return MyRedirect(c, "/showHongtouArticle?id="+c.FormValue("id"))
+	}
 }
 
 func modifyArticlePage(c echo.Context) error {
@@ -540,6 +557,13 @@ func modifyHongtouArticlePage(c echo.Context) error {
 func publishArticle(c echo.Context) error {
 	article := c.(*CustomContext).GetSession("article").(db.Article)
 	article.Time = time.Now()
+
+	if article.IsRed {
+		for _, dep := range service.GetAllDeps() {
+			article.UnSign = append(article.UnSign, dep.Name)
+		}
+	}
+
 	if err := db.Add("article", &article); err != nil {
 		log.Println(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
@@ -721,7 +745,9 @@ func loginPage(c echo.Context) error {
 }
 
 func addUserPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "adduser", nil)
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	deps := service.GetAllDeps()
+	return c.Render(http.StatusOK, "adduser", map[string]db.Any{"User": user, "Deps": deps})
 }
 
 func addDirectoryPage(c echo.Context) error {
@@ -782,6 +808,7 @@ func modifyUserPage(c echo.Context) error {
 	data["Update"] = true
 	data["Dep"] = c.QueryParam("dep")
 	data["Id"] = c.QueryParam("id")
+	data["Deps"] = service.GetAllDeps()
 	switch c.QueryParam("role") {
 	case "大队":
 		data["DD"] = true
@@ -881,12 +908,13 @@ func modifyLink(c echo.Context) error {
 }
 
 func userListPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
 	users := make([]db.User, 10)
 	if err := db.FindMany("user", nil, &users); err != nil {
 		log.Println(err)
 		return err
 	} else {
-		return c.Render(http.StatusOK, "userlist", users)
+		return c.Render(http.StatusOK, "userlist", map[string]db.Any{"users": users, "User": user})
 	}
 }
 
@@ -1066,6 +1094,15 @@ func MyRedirect(c echo.Context, url string) error {
 	return c.Redirect(http.StatusMovedPermanently, url)
 }
 
+func logout(c echo.Context) error {
+	c.(*CustomContext).Destroy()
+	return MyRedirect(c, "/login.html")
+}
+
 func Two(a int) bool {
 	return a > 0 && (a%2 != 0)
+}
+
+func Ten(a int) bool {
+	return a > 0 && (a%9 == 0)
 }

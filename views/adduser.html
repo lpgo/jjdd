@@ -25,62 +25,7 @@
 
     <body ms-controller="fugujiaojing" id="homefirst">
         <div id="wrapper">
-            <div id="header_index">
-                <h1><a href="/index.html" title="w3school 在线教程" style="float:left;"></a></h1>
-                <div id="searchui">
-                    <span style="color: white">2017年11月22日  &emsp;<span >王东</span><a href="" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
-                </div>
-            </div>
-            <div id="navfirst">
-                <div class="navBar">
-                    <ul class="nav clearfix">
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">网站首页</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m on">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">大队概括</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">查看参数</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">基础效果</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">扩展效果</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">SuperSlide</a></h3>
-                        </li>
-                        <li class="s">|</li>
-                        <li class="m">
-                            <h3><a target="_blank" href="http://www.superslide2.com/">大话主席</a></h3>
-                        </li>
-                    </ul>
-                    <ul class="subNav">
-                        <li>你好，欢迎来到府谷交警管理后台！</li>
-                        <li></li>
-                        <li></li>
-                        <li><a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a>|<a href="#">基础效果</a></li>
-                        <li><a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a>|<a href="#">扩展效果</a></li>
-                        <li>
-                            <!-- 空 -->
-                        </li>
-                        <li>
-                            <!-- 空 -->
-                        </li>
-                    </ul>
-                </div>
-            </div>
-             <script type="text/javascript">
-                jQuery(".navBar").slide({ titCell:".nav .m", mainCell:".subNav", delayTime:0, triggerTime:0,returnDefault:true });
-
-            </script>
+            <%template "header" .%>
             <div id="maincontent">
             
 
@@ -104,10 +49,22 @@
                         <input type="hidden" name="id" value="<%.Id%>">
                     <%end%>
 
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        所属部门 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="dep" value="<%.Dep%>"> 
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        所属部门<span style="color: red">*</span>
+                         <select style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" >
+                                
+                            <%if .Update%>
+                                <%range $i,$v := .Deps%>
+                                    <option value="<%$v.Name%>" <%if eq $v.Name $.Dep%>selected='selected'<%end%>><%$v.Name%></option>
+                                <%end%>
+                            <%else%>
+                                <%range $i,$v := .Deps%>
+                                    <option value="<%$v.Name%>" <%if eq $i 0%>selected='selected'<%end%>><%$v.Name%></option>
+                                <%end%>
+                            <%end%>
+                         </select>
                     </div>
+
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         账号权限 &nbsp;
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" value="大队" <%if .DD%>checked<%end%> >&emsp;大队
