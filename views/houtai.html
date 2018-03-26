@@ -12,8 +12,8 @@
         <meta http-equiv="Content-Language" content="zh-cn">
         <meta http-equiv="imagetoolbar" content="false">
         <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
-        <script type="text/javascript" src="/js/ku/jquery1.42.min.js">
-        </script>
+        <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
+        <script type="text/javascript">var category='<%.Category%>';</script>
         <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
         <!--[if IE 6]>
 <script src="DD_belatedPNG.js"></script>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="idea divclass" id="d1" style="padding-top: 10px">
                             <div style="display: inline-block;float: left;">
-                                <button class="buttonl" onclick="window.location.href='/admin/page/publish?category=交管动态&action=create'">新增</button>
+                                <button class="buttonl" onclick="window.location.href='/admin/page/publish?category=<%.Category%>&action=create'">新增</button>
                             </div>
                             <div style="display: inline-block;float: right;">
                                 <input id="sousuoname" style="vertical-align: middle; margin-left: 50em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" ms-duplex="@sousuovalue">
@@ -77,17 +77,16 @@
                             </div>
                             <div class="" style="padding: 0;margin:0;width: 100%;border-top:1px solid #E8E7E3;  border-bottom: 1px solid #E8E7E3;height: 40px;line-height: 40px;text-align: right;">
                                 共{{@pagenum}}页{{@count}}条&emsp;<a style="margin-left: 1em;margin-right: 1em;color: #3CADED" href="#" ms-on-click="pre(@page)">上一页</a> {{@page}} <a style="margin-left: 1em;margin-right: 1em;color: #3CADED" href="#" ms-on-click="next(@page)">下一页</a>
-                                <input style="border: 1px solid #C3C2C1;width: 30px">
-                                <a style="margin-left: 1em;margin-right: 1em;color: #3CADED" href="">跳转</a>
+                                <input ms-duplex="@aaa"  style="border: 1px solid #C3C2C1;width: 30px">
+                                <a style="margin-left: 1em;margin-right: 1em;color: #3CADED" ms-on-click="jump(@aaa)">跳转</a>
                             </div>
                         </div>
-                    </div>
                     <div id="footer " style="text-align: center;">
                         <p id="p2 " style="margin-left: 0;margin-top: 200px">
                             <a style="color: #636161;font-size: 0.8em; " target="_blank " title="府谷县公安局交警大队 ">府谷县公安局交警大队版权所有 保留一切权利</a>
                             <a target="_blank "></a>
                         </p>
-                    </div>
+                     </div>
             </div>
             <script src="/js/ku/avalon.js "></script>
             <script src="/js/houtai.js "></script>

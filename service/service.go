@@ -16,14 +16,15 @@ func LoginByName(name, pwd string) *db.User {
 	return &user
 }
 
-func GetArticlesByPage(page int, cond string) []db.Article {
+func ChangePwd(name, oldPwd, newPwd string) error {
+	return db.UpdateByCond("user", bson.M{"name": name, "pwd": oldPwd}, bson.M{"$set": bson.M{"pwd": newPwd}})
+}
+
+func GetArticlesByPage(page int, cond bson.M) []db.Article {
 	var articles = make([]db.Article, 15)
-	var err error
-	if cond != "" {
-		err = db.FindPart("article", bson.M{"title": bson.M{"$regex": bson.RegEx{Pattern: cond, Options: "ixs"}}}, (page-1)*15, 15, &articles)
-	} else {
-		err = db.FindPart("article", nil, (page-1)*15, 15, &articles)
-	}
+
+	err := db.FindPart("article", cond, (page-1)*15, 15, &articles)
+
 	if err != nil {
 		log.Println(err)
 	}
@@ -37,13 +38,8 @@ func DelArticle(id string) error {
 	return db.Delete("article", id)
 }
 
-func GetArticlesCount(cond string) int {
-	if cond != "" {
-		return db.GetCount("article", bson.M{"title": bson.M{"$regex": bson.RegEx{Pattern: cond, Options: "ixs"}}})
-	} else {
-		return db.GetCount("article", nil)
-	}
-
+func GetArticlesCount(cond bson.M) int {
+	return db.GetCount("article", cond)
 }
 
 func AddUser(user db.User) error {

@@ -25,6 +25,14 @@ import (
 	创建标准的RESTful  api
 */
 
+var clazz map[string]string = map[string]string{
+	"文件简报":  "文件简报",
+	"通知通报":  "文件简报",
+	"大队活动":  "文件简报",
+	"人事文件":  "文件简报",
+	"交安委文件": "文件简报",
+	"简报动态":  "文件简报"}
+
 type Any interface{}
 
 type CustomContext struct {
@@ -158,6 +166,7 @@ func main() {
 	admin.GET("/page/add_user", addUserPage)
 	admin.GET("/page/user_list", userListPage)
 	admin.GET("/page/modify_user", modifyUserPage)
+	admin.GET("/page/changePwd", changePwdPage)
 
 	admin.GET("/page/dep_list", depListPage)
 	admin.GET("/page/add_dep", addDepPage)
@@ -189,6 +198,7 @@ func main() {
 	admin.Any("/getUserList", getUserList)
 	admin.Any("/delUser", delUser)
 	admin.Any("/modifyUser", modifyUser)
+	admin.Any("/changePwd", changePwd)
 	//部门
 	admin.Any("/addDep", addDep)
 	admin.Any("/getDepList", getDepList)
@@ -371,36 +381,42 @@ func delLink(c echo.Context) error {
 }
 
 func getArticles(c echo.Context) error {
+	cond := make(bson.M, 1)
+	if "" != c.QueryParam("searchValue") {
+		cond["title"] = bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchValue"), Options: "ixs"}}
+	}
+	if "true" == c.QueryParam("isRed") {
+		cond["isRed"] = true
+	}
+	if "true" == c.QueryParam("isHot") {
+		cond["isHot"] = true
+	}
+	if "true" == c.QueryParam("isImage") {
+		cond["isImage"] = true
+	}
+	if "true" == c.QueryParam("isTraffic") {
+		cond["isTraffic"] = true
+	}
+	if "" != c.QueryParam("class") {
+		cond["class"] = c.QueryParam("class")
+	}
+	if "" != c.QueryParam("category") {
+		cond["category"] = c.QueryParam("category")
+	}
+
 	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(1, c.QueryParam("searchValue")), "count": service.GetArticlesCount(c.QueryParam("searchValue"))})
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(1, cond), "count": service.GetArticlesCount(cond)})
 	} else {
-		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(page, c.QueryParam("searchValue")), "count": service.GetArticlesCount(c.QueryParam("searchValue"))})
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(page, cond), "count": service.GetArticlesCount(cond)})
 	}
 }
 
 //发布时预览
 func previewArticle(c echo.Context) error {
-	/*
-		file, err := c.FormFile("upfile")
-		if err != nil {
-			return err
-		}
-		src, err := file.Open()
-		if err != nil {
-			return err
-		}
-		defer src.Close()
-		fileName := "/user/images/" + strconv.FormatInt(time.Now().UnixNano(), 10) + file.Filename
-		dst, err := os.Create("public" + fileName)
-		if err != nil {
-			return err
-		}
-		defer dst.Close()
-		if _, err = io.Copy(dst, src); err != nil {
-			return err
-		}
-	*/
+	if c.QueryParam("isRed") == "true" {
+		return previewHongtouArticle(c)
+	}
 	article := db.Article{
 		Subject:   c.FormValue("subject"),
 		Title:     c.FormValue("title"),
@@ -449,7 +465,11 @@ func previewArticleById(c echo.Context) error {
 		log.Println(err)
 		return err
 	} else {
-		return c.Render(http.StatusOK, "preview", map[string]db.Any{"Auditing": true, "Article": article})
+		if c.QueryParam("isRed") == "true" {
+			return c.Render(http.StatusOK, "hongtou", map[string]db.Any{"Auditing": true, "Article": article})
+		} else {
+			return c.Render(http.StatusOK, "preview", map[string]db.Any{"Auditing": true, "Article": article})
+		}
 	}
 }
 
@@ -464,6 +484,10 @@ func previewHongtouArticleById(c echo.Context) error {
 }
 
 func showArticleById(c echo.Context) error {
+	if c.QueryParam("isRed") == "true" {
+		return showHongtouArticleById(c)
+	}
+
 	var article db.Article
 	var pre, next []db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
@@ -540,7 +564,11 @@ func modifyArticlePage(c echo.Context) error {
 		log.Println(err)
 		return err
 	} else {
-		return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": true, "Article": article})
+		if c.QueryParam("isRed") == "true" {
+			return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"Modify": true, "Article": article, "Menu": GetClass(article.Category)})
+		} else {
+			return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": true, "Article": article, "Menu": GetClass(article.Category)})
+		}
 	}
 }
 
@@ -557,6 +585,7 @@ func modifyHongtouArticlePage(c echo.Context) error {
 func publishArticle(c echo.Context) error {
 	article := c.(*CustomContext).GetSession("article").(db.Article)
 	article.Time = time.Now()
+	article.Class = GetClass(article.Category)
 
 	if article.IsRed {
 		for _, dep := range service.GetAllDeps() {
@@ -568,7 +597,7 @@ func publishArticle(c echo.Context) error {
 		log.Println(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
-		return MyRedirect(c, "/admin/page/admin")
+		return MyRedirect(c, "/admin/page/admin?category="+article.Category)
 	}
 }
 
@@ -581,7 +610,7 @@ func auditingArticle(c echo.Context) error {
 		log.Println(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
-		return MyRedirect(c, "/admin/page/admin")
+		return MyRedirect(c, "/admin/page/admin?category="+c.QueryParam("category"))
 	}
 }
 
@@ -649,7 +678,7 @@ func setArticle(c echo.Context) error {
 func login(c echo.Context) error {
 	if user := service.LoginByName(c.FormValue("name"), c.FormValue("pwd")); user != nil {
 		c.(*CustomContext).SetSession("user", user)
-		return MyRedirect(c, "/admin/page/admin")
+		return MyRedirect(c, "/admin/page/admin?category=文件简报&menu=文件简报")
 	} else {
 		return c.Render(http.StatusOK, "login", map[string]bool{"error": true})
 	}
@@ -657,14 +686,19 @@ func login(c echo.Context) error {
 
 func publishPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category")}
+	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category"))}
 	if c.QueryParam("action") == "edit" {
 		data["Edit"] = true
 	}
 	if c.QueryParam("action") == "create" {
 		data["Create"] = true
 	}
-	return c.Render(http.StatusOK, "publish", data)
+
+	if c.QueryParam("isRed") == "true" {
+		return c.Render(http.StatusOK, "publish_hongtou", data)
+	} else {
+		return c.Render(http.StatusOK, "publish", data)
+	}
 }
 
 func publishHongtouPage(c echo.Context) error {
@@ -680,7 +714,11 @@ func publishHongtouPage(c echo.Context) error {
 }
 
 func previewPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "preview", nil)
+	if c.QueryParam("isRed") == "true" {
+		return c.Render(http.StatusOK, "hongtou", nil)
+	} else {
+		return c.Render(http.StatusOK, "preview", nil)
+	}
 }
 
 func hongtouPage(c echo.Context) error {
@@ -692,7 +730,11 @@ func listPage(c echo.Context) error {
 }
 func adminPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user})
+	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category"))})
+}
+func changePwdPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.Render(http.StatusOK, "changepwd", map[string]db.Any{"User": user})
 }
 
 func setArticlePage(c echo.Context) error {
@@ -827,6 +869,16 @@ func modifyUser(c echo.Context) error {
 		return err
 	} else {
 		return userListPage(c)
+	}
+}
+
+func changePwd(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	if err := service.ChangePwd(user.Name, c.FormValue("oldpass"), c.FormValue("newpass1")); err != nil {
+		log.Println(err)
+		return err
+	} else {
+		return MyRedirect(c, "/admin/logout")
 	}
 }
 
@@ -1105,4 +1157,8 @@ func Two(a int) bool {
 
 func Ten(a int) bool {
 	return a > 0 && (a%9 == 0)
+}
+
+func GetClass(category string) string {
+	return clazz[category]
 }

@@ -67,6 +67,7 @@ type Article struct {
 	Pic        string        `bson:"pic" json:"pic"`               //标题图片
 	Content    template.HTML `bson:"content" json:"content"`       //内容
 	Time       time.Time     `bson:"time" json:"time"`             //发表时间
+	Class      string        `bson:"class" json:"class"`           //大类
 	Category   string        `bson:"category" json:"category"`     //分类(移动文章)
 	Subject    string        `bson:"subject" json:"subject"`       //专题
 	IsHot      bool          `bson:"isHot" json:"isHot"`           //头条要闻

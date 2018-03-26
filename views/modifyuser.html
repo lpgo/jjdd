@@ -1,0 +1,109 @@
+﻿<%define "changepwd"%>
+<!DOCTYPE html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>府谷交警内网后台管理程序</title>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="府谷交警 内网">
+    <link rel="stylesheet" type="text/css" href="/css/houtai.css">
+    <link rel="stylesheet" type="text/css" href="/js/webuploader/webuploader.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta http-equiv="imagetoolbar" content="false">
+    <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
+   
+    <!--[if IE 6]>
+<script src="DD_belatedPNG.js"></script>
+<script>
+  DD_belatedPNG.fix('.phoneicon');
+</script>
+<![endif]-->
+
+    <body ms-controller="fugujiaojing" id="homefirst">
+        <div id="wrapper">
+            <%template "header" .%>
+            <div id="maincontent">
+            </div>
+                <div class="idea divclass" id="d1">
+                    <h2>修改密码</h2>
+                </div>
+                <form action="/admin/changePwd" method="post" name="dep"  onsubmit="return CheckPost();">
+                     
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        旧密码<span style="color: red">*</span>
+                        <input  style="vertical-align: middle; margin-left: 44px;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="password" name="oldpass"> 
+                    </div> 
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        新密码<span style="color: red">*</span>
+                        <input  style="vertical-align: middle; margin-left: 44px;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="password" name="newpass1" > 
+                    </div> 
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        重复新密码<span style="color: red">*</span>
+                        <input  style="vertical-align: middle; margin-left: 20px;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="password" name="newpass2" > 
+                    </div> 
+                   
+                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
+                    &emsp;&emsp;
+                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/admin'">
+
+                </form>
+            </div>
+            <div id="footer " style="text-align: center;">
+                        <p id="p2 " style="margin-left: 0;margin-top: 200px">
+                            <a style="color: #636161;font-size: 0.8em; " target="_blank " title="府谷县公安局交警大队 ">府谷县公安局交警大队版权所有 保留一切权利</a>
+                            <a target="_blank "></a>
+                        </p>
+              </div>
+        </div>
+        
+        <script type="text/javascript" charset="utf-8"  src="/js/ku/avalon.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="/js/houtaifabu.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="/js/webuploader/webuploader.js"></script>
+
+</body>
+    <script type="text/javascript">
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm,'');
+    }
+
+     function CheckPost ()
+	   {  
+        dep.oldpass.value=myTrim(dep.oldpass.value);
+        dep.newpass1.value=myTrim(dep.newpass1.value);
+        dep.newpass2.value=myTrim(dep.newpass2.value);
+
+        if (myTrim(dep.oldpass.value) == "")
+          {
+              alert("请填旧密码！");
+              dep.oldpass.focus();
+              return false;
+          }
+	    if (myTrim(dep.newpass1.value) == "")
+          {
+              alert("请填新密码！");
+              dep.newpass1.focus();
+              return false;
+          }
+           if (myTrim(dep.newpass2.value) == "")
+          {
+              alert("请填重复新密码！");
+              dep.newpass2.focus();
+              return false;
+          }
+           if (dep.newpass1.value!=dep.newpass2.value)
+          {
+              alert("两次密码输入不相同");
+              dep.newpass1.focus();
+              return false;
+          }
+	     return true;
+	   }
+    </script>
+
+</html>
+<%end%>

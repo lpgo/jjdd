@@ -1,8 +1,8 @@
 <%define "header" %>
     <div id="header_index">
         <h1><a href="/index.html" title="" style="float:left;"></a></h1>
-        <div id="searchui">
-            <span style="color: white">&emsp;<%.User.Department%>&emsp;&emsp;</span><span style="color: white" id="time"></span><a href="/admin/logout" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
+        <div id="searchui" style="margin-right: 3em;width: 360px">
+            <span style="color: white">&emsp;<%.User.Department%>&emsp;&emsp;<%.User.Name%>&emsp;&emsp;</span><span style="color: white" id="time"></span><a href="/admin/page/changePwd" style="margin-left: 2em;color: #F5DC2F;">修改密码</a><a href="/admin/logout" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
         </div>
         <script type="text/javascript">
         var element = document.getElementById('time');
@@ -10,41 +10,51 @@
         element.innerHTML = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
         </script>
     </div>
+    <style type="text/css">
+    .subNav li a{
+    	font-size: 1.2em;
+    }
+    	.subNav li a:hover{
+    		color:red;
+    	}
+    </style>
     <div id="navfirst">
         <div class="navBar">
             <ul class="nav clearfix">
-                <li class="m">
+                <li class="m  <%if eq .Menu "网站首页"%>on<%end%>">
                     <h3><a target="_blank" href="/">网站首页</a></h3>
                 </li>
                 <li class="s">|</li>
-                <li class="m on">
-                    <h3><a target="_blank" href="/admin/page/admin">文章管理</a></h3>
+                <li class="m  <%if eq .Menu "网站管理"%>on<%end%>">
+                    <h3><a  href="/admin/page/user_list">网站管理</a></h3>
                 </li>
                 <li class="s">|</li>
-                <li class="m">
-                    <h3><a target="_blank" href="/admin/page/user_list">用户管理</a></h3>
+                <li class="m  <%if eq .Menu "大队概括"%>on<%end%>">
+                    <h3><a  href="admin/page/admin?class=大队概括">大队概括</a></h3>
                 </li>
                 <li class="s">|</li>
-                <li class="m">
-                    <h3><a target="_blank" href="/admin/page/dep_list">部门管理</a></h3>
+                <li class="m  <%if eq .Menu "文件简报"%>on<%end%>">
+                    <h3><a  href="#">文件简报</a></h3>
                 </li>
                 <li class="s">|</li>
-                <li class="m">
-                    <h3><a target="_blank" href="/admin/page/directory_list">通讯录管理</a></h3>
+                <li class="m  <%if eq .Menu "通讯录管理"%>on<%end%>">
+                    <h3><a  href="/admin/page/directory_list">通讯录管理</a></h3>
                 </li>
                 <li class="s">|</li>
-                <li class="m">
-                    <h3><a target="_blank" href="/admin/page/link_list">链接管理</a></h3>
+                <li class="m  <%if eq .Menu "链接管理"%>on<%end%>">
+                    <h3><a  href="/admin/page/link_list">链接管理</a></h3>
                 </li>
                 <li class="s">|</li>
-                <li class="m">
-                    <h3><a target="_blank" href="/admin/page/saveRota">值班管理</a></h3>
+                <li class="m  <%if eq .Menu "值班管理"%>on<%end%>">
+                    <h3><a  href="/admin/page/saveRota">值班管理</a></h3>
                 </li> 
             </ul>
             <ul class="subNav">
                 <li>你好，欢迎来到府谷交警管理后台！</li>
-                <li><a href="/admin/page/publish_hongtou?action=create&category=红头文件">发布红头文件</a></li>
+                <li><a href="/admin/page/user_list">用户管理</a>|<a href="/admin/page/dep_list">部门管理</a>|<a href="/admin/page/directory_list">通讯录管理</a>|<a href="/admin/page/link_list">链接管理</a>|<a href="/admin/page/saveRota">值班管理</a></li>
                 <li></li>
+                <li><a href="/admin/page/admin?category=文件简报">文件简报</a>|<a href="/admin/page/admin?category=通知通报">通知通报</a>|<a href="/admin/page/admin?category=人事文件">人事文件</a>|<a href="/admin/page/admin?category=交安委文件">交安委文件</a>|<a href="/admin/page/admin?category=简报动态">简报动态</a>|<a href="/admin/page/admin?category=大队活动">大队活动</a></li>
+
                 <li></li>
                 <li></li>
                 <li>
