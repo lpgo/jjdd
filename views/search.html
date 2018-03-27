@@ -1,0 +1,490 @@
+﻿<%define "search"%>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>政府网站模板</title>
+    <meta name="keywords" content="政府方案">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/label.css">
+    <link href="/css/index.css" type="text/css" rel="stylesheet">
+        <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
+
+    <script type="text/javascript" src="/js/config.js"></script>
+    <script type="text/javascript" src="/js/util.js"></script>
+    <script type="text/javascript" src="/js/zh-cn.js"></script>
+    <script type="text/javascript" src="/js/zh-cn(1).js"></script>
+
+    <script type="text/javascript">
+        function nTabs(thisObj, Num) {
+            if (thisObj.className == "active") return;
+            var tabObj = thisObj.parentNode.id;
+            var tabList = document.getElementById(tabObj).getElementsByTagName("li");
+            for (i = 0; i < tabList.length; i++) {
+                if (i == Num) {
+                    thisObj.className = "active";
+                    document.getElementById(tabObj + "_Content" + i).style.display = "block";
+                } else {
+                    tabList[i].className = "normal";
+                    document.getElementById(tabObj + "_Content" + i).style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        #play_9647 { width:100%;position: relative;z-index: -2;margin:0 auto;}
+        #play_9647 .clearfix li { display: none; position: absolute; overflow: hidden; width:100%; height:570px;}
+        #play_9647 .clearfix li img {margin: auto; width:100%; height:570px; overflow: hidden; }
+        #play_9647 .jsNav { position:absolute;right:700px;bottom:240px;z-index:999;display:none;}
+        #play_9647 .jsNav li { background-color:#b8eff4;cursor:pointer; display: inline-block; float: left; height:
+        10px; line-height: 0; margin-left: 5px; text-indent: -9999px; width: 40px; z-index: 999; }
+        #play_9647 .jsNav li.over { background-color:#FFF; z-index: 999;}
+    </style>
+    <style type="text/css">
+    #play_9609 {
+        margin: 0;
+        float: left;
+        width: 570px;
+        height: 350px;
+        overflow: hidden;
+        border: #ccc 1px solid;
+    }
+
+    #play_9609 .playShow {
+        height: 350px;
+    }
+
+    #play_9609 .playBg {
+        margin: 0;
+        float: left;
+        margin-top: -30px;
+        z-index: 1;
+        filter: alpha(opacity=70);
+        opacity: 0.7;
+        width: 570px;
+        position: absolute;
+        height: 30px;
+        background: #000;
+    }
+
+    #play_9609 .playText {
+        margin: 0;
+        float: left;
+        text-indent: 10px;
+        width: 570px;
+        margin-top: -30px;
+        z-index: 2;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 30px;
+        overflow: hidden;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    #play_9609 .playNum {
+        width: 570px;
+        overflow: hidden;
+        margin: -30px 5px 0 0px;
+        z-index: 3;
+        text-align: right;
+        position: absolute;
+        height: 25px;
+    }
+
+    #play_9609 .playNum a {
+        margin: 5px 2px;
+        width: 15px;
+        height: 15px;
+        font-size: 14px;
+        display: inline-block;
+        font-weight: bold;
+        line-height: 15px;
+        cursor: pointer;
+        color: #000;
+        background: #D7D6D7;
+        text-align: center;
+    }
+
+    #play_9609 .playShow img {
+        width: 570px;
+        height: 350px;
+    }
+    </style>
+    <style type="text/css">
+        object, embed {
+            -webkit-animation-duration: .001s;
+            -webkit-animation-name: playerInserted;
+            -ms-animation-duration: .001s;
+            -ms-animation-name: playerInserted;
+            -o-animation-duration: .001s;
+            -o-animation-name: playerInserted;
+            animation-duration: .001s;
+            animation-name: playerInserted;
+        }
+
+        @-webkit-keyframes playerInserted {
+            from {
+                opacity: 0.99;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-ms-keyframes playerInserted {
+            from {
+                opacity: 0.99;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes playerInserted {
+            from {
+                opacity: 0.99;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes playerInserted {
+            from {
+                opacity: 0.99;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body  ms-controller="fugujiaojing" >
+
+<div id="content" class="container"> <!--中间内容部分-->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <div class="nav mtop" style="margin-top: 1em;margin-bottom: 1em;">
+        <div style="float: left;margin-right: 1em;color: red;font-size: 1.3em;background:no-repeat url('../images/guohui1.png') ;background-position: 1px 2px;font-weight: bold;padding-left: 2em;">府谷交警</div>
+        <div class="search_form" style="float: left;width: 400px;">
+                <form>
+                    <input type="text" value="" ms-duplex="@searchValue" style="width: 300px;border: 1px solid #ccc" class="keyword" id="keyword" name="keyword">
+                    <input  style="cursor: pointer;" ms-on-click="search(@searchValue)" class="submitbtn" value="" id="button" name="button">
+                </form>
+        </div>
+    </div>
+    <div class="govMain">
+        <div class="dt_right" style="width: 1038px">
+            <div class="border1" style="height: auto;">
+                <style type="text/css">
+                    .searchbody{
+                        margin: 1.6em 3em;
+                    }
+                    .searchbodyline{
+                        margin: 0.3em 0;
+                    }
+                </style>
+                <div class="searchbody"  ms-for="($index, el) in @arr" >
+                    <div class="searchbodyline"><a target="_blank" ms-attr="{href:'/showArticle?id='+el.id}" style="font-weight: 400;font-size: medium;color: blue;text-decoration: underline;"> <span ms-html="el.title| uppercase"></span></a></div>
+
+                    <div :visible="!el.pic" class="searchbodyline" style="font-size: 1.2em;">{{el.content}}</div>
+
+
+                    <div :visible="el.pic" class="searchbodyline" style="font-size: 1.2em;">
+                     <a href="#" style="float: left;height: 100px;width: 100px">
+                         <img ms-attr="{src:el.pic}"  src="../images/guohui.png" style="width: 100%;height: 100%">
+                     </a>   
+                     <div style="float: right;width: 850px">
+                          {{el.content}}
+                     </div>
+                     <div style="clear: both;"></div>
+                   </div>
+
+
+                    <div class="searchbodyline" style="color: #gray">发布时间：{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</div>
+
+                </div>
+
+                <div class="main1">                 
+                    <div class="mtop pages" id="page">
+                        共{{@pagenum}}页{{@count}}条
+                        <a class="s1 s3"   ms-on-click="jump(1)">首页</a>
+                        <a class="s1 s3"  ms-on-click="pre(@page)">&lt;&lt;</a>
+                        <a class="s1 s3"   ms-on-click="pre(@page)">上一页</a>
+                        <span class="s1 s3" style="text-align: center;"><input ms-duplex="@page" ms-on-keydown="jump(@page)"  style="border: none;width: 30px"></span>
+                        <a class="s1 s3"  ms-on-click="next(@page)">下一页</a>
+                        <a class="s1 s3"  ms-on-click="next(@page)">&gt;&gt;</a>
+                        <a class="s1 s3"   ms-on-click="jump(@pagenum)">末页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+
+
+<div id="footer">
+    <div class="wp_inner">
+        <div class="foot">
+            <div class="foot1 fl"><span id="_ideConac"> <a href="#" target="_blank"><img id="imgConac" vspace="0"
+                                                                                         hspace="0" border="0"
+                                                                                         src="images/red.png"
+                                                                                         data-bd-imgshare-binded="1"></a> </span>
+            </div>
+            <div class="foot2 fl">
+                <div class="footnav"><a href="#">网站地图</a><span>|</span><a href="#">网站地图</a><span>|</span><a href="#">网站地图</a><span>|</span><a
+                        href="#">网站地图</a><span>|</span><a href="#">网站地图</a></div>
+                <div class="footext"> 主办单位：某某县人民政府　承办单位：某某县电子政务信息中心　技术支持：24H <br>
+                    备案编号：蜀ICP备14000601号 联系电话：0817-7777777　 邮箱地址：nanchong@live.cn
+                </div>
+            </div>
+            <div class="foot3 fl">
+                <div class="qrcode fl"><a href="#" target="_blank" title="" style="text-decoration:none;"><img
+                        width="86" height="86" border="none" alt="" src="images/0353d3ed7d1bfdc2.jpg"></a></div>
+                <div class="qrcode fr"><a href="#" target="_blank" title="" style="text-decoration:none;"><img
+                        width="86" height="86" border="none" alt="" src="images/0353d3ed7d1bfdc2.jpg"></a></div>
+            </div>
+            <div class="clear"></div>
+            <div class="foot4">
+
+                <span id="_span_jiucuo"><img onclick="Link(&#39;&#39;)" style="margin:0;border:0;cursor: pointer;"
+                                             src="images/jiucuo.png"></span>
+            </div>
+        </div>
+        <div id="footer_login" style="text-align:center;clear:both;font-size:14px;"></div>
+    </div>
+</div>
+    <script src="/js/ku/avalon.js "></script>
+    <script type="text/javascript">
+
+var meiyenum=15;
+var net=function(page){
+
+}
+var searchV;
+avalon.filters.uppercase = function (str) {
+    var searchValue=searchV;
+    var length=searchValue.length;
+    var kaishi=str.indexOf(searchValue);
+    var jieshu=kaishi+length;
+    console.log(kaishi);
+    var str1=str.substring(0,kaishi);
+    var str2=str.substring(jieshu,str.length);
+    var str3='<span style="color:red">'+searchValue+'</span>';
+    var str4=str1+str3+str2;
+    return str4;
+}
+var vm = avalon.define({
+  $id: "fugujiaojing",
+  isbox:false,
+  arr: [],
+  count:0,
+  pagenum:0,
+  page:1,
+  pagemeiye:15,
+  searchValue:'',
+  aaa:"",
+  search:function(sousuovalue){
+    searchV=sousuovalue
+   $.ajax({
+    url:"/searchArticle?searchValue="+sousuovalue,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    xhrFields: {
+        withCredentials: true
+     },
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        
+    },
+    success:function(data,status){
+      vm.arr=data.data;
+      vm.page=1;
+      vm.count =data.count;
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+      }
+  });
+  
+},
+  del:function(index){
+    function a(){
+       $.ajax({
+        url:"/searchArticle?id="+index+"&searchValue="+vm.searchValue,    //请求的url地址
+        dataType:"json",   //返回格式为json
+        async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+        type:"GET",   //请求方式
+        beforeSend:function(){
+            //请求前的处理
+        },
+        success:function(data,status){
+           $.ajax({
+              url:"/searchArticle?page="+vm.page,    //请求的url地址
+              dataType:"json",   //返回格式为json
+              async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+              type:"GET",   //请求方式
+              beforeSend:function(){
+                  //请求前的处理
+              },
+              success:function(data,status){
+                vm.arr=data.data;
+                vm.count =data.count;
+                vm.page=1;
+                vm.pagenum=parseInt(vm.count/meiyenum)+1;
+              },
+              complete:function(){
+                  //请求完成的处理
+              },
+              error:function(){
+                  //请求出错处理
+              }
+              });
+        },
+        complete:function(){
+            //请求完成的处理
+        },
+        error:function(){
+            //请求出错处理
+        }
+        });
+    }
+    var r=confirm("您确认要删除吗？");
+    if(r){
+      a();
+    } else{
+
+    }  
+   
+  },
+  click:function(){
+    this.isbox=!this.isbox;
+
+  },
+  divmouseover:function (index) {
+    this.arr[index].ishidden=true;
+  },
+  jump:function(page){
+    vm.page=page;
+    $.ajax({
+    url:"/searchArticle?page="+page+"&searchValue="+vm.searchValue,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(data,status){
+      vm.arr=data.data;
+      vm.count =data.count;
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+});
+  },
+  pre:function(page){
+    if(page<=1){
+      return;
+    }
+    $.ajax({
+    url:"/searchArticle?page="+(page-1)+"&searchValue="+vm.searchValue,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(data,status){
+      vm.arr=data.data;
+      vm.page=page-1;
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+});
+  },
+  next:function(page){
+    if(page>=vm.pagenum){
+      return;
+    }
+
+   $.ajax({
+    url:"/searchArticle?page="+(page+1)+"&searchValue="+vm.searchValue,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(data,status){
+      vm.arr=data.data;
+      vm.page=page+1;
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+  });
+  },
+  divmouseout:function(index){
+    this.arr[index].ishidden=false;
+  }
+ })
+
+$.ajax({
+    url:"/searchArticle?page=1"+"&searchValue="+vm.searchValue,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(data,status){
+      vm.arr=data.data;
+      vm.count =data.count;
+      vm.page=1;
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;
+      console.log(vm.pagenum)
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+});
+ // $.get("/admin/getArticles?page=1",function(data,status){
+ //      vm.arr=data.data;
+ //      console.log(vm.arr)
+ //      for(var i=0;i< vm.arr.length;i++){
+ //         vm.arr[i].ishidden=false;
+ //    
+        
+    </script>
+
+</body>
+</html>
+<%end%>

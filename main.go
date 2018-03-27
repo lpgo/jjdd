@@ -128,6 +128,7 @@ func main() {
 	funmap := make(template.FuncMap, 1)
 	funmap["Two"] = Two
 	funmap["Ten"] = Ten
+	funmap["AddSpace"] = AddSpace
 	temp.Funcs(funmap)
 	t := &Template{
 		templates: template.Must(temp.ParseGlob("views/*.html")),
@@ -181,6 +182,10 @@ func main() {
 	admin.GET("/page/link_list", linkListPage)
 	admin.GET("/page/modify_link", modifyLinkPage)
 
+	admin.GET("/page/add_subject", addSubjectPage)
+	admin.GET("/page/subject_list", subjectListPage)
+	admin.GET("/page/modify_subject", modifySubjectPage)
+
 	/*----------------操作--------*/
 	//文章
 	admin.Any("/publish", publishArticle)
@@ -221,6 +226,12 @@ func main() {
 	admin.Any("/delLink", delLink)
 	admin.Any("/modifyLink", modifyLink)
 
+	//专题
+	admin.Any("/addSubject", addSubject)
+	admin.Any("/getSubjectList", getSubjectList)
+	admin.Any("/delSubject", delSubject)
+	admin.Any("/modifySubject", modifySubject)
+
 	admin.Any("/logout", logout)
 
 	e.Any("/getDirectoryByname1", getDirectoryByName)
@@ -231,8 +242,11 @@ func main() {
 	e.Any("/showArticle", showArticleById)
 	e.Any("/showHongtouArticle", showHongtouArticleById)
 	e.Any("/signArticle", signArticle)
+	e.Any("/articleList", articleListPage)
+	e.Any("/searchArticle", searchArticle)
 
 	e.GET("/directory", directoryPage)
+	e.GET("/search", searchPage)
 	e.GET("/", indexPage)
 	e.GET("/list.html", listPage)
 	e.GET("/login.html", loginPage)
@@ -295,6 +309,28 @@ func addDep(c echo.Context) error {
 		return c.Render(http.StatusOK, "adddep", map[string]bool{"NameError": true})
 	} else {
 		return MyRedirect(c, "/admin/page/dep_list")
+	}
+}
+
+func addSubject(c echo.Context) error {
+	sub := db.Subject{
+		Id:   bson.NewObjectId(),
+		Name: c.FormValue("subjectName"),
+		Pic:  c.FormValue("pic"),
+	}
+
+	if c.FormValue("isHot") == "true" {
+		sub.IsHot = true
+		db.UpdateByCond("subject", bson.M{"isHot": true}, bson.M{"$set": bson.M{"isHot": false}})
+	} else {
+		sub.IsHot = false
+	}
+
+	if err := db.Add("subject", sub); err != nil {
+		log.Println(err)
+		return err
+	} else {
+		return MyRedirect(c, "/admin/page/subject_list")
 	}
 }
 
@@ -362,6 +398,15 @@ func delDep(c echo.Context) error {
 	}
 }
 
+func delSubject(c echo.Context) error {
+	if err := db.Delete("subject", c.QueryParam("id")); err != nil {
+		log.Println(err)
+		return err
+	} else {
+		return c.NoContent(http.StatusOK)
+	}
+}
+
 func delDirectory(c echo.Context) error {
 	if err := service.DelDirectory(c.QueryParam("id")); err != nil {
 		log.Println(err)
@@ -406,9 +451,9 @@ func getArticles(c echo.Context) error {
 
 	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(1, cond), "count": service.GetArticlesCount(cond)})
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(1, 15, cond), "count": service.GetArticlesCount(cond)})
 	} else {
-		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(page, cond), "count": service.GetArticlesCount(cond)})
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(page, 15, cond), "count": service.GetArticlesCount(cond)})
 	}
 }
 
@@ -496,11 +541,11 @@ func showArticleById(c echo.Context) error {
 	}
 
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false}, "time", 1, &pre); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false, "isAuditing": true}, "time", 1, &pre); err != nil {
 		log.Println(err)
 		return err
 	}
-	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": false}, "time", 1, &next); err != nil {
+	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": false, "isAuditing": true}, "time", 1, &next); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -525,11 +570,11 @@ func showHongtouArticleById(c echo.Context) error {
 	}
 
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true}, "time", 1, &pre); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true, "isAuditing": true}, "time", 1, &pre); err != nil {
 		log.Println(err)
 		return err
 	}
-	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": true}, "time", 1, &next); err != nil {
+	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": true, "isAuditing": true}, "time", 1, &next); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -565,9 +610,9 @@ func modifyArticlePage(c echo.Context) error {
 		return err
 	} else {
 		if c.QueryParam("isRed") == "true" {
-			return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"Modify": true, "Article": article, "Menu": GetClass(article.Category)})
+			return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
 		} else {
-			return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": true, "Article": article, "Menu": GetClass(article.Category)})
+			return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
 		}
 	}
 }
@@ -578,7 +623,7 @@ func modifyHongtouArticlePage(c echo.Context) error {
 		log.Println(err)
 		return err
 	} else {
-		return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"Modify": true, "Article": article})
+		return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"Modify": true, "Article": article, "Subjects": service.GetAllSubjects()})
 	}
 }
 
@@ -640,7 +685,7 @@ func modifyArticle(c echo.Context) error {
 		log.Println(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
-		return MyRedirect(c, "/admin/page/admin")
+		return MyRedirect(c, "/admin/page/admin?category="+article.Category)
 	}
 
 }
@@ -671,7 +716,7 @@ func setArticle(c echo.Context) error {
 		log.Println(err)
 		return err
 	} else {
-		return MyRedirect(c, "/admin/page/admin")
+		return MyRedirect(c, "/admin/page/admin?category="+c.FormValue("category"))
 	}
 }
 
@@ -686,7 +731,7 @@ func login(c echo.Context) error {
 
 func publishPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category"))}
+	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "Subjects": service.GetAllSubjects()}
 	if c.QueryParam("action") == "edit" {
 		data["Edit"] = true
 	}
@@ -703,7 +748,7 @@ func publishPage(c echo.Context) error {
 
 func publishHongtouPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category")}
+	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Subjects": service.GetAllSubjects()}
 	if c.QueryParam("action") == "edit" {
 		data["Edit"] = true
 	}
@@ -746,7 +791,7 @@ func setArticlePage(c echo.Context) error {
 		return err
 	}
 
-	return c.Render(http.StatusOK, "setarticle", map[string]db.Any{"User": user, "Id": c.QueryParam("id"), "Article": article})
+	return c.Render(http.StatusOK, "setarticle", map[string]db.Any{"User": user, "Id": c.QueryParam("id"), "Article": article, "Menu": article.Class})
 }
 
 func saveRotaPage(c echo.Context) error {
@@ -770,7 +815,8 @@ func indexPage(c echo.Context) error {
 	links := service.GetLinks()
 	hotArticle := service.GetHotArticle()
 	imageArticles := service.GetImageArticles()
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"rota": rota, "links": links, "hotArticle": hotArticle, "imageArticles": imageArticles})
+	subjects := service.GetAllSubjects()
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"rota": rota, "links": links, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
 }
 
 func directoryPage(c echo.Context) error {
@@ -780,6 +826,14 @@ func directoryPage(c echo.Context) error {
 		return err
 	}
 	return c.Render(http.StatusOK, "directory", map[string]db.Any{"Deps": deps})
+}
+
+func searchPage(c echo.Context) error {
+	return c.Render(http.StatusOK, "search", map[string]db.Any{})
+}
+
+func articleListPage(c echo.Context) error {
+	return c.Render(http.StatusOK, "articlelist", map[string]db.Any{})
 }
 
 func loginPage(c echo.Context) error {
@@ -834,9 +888,24 @@ func depListPage(c echo.Context) error {
 	return c.Render(http.StatusOK, "deplist", map[string]db.Any{"User": user})
 }
 
+func subjectListPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.Render(http.StatusOK, "subjectlist", map[string]db.Any{"User": user, "Menu": "网站管理"})
+}
+
 func addDepPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"User": user, "Update": false})
+}
+
+func addSubjectPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.Render(http.StatusOK, "addsubject", map[string]db.Any{"User": user, "Update": false, "Menu": "网站管理"})
+}
+
+func modifySubjectPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.Render(http.StatusOK, "addsubject", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Modify": true, "Name": c.QueryParam("name"), "Pic": c.QueryParam("pic"), "IsHot": c.QueryParam("isHot"), "Menu": "网站管理"})
 }
 
 func modifyDepPage(c echo.Context) error {
@@ -906,6 +975,23 @@ func modifyDep(c echo.Context) error {
 		return err
 	}
 	return directoryListPage(c)
+}
+
+func modifySubject(c echo.Context) error {
+
+	if c.FormValue("isHot") == "true" {
+		db.UpdateByCond("subject", bson.M{"isHot": true}, bson.M{"$set": bson.M{"isHot": false}})
+		if err := db.UpdateById("subject", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("subjectName"), "pic": c.FormValue("pic"), "isHot": true}}); err != nil {
+			log.Println(err)
+			return err
+		}
+	} else {
+		if err := db.UpdateById("subject", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("subjectName"), "pic": c.FormValue("pic"), "isHot": false}}); err != nil {
+			log.Println(err)
+			return err
+		}
+	}
+	return MyRedirect(c, "/admin/page/subject_list")
 }
 
 func modifyDirectory(c echo.Context) error {
@@ -983,6 +1069,14 @@ func getDepList(c echo.Context) error {
 		return err
 	} else {
 		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetDepsByPage(page), "count": service.GetDepsCount()})
+	}
+}
+
+func getSubjectList(c echo.Context) error {
+	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
+		return err
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetSubjectsByPage(page), "count": service.GetSubjectsCount()})
 	}
 }
 
@@ -1066,6 +1160,29 @@ func searchDirectoryByPhone(c echo.Context) error {
 		return err
 	}
 	return c.JSON(http.StatusOK, map[string]db.Any{"data": deps})
+}
+
+func searchArticle(c echo.Context) error {
+	cond := bson.M{"isAuditing": true}
+
+	if "" != c.QueryParam("searchValue") {
+		cond["title"] = bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchValue"), Options: "ixs"}}
+	}
+
+	if "" != c.QueryParam("category") {
+		cond["category"] = c.QueryParam("category")
+	}
+
+	if "" != c.QueryParam("class") {
+		cond["class"] = c.QueryParam("class")
+	}
+
+	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetIndexArticlesByPage(1, 15, cond), "count": service.GetArticlesCount(cond)})
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetIndexArticlesByPage(page, 15, cond), "count": service.GetArticlesCount(cond)})
+	}
+
 }
 
 func uploadImage(c echo.Context) error {
@@ -1161,4 +1278,13 @@ func Ten(a int) bool {
 
 func GetClass(category string) string {
 	return clazz[category]
+}
+
+func AddSpace(s string) template.HTML {
+	str := []rune(s)
+	if len(str) == 2 {
+		return template.HTML(string(str[0]) + "&emsp;" + string(str[1]))
+	} else {
+		return template.HTML(s)
+	}
 }

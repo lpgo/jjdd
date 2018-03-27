@@ -1,0 +1,80 @@
+﻿<%define "subjectlist"%>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>府谷交警内网后台管理程序</title>
+    <meta name="description" content="府谷交警 内网">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" type="text/css" href="/css/houtai.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta http-equiv="imagetoolbar" content="false">
+    <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery1.42.min.js">
+    </script>
+    <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
+    <!--[if IE 6]>
+<script src="DD_belatedPNG.js"></script>
+<script>
+  DD_belatedPNG.fix('.phoneicon');
+</script>
+<![endif]-->
+
+    <body ms-controller="fugujiaojing" id="homefirst">
+        <div id="wrapper">
+            <%template "header" .%>
+
+            <div id="maincontent">
+                <div class="idea divclass" id="d1">
+                    <h2>专题列表</h2>
+                </div>
+                <div class="idea divclass" id="d1" style="padding-top: 10px">
+                    <div style="display: inline-block;float: left;">
+                        <button class="buttonl"  onclick="window.location.href='/admin/page/add_subject'">新增专题</button>
+                    </div>
+                   <!--  <div style="display: inline-block;float: right;">
+                        <input style="vertical-align: middle; margin-left: 50em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="" name="">
+                        <button style="height:40px;line-height: 38px;margin-left: 10px;width:80px;background-color: #006CE8;color:white;vertical-align: middle;">搜索</button>
+                    </div> -->
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="idea divclass" id="d3" style="padding:0;border: 1px solid #aaa;border-top: none;margin-bottom: 10px">
+                    <div class="cleardiv " style="width: 100%;background-color: #E8E7E3!important;border-bottom: 1px solid #E8E7E3;height: 40px;line-height: 40px;font-weight: bold;">
+                        <div class="cleardiv" style="width: 10%;float: left;text-align: center;">编号</div>
+                        <div class="cleardiv" style="width: 30%;float: left;text-align:center;">专题名</div>
+                        <div class="cleardiv" style="width: 40%;float: left;color: #E8E7E3!important;text-align:center;"> 操作</div>
+                        <div class="cleardiv" style="width: 20%;float: left;text-align:center;">专题图片</div>
+
+                    </div>
+                   
+                     <div  ms-for="($index, el) in @arr" class="cleardiv hoverdiv" ms-mouseover="@divmouseover($index)" ms-mouseleave="@divmouseout($index)" style="width: 100%;border-bottom: 1px solid #E8E7E3!important;height: 40px;line-height: 40px">
+                        <div class="cleardiv" style="width: 10%;float: left;text-align: center;">{{(@page-1)*@pagemeiye+$index+1}}</div>
+                        <div class="cleardiv" style="width: 30%;float: left;text-align:center;"><span style="margin-right: 5px;color: red" :visible="el.isHot">[主要]</span>{{el.name}}</div>
+                        <div class="cleardiv" style="width: 40%;float: left;text-align:center;"><span ms-if="!el.ishidden" style="color: white">.</span> <span ms-if="el.ishidden"><a  style="color: #d9534f" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  <a style="color: #f0ad4e" ms-attr="{href:'/admin/page/modify_subject?id='+ el.id+'&name='+el.name+'&pic='+el.pic+'&isHot='+el.isHot}">修改</a></span></div>
+                         <div class="cleardiv" style="width: 20%;float: left;text-align:center;"> <a style="color: #f0ad4e" target="_blank"  ms-attr="{href:el.pic}">查看图片</a></div>
+                        </div>
+                       
+
+                        <div class="" style="padding: 0;margin:0;width: 100%;border-top:1px solid #E8E7E3;  border-bottom: 1px solid #E8E7E3;height: 40px;line-height: 40px;text-align: right;">
+                            共{{@pagenum}}页{{@count}}条&emsp;<a style="margin-left: 1em;margin-right: 1em;color: #3CADED" href="#" ms-on-click="pre(@page)">上一页</a> {{@page}} <a style="margin-left: 1em;margin-right: 1em;color: #3CADED" href="#" ms-on-click="next(@page)">下一页</a>
+                            <input ms-duplex="@aaa" style="border: 1px solid #C3C2C1;width: 30px;text-align: center;">
+                            <a style="margin-left: 1em;margin-right: 1em;color: #3CADED;cursor: pointer;" ms-on-click="jump(@aaa)">跳转</a>
+                        </div>
+                    </div>
+                    <div id="footer " style="text-align: center;">
+                        <p id="p2 " style="margin-left: 0;margin-top: 200px">
+                            <a style="color: #636161;font-size: 0.8em; " target="_blank " title="府谷县公安局交警大队 ">府谷县公安局交警大队版权所有 保留一切权利</a>
+                            <a target="_blank "></a>
+                        </p>
+                     </div>
+                </div>
+               
+            </div>
+            <script src="/js/ku/avalon.js "></script>
+            <script src="/js/zhuantilist.js "></script>
+    </body>
+
+</html>
+<%end%>

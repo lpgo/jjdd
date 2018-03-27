@@ -3,8 +3,11 @@ package service
 import (
 	"errors"
 	"gopkg.in/mgo.v2/bson"
+	"html/template"
 	"jjdd/db"
 	"log"
+	"regexp"
+	"strings"
 )
 
 func LoginByName(name, pwd string) *db.User {
@@ -20,16 +23,37 @@ func ChangePwd(name, oldPwd, newPwd string) error {
 	return db.UpdateByCond("user", bson.M{"name": name, "pwd": oldPwd}, bson.M{"$set": bson.M{"pwd": newPwd}})
 }
 
-func GetArticlesByPage(page int, cond bson.M) []db.Article {
-	var articles = make([]db.Article, 15)
+//后台不显示文章内容
+func GetArticlesByPage(page, count int, cond bson.M) []db.Article {
+	var articles = make([]db.Article, count)
 
-	err := db.FindPart("article", cond, (page-1)*15, 15, &articles)
+	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "-time")
 
 	if err != nil {
 		log.Println(err)
 	}
 	for index, _ := range articles {
 		articles[index].Content = ""
+	}
+	return articles
+}
+
+//用于前台
+func GetIndexArticlesByPage(page, count int, cond bson.M) []db.Article {
+	var articles = make([]db.Article, count)
+
+	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "-time")
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	for index, _ := range articles {
+		articles[index].Content = template.HTML(NoHtml(string(articles[index].Content)))
+		if len([]rune(string(articles[index].Content))) > 300 {
+			articles[index].Content = template.HTML([]rune(string(articles[index].Content))[:300])
+			articles[index].Content += "..."
+		}
 	}
 	return articles
 }
@@ -58,7 +82,7 @@ func AddUser(user db.User) error {
 func AddDep(dep db.Department) error {
 	var u db.Department
 	if err := db.FindOne("department", bson.M{"name": dep.Name}, &u); err == nil {
-		return errors.New("用户名重复")
+		return errors.New("部门名重复")
 	} else {
 		if err := db.Add("department", &dep); err != nil {
 			log.Println(err)
@@ -87,9 +111,25 @@ func GetDepsByPage(page int) []db.Department {
 	return deps
 }
 
+func GetSubjectsByPage(page int) []db.Subject {
+	var subs = make([]db.Subject, 15)
+	if err := db.FindPart("subject", nil, (page-1)*15, 15, &subs); err != nil {
+		log.Println(err)
+	}
+	return subs
+}
+
 func GetAllDeps() []db.Department {
 	var deps = make([]db.Department, 10)
 	if err := db.GetAll("department", &deps); err != nil {
+		log.Println(err)
+	}
+	return deps
+}
+
+func GetAllSubjects() []db.Subject {
+	var deps = make([]db.Subject, 5)
+	if err := db.GetAll("subject", &deps); err != nil {
 		log.Println(err)
 	}
 	return deps
@@ -148,7 +188,7 @@ func GetLinks() []db.Link {
 
 func GetHotArticle() db.Article {
 	var article db.Article
-	if err := db.FindOne("article", bson.M{"isHot": true}, &article); err != nil {
+	if err := db.FindOne("article", bson.M{"isHot": true, "isAuditing": true}, &article); err != nil {
 		log.Println(err)
 	}
 	return article
@@ -156,7 +196,7 @@ func GetHotArticle() db.Article {
 
 func GetImageArticles() []db.Article {
 	var articles = make([]db.Article, 20)
-	if err := db.FindManyOrder("article", bson.M{"isImage": true}, "time", 20, &articles); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"isImage": true, "isAuditing": true}, "time", 20, &articles); err != nil {
 		log.Println(err)
 	}
 	return articles
@@ -214,9 +254,34 @@ func GetUsersCount() int {
 func GetDepsCount() int {
 	return db.GetCount("department", nil)
 }
+func GetSubjectsCount() int {
+	return db.GetCount("subject", nil)
+}
 func GetDirectorysCount(dep string) int {
 	return db.GetCount("directory", bson.M{"dep": dep})
 }
 func GetLinksCount(c string) int {
 	return db.GetCount("link", bson.M{"category": c})
+}
+
+func NoHtml(src string) string {
+	re, _ := regexp.Compile("\\<[\\S\\s]+?\\>")
+	src = re.ReplaceAllStringFunc(src, strings.ToLower)
+
+	//去除STYLE
+	re, _ = regexp.Compile("\\<style[\\S\\s]+?\\</style\\>")
+	src = re.ReplaceAllString(src, "")
+
+	//去除SCRIPT
+	re, _ = regexp.Compile("\\<script[\\S\\s]+?\\</script\\>")
+	src = re.ReplaceAllString(src, "")
+
+	//去除所有尖括号内的HTML代码，并换成换行符
+	re, _ = regexp.Compile("\\<[\\S\\s]+?\\>")
+	src = re.ReplaceAllString(src, "\n")
+
+	//去除连续的换行符
+	re, _ = regexp.Compile("\\s{2,}")
+	src = re.ReplaceAllString(src, "\n")
+	return src
 }

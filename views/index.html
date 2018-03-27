@@ -67,7 +67,7 @@
                     <span>|</span>
                     <span  style="cursor: pointer;">设为首页</span>
                     <span>|</span>
-                    <span  style="cursor: pointer;">站内搜索</span>
+                    <span  style="cursor: pointer;" onclick="window.location.href='/search'">站内搜索</span>
                 </div>
                 <div style="display: inline-block;clear: both;"></div>
                 <div class="logo" style="width: 117px;margin-top: 77px;margin-left: -188px;"><a id="logopic" href="#"><img style="width: 163%;" src="images/guohui.png"></a></div>
@@ -97,7 +97,7 @@
                     <li class=""><a href="index.php/opinion-main" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav5 phoneicon">交管动态</a> </li>
                     <li class=""><a href="734.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav6 phoneicon">学习园地</a>
                     </li>
-                    <li class=""><a href="1116.shtml" style="text-decoration: none!important;color: white;font-size: 18px" target="" class="nav7 phoneicon">数据报送</a> </li>
+                    <li class=""><a href="1116.shtml" style="text-decoration: none!important;color: white;font-size: 18px" target="" class="nav7 phoneicon">专项行动</a> </li>
                 </ul>
             </div>
         </div>
@@ -206,11 +206,11 @@
                         <div class="TabTitle" style="background: none">
                             <ul id="Tab0">
                                 <li class="active" onmouseover="nTabs(this,0);"><a style="font-size: 18px;font-weight: bold;" href="#">交管要闻</a></li>
-                                <li>
+                               <!--  <li>
                                     <input type="" name="" style="height:40px;width: 256px;margin-left:10px;margin-top:5px;padding-left: 10px;
     padding-right: 10px;font-size: 18px;border: 1px solid #1d7ad5;">
                                 </li>
-                                <li><a class="phoneicon" style="background:url(/images/search1.png) no-repeat;height: 50px;width: 50px;cursor: pointer;float: right;background-position: 0 10px"></a></li>
+                                <li><a class="phoneicon" style="background:url(/images/search1.png) no-repeat;height: 50px;width: 50px;cursor: pointer;float: right;background-position: 0 10px"></a></li> -->
                             </ul>
                         </div>
                         <div class="TabContent">
@@ -233,7 +233,13 @@
                     </div>
                 </div>
                 <!--      µÚ¶þ°æ    ×¨Ìâ    -->
-                <div class="special fl"> <a href="#" target="_blank" title="" style="text-decoration:none;"><img width="1094" height="95" border="none" alt="" src="images/fd09c719d235df9a.jpg"></a> </div>
+                <div class="special fl">
+                    <%range .subjects%>
+                        <%if .IsHot%> 
+                    <a href="#"  title="" style="text-decoration:none;"><img width="1094" height="95" border="none" alt="" src="<%.Pic%>"></a>
+                        <%end%>
+                    <%end%>
+                </div>
                 <!--      µÚ¶þ°æ    ×ÊÑ¶    -->
                 <div class="information">
                     <div class="information-left fl">
@@ -449,20 +455,20 @@
                                     <tr>
                                         <td>值班领导</td>
                                         <td colspan="2">
-                                            <%.Lingdao%>
+                                            <%AddSpace .Lingdao%>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>带班组长</td>
                                         <td colspan="2">
-                                            <%.Zuzhang%>
+                                            <%AddSpace .Zuzhang%>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td rowspan="2">处警人员</td>
                                         <%range $k,$v := .Chujing%>
                                             <td>
-                                                <%$v%>
+                                                <%AddSpace $v%>
                                             </td>
                                             <%if Two $k%>
                                     </tr>
@@ -473,7 +479,7 @@
                                                     <td rowspan="3">值班人员</td>
                                                     <%range $k,$v := .Zhiban%>
                                                         <td>
-                                                            <%$v%>
+                                                            <%AddSpace $v%>
                                                         </td>
                                                         <%if Two $k%>
                                                 </tr>
@@ -484,7 +490,7 @@
                                                                 <td rowspan="2">备勤人员</td>
                                                                 <%range $k,$v := .Beiqing%>
                                                                     <td>
-                                                                        <%$v%>
+                                                                        <%AddSpace $v%>
                                                                     </td>
                                                                     <%if Two $k%>
                                                             </tr>
@@ -495,7 +501,7 @@
                                                                             <td rowspan="3">接警人员</td>
                                                                             <%range $k,$v := .Jiejing%>
                                                                                 <td>
-                                                                                    <%$v%>
+                                                                                    <%AddSpace $v%>
                                                                                 </td>
                                                                                 <%if Two $k%>
                                                                         </tr>
@@ -518,24 +524,13 @@
                     <div class="picMarquee-left">
                         <div class="bd" style="">
                             <ul class="picList">
+                                <%range .subjects%>
+                                <%if not .IsHot%>
                                 <li>
-                                    <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/2f5f890281e9e957.jpg" /></a></div>
+                                    <div class="pic ztpic"><a href="http://www.SuperSlide2.com" ><img width="358" height="70" border="none" src="<%.Pic%>" /></a></div>
                                 </li>
-                                <li>
-                                    <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/23f66242516cc9a8.jpg" /></a></div>
-                                </li>
-                                <li>
-                                    <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/fb69c86cefaeeb24.jpg" /></a></div>
-                                </li>
-                                <li>
-                                    <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/2f5f890281e9e957.jpg" /></a></div>
-                                </li>
-                                <li>
-                                    <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/23f66242516cc9a8.jpg" /></a></div>
-                                </li>
-                                <li>
-                                    <div class="pic ztpic"><a href="http://www.SuperSlide2.com" target="_blank"><img width="358" height="70" border="none" src="images/fb69c86cefaeeb24.jpg" /></a></div>
-                                </li>
+                                <%end%>
+                                <%end%>
                             </ul>
                         </div>
                     </div>
@@ -764,7 +759,7 @@
                                 </tr>
                                 <tr>
                                     <td style="background-color:#f59026 "><img style="padding-bottom: 2px" src="images/shuju.png">
-                                        <br> 数据报送</td>
+                                        <br> 站内搜索</td>
                                     <td style="background-color:#8ab436 "><img style="padding-bottom: 2px" src="images/xiazai.png">
                                         <br>软件下载</td>
                                 </tr>

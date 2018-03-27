@@ -57,6 +57,14 @@ type User struct {
 	IsHidden   bool          `bson:"ishidden" json:"ishidden"`
 }
 
+type Subject struct {
+	Id       bson.ObjectId `bson:"_id" json:"id"`
+	Name     string        `bson:"name" json:"name"`
+	Pic      string        `bson:"pic" json:"pic"`
+	IsHot    bool          `bson:"isHot" json:"isHot"`
+	IsHidden bool          `bson:"ishidden" json:"ishidden"`
+}
+
 type Article struct {
 	Id         bson.ObjectId `bson:"_id" json:"id"`
 	Title      string        `bson:"title" json:"title"`           //标题

@@ -44,14 +44,14 @@
                     <input type="hidden" name="category" value="<%.Article.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
+                        <%range .Subjects%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" value="<%.Article.Title%>"> <span style="margin-left: 2em;color: gray">还可输入<span style="color:red">40</span>个字符</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" value="<%.Article.Title%>"> <span style="margin-left: 2em;color: gray">
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         拟&emsp;&emsp;稿 <span style="color: red">*</span>
@@ -92,13 +92,13 @@
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                        <%range .Subjects%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" checked>&emsp;<%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" > <span style="margin-left: 2em;color: gray">还可输入<span style="color:red">40</span>个字符</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" > <span style="margin-left: 2em;color: gray">
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         拟&emsp;&emsp;稿 <span style="color: red">*</span>
@@ -137,10 +137,10 @@
                     <input type="hidden" name="category" value="<%.Article.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
+                        <%range .Subjects%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
