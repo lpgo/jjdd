@@ -87,13 +87,13 @@
                     </div>
                     <%end%>
                     <%if .Create%>
-                    <form action="/admin/preview" method="post"  name="dep"  enctype="multipart/form-data">
+                    <form action="/admin/preview" method="post"  name="dep"  enctype="multipart/form-data"   onsubmit="return CheckPost();">
                     <input type="hidden" name="category" value="<%.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
                         <%range .Subjects%>
-                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" checked>&emsp;<%.Name%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" >&emsp;<%.Name%>
                         <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">

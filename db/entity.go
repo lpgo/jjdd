@@ -67,13 +67,14 @@ type Subject struct {
 
 type Article struct {
 	Id         bson.ObjectId `bson:"_id" json:"id"`
-	Title      string        `bson:"title" json:"title"`           //标题
-	Creator    string        `bson:"creator" json:"creator"`       //拟稿人
-	Assessor   string        `bson:"assessor" json:"assessor"`     //审核人
-	Signature  string        `bson:"signature" json:"signature"`   //签发人
-	From       string        `bson:"from" json:"from"`             //来源
-	Pic        string        `bson:"pic" json:"pic"`               //标题图片
-	Content    template.HTML `bson:"content" json:"content"`       //内容
+	Title      string        `bson:"title" json:"title"`         //标题
+	Creator    string        `bson:"creator" json:"creator"`     //拟稿人
+	Assessor   string        `bson:"assessor" json:"assessor"`   //审核人
+	Signature  string        `bson:"signature" json:"signature"` //签发人
+	From       string        `bson:"from" json:"from"`           //来源
+	Pic        string        `bson:"pic" json:"pic"`             //标题图片
+	Content    template.HTML `bson:"content" json:"content"`     //内容
+	Attach     template.HTML `bson:"attach" json:"attach"`
 	Time       time.Time     `bson:"time" json:"time"`             //发表时间
 	Class      string        `bson:"class" json:"class"`           //大类
 	Category   string        `bson:"category" json:"category"`     //分类(移动文章)

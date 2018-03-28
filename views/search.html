@@ -12,8 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/label.css">
     <link href="/css/index.css" type="text/css" rel="stylesheet">
-        <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
-
+    <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
     <script type="text/javascript" src="/js/config.js"></script>
     <script type="text/javascript" src="/js/util.js"></script>
     <script type="text/javascript" src="/js/zh-cn.js"></script>
@@ -218,7 +217,7 @@
                         <a class="s1 s3"   ms-on-click="jump(1)">首页</a>
                         <a class="s1 s3"  ms-on-click="pre(@page)">&lt;&lt;</a>
                         <a class="s1 s3"   ms-on-click="pre(@page)">上一页</a>
-                        <span class="s1 s3" style="text-align: center;"><input ms-duplex="@page" ms-on-keydown="jump(@page)"  style="border: none;width: 30px"></span>
+                        <span class="s1 s3" style="text-align: center;"><input ms-duplex="@page" ms-on-keyup="jump(@page)"  style="border: none;width: 30px"></span>
                         <a class="s1 s3"  ms-on-click="next(@page)">下一页</a>
                         <a class="s1 s3"  ms-on-click="next(@page)">&gt;&gt;</a>
                         <a class="s1 s3"   ms-on-click="jump(@pagenum)">末页</a>
@@ -378,7 +377,7 @@ var vm = avalon.define({
     this.arr[index].ishidden=true;
   },
   jump:function(page){
-    vm.page=page;
+    vm.page=parseInt(page) ;
     $.ajax({
     url:"/searchArticle?page="+page+"&searchValue="+vm.searchValue,    //请求的url地址
     dataType:"json",   //返回格式为json

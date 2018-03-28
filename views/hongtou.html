@@ -382,11 +382,11 @@
                         <div class="xxfz" style="margin: 0;height: 49px">
                             <div class="fl">
                                     <%if .Auditing%>
-                                    <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass'">审核通过</button>
-                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass'">不通过</button>
+                                    <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass&category=<%.Article.Category%>'">审核通过</button>
+                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&category=<%.Article.Category%>'">不通过</button>
                                     <%else%>
                                     <button class="buttonl"  style="background-color: #27a9f4;"   onclick="window.location.href='/admin/publish'">保存文章</button>
-                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish_hongtou?action=edit&category=<%.Article.Category%>'">返回编辑</button>
+                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish?action=edit&category=<%.Article.Category%>&isRed=true'">返回编辑</button>
                                     <%end%>
                             </div>
                         </div>
@@ -424,7 +424,7 @@
                         <div style="padding-top: 230px;text-align: center;font-size: 20px;font-family: '仿宋'">府公交&nbsp;﹝<%.Article.Year%>﹞&nbsp;<%.Article.No%>号</div>
                         <div class="intr_title" style="padding-top: 158px;color: #000;"><%.Article.Title%></div>
                         <div class="conTxt">
-                            <%.Article.Content%>
+                            <%.Article.Content%><%.Article.Attach%>
                         </div>
                         <div class="clear"></div>
                         <%if .Show%>
@@ -458,9 +458,9 @@
                                 </tr>
                             </table>
                             <div style="margin: 5px 5px;background-color: #e6e4e4;text-align: right;padding-top: 6px;padding-bottom: 6px;">
-                                <form action="/signArticle" method="post">
-                                    <input type="text" value="请输入用户名" style="padding-left: 1em;padding-right:1em;color: #aaaaaa;width: 6em;height: 2em;line-height:2em;" name="name">
-                                    <input type="password" value="请输入密码" style="padding-left: 1em;padding-right:1em;color: #aaaaaa;width: 6em;height: 2em;line-height:2em;" name="pwd">
+                                <form action="/signArticle" method="post" name="tijiao">
+                                    <input type="text" value="请输入用户名" onfocus="tijiao.name.value=''" style="padding-left: 1em;padding-right:1em;color: #aaaaaa;width: 6em;height: 2em;line-height:2em;" name="name">
+                                    <input type="password" value="请输入密码"  onfocus="tijiao.pwd.value=''"  style="padding-left: 1em;padding-right:1em;color: #aaaaaa;width: 6em;height: 2em;line-height:2em;" name="pwd">
                                     <input type="submit" style="height: 2.4em;width: 4em;margin-right: 1em;background-color: #087cf3;color: white;outline: none" value="签收">
                                     <input type="hidden" name="id" value="<%call .Hex .Article.Id%>">
                                 </form>
@@ -483,12 +483,12 @@
                         <div class="pager">
                             <div><strong><font color="red">上一篇：</font></strong>
                                 <%if .Pre%>
-                                <a href="/showHongtouArticle?id=<%call .Hex .Pre.Id%>" title="<%.Pre.Title%>"><%.Pre.Title%></a>
+                                <a href="/showArticle?id=<%call .Hex .Pre.Id%>" title="<%.Pre.Title%>"><%.Pre.Title%></a>
                                 <%else%>没有了<%end%>
                             </div>
                             <div><strong><font color="red">下一篇：</font></strong>
                                 <%if .Next%>
-                                <a href="/showHongtouArticle?id=<%call .Hex .Next.Id%>" title="<%.Next.Title%>"><%.Next.Title%></a>
+                                <a href="/showArticle?id=<%call .Hex .Next.Id%>" title="<%.Next.Title%>"><%.Next.Title%></a>
                                 <%else%>没有了<%end%>
                             </div>
                         </div>

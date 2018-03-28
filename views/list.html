@@ -8,14 +8,14 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>政府网站模板</title>
-    <meta name="keywords" content="政府方案">
+    <title>府谷交警</title>
+    <meta name="keywords" content="府谷交警">
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="/css/common.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/label.css">
     <link href="/css/index.css" type="text/css" rel="stylesheet">
-
+    <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
     <script type="text/javascript" src="/js/config.js"></script>
     <script type="text/javascript" src="/js/util.js"></script>
     <script type="text/javascript" src="/js/zh-cn.js"></script>
@@ -169,7 +169,7 @@
         }
     </style>
 </head>
-<body>
+<body  ms-controller="fugujiaojing" >
 <div id="header">
     <div class="head_top">
         <div class="wp_inner">
@@ -341,74 +341,21 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <div class="nav mtop">您的位置：
         <a href="#">首页</a>
-        &gt;&gt; <a href="1116.shtml">一线传真</a>
-        &gt;&gt; <a href="1241.shtml">一线传真</a>
-        &gt;&gt; <a href="1242.shtml">一线传真</a>
+        &gt;&gt; <a href="/list?class=<%.Class%>"><%.Class%></a>
+        <%if .Category%>&gt;&gt; <a href="/list?category=<%.Category%>"><%.Category%></a><%end%>
     </div>
     <div class="govMain">
         <div class="dt_left">
             <div class="left_nav">
-                <div class="head10"><span class="title16"><a href="1241.shtml">一线传真</a></span></div>
+                <div class="head10" style="cursor: pointer;" onclick="window.location.href='/list?class=<%.Class%>'"><span class="title16"><a href="/list?class=<%.Class%>"><%.Class%></a></span></div>
                 <div class="main3" style="padding:10px 10px 60px 10px;">
                     <ul class="menu_list_1" id="left_nav_url">
-                        <li class="cid_1241 ">
-                            <dt><a href="1241.shtml">一线传真</a></dt>
-                            <!--  <dl style="display:block;">
-                             <dd><a href="1242.shtml">旅游动态</a></dd>
-                             <dd><a href="1246.shtml">旅游视频</a></dd>
-                             <dd><a href="1243.shtml">旅游公告</a></dd>
-                             <dd><a href="1244.shtml">旅游帮助</a></dd>
-                             </dl>   -->
+                        <%range .AllCategorys%>
+                        <li class="cid_1241 "  onclick="window.location.href='/list?category=<%.%>'">
+                            <dt><a href="/list?category=<%.%>"><%.%></a></dt>
+                            
                         </li>
-                        <li class="cid_1218 ">
-                            <dt><a href="1218.shtml">一线传真</a></dt>
-                            <dl style="display:none">
-                                <dd><a href="1230.shtml">旅游景点</a></dd>
-                                <dd><a href="1231.shtml">生态景点</a></dd>
-                                <dd><a href="1232.shtml">民俗景点</a></dd>
-                            </dl>
-                        </li>
-                        <li class="cid_1221 ">
-                            <dt><a href="1221.shtml">一线传真</a></dt>
-                        </li>
-                        <li class="cid_1219 ">
-                            <dt><a href="1219.shtml">一线传真</a></dt>
-                            <dl style="display:none">
-                                <dd><a href="1224.shtml">老字号</a></dd>
-                                <dd><a href="1225.shtml">本土小吃</a></dd>
-                                <dd><a href="1226.shtml">特色餐馆</a></dd>
-                            </dl>
-                        </li>
-                        <li class="cid_1220 ">
-                            <dt><a href="1220.shtml">一线传真</a></dt>
-                            <dl style="display:none">
-                                <dd><a href="1227.shtml">星级酒店</a></dd>
-                                <dd><a href="1228.shtml">商务酒店</a></dd>
-                                <dd><a href="1229.shtml">经济酒店</a></dd>
-                            </dl>
-                        </li>
-                        <li class="cid_1222 ">
-                            <dt><a href="1222.shtml">一线传真</a></dt>
-                            <dl style="display:none">
-                                <dd><a href="1233.shtml">本县特产</a></dd>
-                                <dd><a href="1234.shtml">旅游商品</a></dd>
-                                <dd><a href="1235.shtml">大型商场</a></dd>
-                                <dd><a href="1236.shtml">购物街区</a></dd>
-                            </dl>
-                        </li>
-                        <li class="cid_1223 ">
-                            <dt><a href="1223.shtml">一线传真</a></dt>
-                            <dl style="display:none">
-                                <dd><a href="1237.shtml">KTV</a></dd>
-                                <dd><a href="1238.shtml">休闲保健</a></dd>
-                                <dd><a href="1239.shtml">演艺吧</a></dd>
-                                <dd><a href="1240.shtml">酒吧</a></dd>
-                            </dl>
-                        </li>
-                        <li class="cid_1245 ">
-                            <dt><a href="1245.shtml">一线传真</a></dt>
-                        </li>
-
+                        <%end%>
                     </ul>
                     <script type="text/javascript">
                         (function () {
@@ -430,71 +377,34 @@
         <div class="dt_right">
             <div class="border1">
                 <div class="head11">
-                    <span class="title19">一线传真</span>
+                    <span class="title19"><%if .Category%><%.Category%><%else%><%.Class%><%end%></span>
                 </div>
                 <div class="main1">
                     <ul class="label_ul_b">
                         <br>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;&emsp;&emsp;{{el.title}}</a>
                         </li>
                         <br>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li> <li class="label_arrow_1" style=";">
-                        <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                    </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}</a>
                         </li>
                         <br>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
+                        <li ms-for="($index, el) in @arr3"  class="label_arrow_1" style="overflow: hidden;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}</a>
                         </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-                        <li class="label_arrow_1" style=";">
-                            <span class="label_datatime">2016-03-25</span><a href="1219.shtml" target="_blank" title="[一线传真]&emsp;&emsp;富士康2万员工巡游如狂欢节 宣誓珍惜生命"><span style="color: #0064d4;">[一线传真]</span>&emsp;交警龙SIR夜夜拼命工作 如愿甚至加薪</a>
-                        </li>
-
                         <li class="clear"></li>
                     </ul>
-                    <div class="mtop pages" id="page">
-                        19条
-                        1/1页
-                        <a class="s1 s3">首页</a>
-                        <a class="s1 s3">&lt;&lt;</a>
-                        <a class="s1 s3">上一页</a>
-                        <span class="s1">1</span>
-                        <a class="s1 s3">下一页</a>
-                        <a class="s1 s3">&gt;&gt;</a>
-                        <a class="s1 s3">末页</a>
-                        <input type="text" style="width: 2em;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.15em;vertical-align: bottom">
+                    
+                   <div class="mtop pages" id="page">
+                        共{{@pagenum}}页{{@count}}条
+                        <a class="s1 s3"   ms-on-click="jump(1)">首页</a>
+                        <a class="s1 s3"  ms-on-click="pre(@page)">&lt;&lt;</a>
+                        <a class="s1 s3"   ms-on-click="pre(@page)">上一页</a>
+                        <span class="s1 s3" style="text-align: center;"><input ms-on-keyup="jump(@page)"   ms-duplex="@page" style="border: none;width: 30px"></span>
+                        <a class="s1 s3"  ms-on-click="next(@page)">下一页</a>
+                        <a class="s1 s3"  ms-on-click="next(@page)">&gt;&gt;</a>
+                        <a class="s1 s3"   ms-on-click="jump(@pagenum)">末页</a>
                     </div>
                 </div>
             </div>
@@ -536,6 +446,245 @@
         <div id="footer_login" style="text-align:center;clear:both;font-size:14px;"></div>
     </div>
 </div>
+    <script src="/js/ku/avalon.js "></script>
+    <script type="text/javascript">
+    	
+var meiyenum=15;
+var isca=<%.Category%>;
+var iscl=<%.Class%>
+var net=function(page){
+
+}
+var searchV;
+avalon.filters.uppercase = function (str) {
+    var searchValue=searchV;
+    var length=searchValue.length;
+    var kaishi=str.indexOf(searchValue);
+    var jieshu=kaishi+length;
+    console.log(kaishi);
+    var str1=str.substring(0,kaishi);
+    var str2=str.substring(jieshu,str.length);
+    var str3='<span style="color:red">'+searchValue+'</span>';
+    var str4=str1+str3+str2;
+    return str4;
+}
+var vm = avalon.define({
+  $id: "fugujiaojing",
+  isbox:false,
+  arr: [],
+  arr1:[],
+  arr2:[],
+  arr3:[],
+  count:0,
+  pagenum:0,
+  page:1,
+  pagemeiye:15,
+  searchValue:'',
+  aaa:"",
+  search:function(sousuovalue){
+    searchV=sousuovalue
+   $.ajax({
+    url:"/searchArticle?class="+iscl+"&category="+isca,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    xhrFields: {
+        withCredentials: true
+     },
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        
+    },
+    success:function(data,status){
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
+
+      vm.page=1;
+      vm.count =data.count;
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+      }
+  });
+  
+},
+  del:function(index){
+    function a(){
+       $.ajax({
+        url:"/searchArticle?id="+index+"&searchValue="+vm.searchValue,    //请求的url地址
+        dataType:"json",   //返回格式为json
+        async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+        type:"GET",   //请求方式
+        beforeSend:function(){
+            //请求前的处理
+        },
+        success:function(data,status){
+           $.ajax({
+              url:"/searchArticle?page="+vm.page,    //请求的url地址
+              dataType:"json",   //返回格式为json
+              async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+              type:"GET",   //请求方式
+              beforeSend:function(){
+                  //请求前的处理
+              },
+              success:function(data,status){
+                  vm.arr1=data.data.slice(0,5);
+                  vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
+                  vm.count =data.count;
+                vm.page=1;
+                vm.pagenum=parseInt(vm.count/meiyenum)+1;
+              },
+              complete:function(){
+                  //请求完成的处理
+              },
+              error:function(){
+                  //请求出错处理
+              }
+              });
+        },
+        complete:function(){
+            //请求完成的处理
+        },
+        error:function(){
+            //请求出错处理
+        }
+        });
+    }
+    var r=confirm("您确认要删除吗？");
+    if(r){
+      a();
+    } else{
+
+    }  
+   
+  },
+  click:function(){
+    this.isbox=!this.isbox;
+
+  },
+  divmouseover:function (index) {
+    this.arr[index].ishidden=true;
+  },
+  jump:function(page){
+    vm.page=parseInt(page) ;
+    $.ajax({
+    url:"/searchArticle?page="+page+"&class="+iscl+"&category="+isca,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(data,status){
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
+      vm.count =data.count;
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+});
+  },
+  pre:function(page){
+    if(page<=1){
+      return;
+    }
+    $.ajax({
+    url:"/searchArticle?page="+(page-1)+"&class="+iscl+"&category="+isca,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(data,status){
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
+      vm.page=page-1;
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+});
+  },
+  next:function(page){
+    if(page>=vm.pagenum){
+      return;
+    }
+
+   $.ajax({
+    url:"/searchArticle?page="+(page+1)+"&class="+iscl+"&category="+isca,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(data,status){
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
+      vm.page=page+1;
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+  });
+  },
+  divmouseout:function(index){
+    this.arr[index].ishidden=false;
+  }
+ })
+
+$.ajax({
+    url:"/searchArticle?page=1"+"&class="+iscl+"&category="+isca,    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    type:"GET",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(data,status){
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
+      vm.count =data.count;
+      vm.page=1;
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;
+      console.log(vm.pagenum)
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+});
+ // $.get("/admin/getArticles?page=1",function(data,status){
+ //      vm.arr=data.data;
+ //      console.log(vm.arr)
+ //      for(var i=0;i< vm.arr.length;i++){
+ //         vm.arr[i].ishidden=false;
+ //    
+    </script>
+
 </body>
 </html>
 <%end%>

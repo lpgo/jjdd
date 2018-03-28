@@ -56,21 +56,21 @@
                         移动文章<span style="color: white">*</span>
                          <select style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" >
                             <option value="通知通报" <%if eq .Article.Category "通知通报"%>selected='selected'<%end%>>通知通报</option>
-                             <option value="文件简报" <%if eq .Article.Category "文件简报"%>selected='selected'<%end%>>文件简报</option>
+                             <option value="文件简报" <%if eq .Article.Category "交管简报"%>selected='selected'<%end%>>文件简报</option>
                             <option value="人事文件" <%if eq .Article.Category "人事文件"%>selected='selected'<%end%>>人事文件</option>
                             <option value="交安委文件" <%if eq .Article.Category "交安委文件"%>selected='selected'<%end%>>交安委文件</option>
-                            <option value="简报动态" <%if eq .Article.Category "简报动态"%>selected='selected'<%end%>>简报动态</option>
                             <option value="大队活动" <%if eq .Article.Category "大队活动"%>selected='selected'<%end%>>大队活动</option>
 
                          </select>
                     </div>    
                     
                     <input type="hidden" name="id" value="<%call .Hex .Article.Id%>">
+                    <input type="hidden" name="isRed" value="<%.Article.IsRed%>">
                    
                    
                     <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
                     &emsp;&emsp;
-                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/admin'">
+                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/admin?category=<%.Article.Category%>&isRed=<%.Article.IsRed%>'">
 
                 </form>
             </div>

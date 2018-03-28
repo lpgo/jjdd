@@ -286,9 +286,9 @@ code.hide();
           var str;
           for(var i=0;i<data.length;i++){
             if(i%2==0){
-              str+=" <tr class='firstTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td ><td >"+data[i].tel+"</td><td>"+data[i].phone+"</td></tr>"
+              str+=" <tr class='firstTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td ><td >"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
             }else{
-              str+=  " <tr class='lastTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td><td>"+data[i].tel+"</td><td>"+data[i].phone+"</td></tr>"
+              str+=  " <tr class='lastTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td><td>"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
             }
           }
          $(".removeDate").remove();

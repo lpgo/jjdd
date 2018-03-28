@@ -40,10 +40,10 @@
                     <input type="hidden" name="category" value="<%.Article.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
+                        <%range .Subjects%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
@@ -89,14 +89,14 @@
                     </div>
                     <%end%>
                     <%if .Create%>
-                    <form action="/admin/previewHongtou" method="post" enctype="multipart/form-data"   onsubmit="return CheckPost();">
+                    <form action="/admin/preview" method="post" enctype="multipart/form-data"   onsubmit="return CheckPost();">
                     <input type="hidden" name="category" value="<%.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                        <%range .Subjects%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" >&emsp;<%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
@@ -141,14 +141,14 @@
                     </div>
                     <%end%>
                     <%if .Edit%>
-                    <form action="/admin/previewHongtou" method="post" enctype="multipart/form-data">
+                    <form action="/admin/preview" method="post" enctype="multipart/form-data"   onsubmit="return CheckPost();">
                     <input type="hidden" name="category" value="<%.Article.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="打非专项" >&emsp;打非专项
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="行动要迅速">&emsp;行动要迅速
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="严打五十天">&emsp;严打五十天
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
+                        <%range .Subjects%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
@@ -194,6 +194,7 @@
 
                     </div>
                     <%end%>
+                    <input type="hidden" name="isRed" value="true">
                 </form>
             </div>
             <div id="footer">

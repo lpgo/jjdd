@@ -25,13 +25,8 @@ import (
 	创建标准的RESTful  api
 */
 
-var clazz map[string]string = map[string]string{
-	"文件简报":  "文件简报",
-	"通知通报":  "文件简报",
-	"大队活动":  "文件简报",
-	"人事文件":  "文件简报",
-	"交安委文件": "文件简报",
-	"简报动态":  "文件简报"}
+var clazz map[string][]string = map[string][]string{
+	"文件简报": []string{"交管简报", "通知通报", "大队活动", "人事文件", "交安委文件"}}
 
 type Any interface{}
 
@@ -157,11 +152,8 @@ func main() {
 	/*--------页面--------*/
 	admin.GET("/page/publish", publishPage)
 	admin.GET("/page/publish_hongtou", publishHongtouPage)
-	admin.GET("/page/preview", previewPage)
-	admin.GET("/page/hongtou", hongtouPage)
 	admin.GET("/page/admin", adminPage)
 	admin.GET("/page/modifyPage", modifyArticlePage)
-	admin.GET("/page/modifyHongtouPage", modifyHongtouArticlePage)
 	admin.GET("/page/set_article", setArticlePage)
 
 	admin.GET("/page/add_user", addUserPage)
@@ -190,9 +182,7 @@ func main() {
 	//文章
 	admin.Any("/publish", publishArticle)
 	admin.Any("/preview", previewArticle)
-	admin.Any("/previewHongtou", previewHongtouArticle)
 	admin.Any("/previewById", previewArticleById)
-	admin.Any("/previewHongtouById", previewHongtouArticleById)
 	admin.Any("/getArticles", getArticles)
 	admin.Any("/delArticle", delArticle)
 	admin.Any("/auditing", auditingArticle)
@@ -240,15 +230,13 @@ func main() {
 	e.Any("/searchDirectoryByTel", searchDirectoryByTel)
 	e.Any("/searchDirectoryByPhone", searchDirectoryByPhone)
 	e.Any("/showArticle", showArticleById)
-	e.Any("/showHongtouArticle", showHongtouArticleById)
 	e.Any("/signArticle", signArticle)
-	e.Any("/articleList", articleListPage)
 	e.Any("/searchArticle", searchArticle)
 
 	e.GET("/directory", directoryPage)
 	e.GET("/search", searchPage)
+	e.GET("/list", listPage)
 	e.GET("/", indexPage)
-	e.GET("/list.html", listPage)
 	e.GET("/login.html", loginPage)
 	e.Any("/login", login)
 
@@ -459,7 +447,7 @@ func getArticles(c echo.Context) error {
 
 //发布时预览
 func previewArticle(c echo.Context) error {
-	if c.QueryParam("isRed") == "true" {
+	if c.FormValue("isRed") == "true" {
 		return previewHongtouArticle(c)
 	}
 	article := db.Article{
@@ -481,6 +469,29 @@ func previewArticle(c echo.Context) error {
 //发布时预览
 func previewHongtouArticle(c echo.Context) error {
 
+	str := `<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
+    <br/>
+	</p>
+	<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
+	    <br/>
+	</p>
+	<p style="margin-top: 5px; margin-bottom: 5px; margin-left: 0px; line-height: 37px; text-align: right;position: relative;">
+	    <img src="/images/zhangzi.gif" style="position: absolute;width: 175px; height: 180px;right: 100px;top: -60px;"/> 
+	 &nbsp; &nbsp;<span style="font-family: 仿宋, FangSong; font-size: 21px;padding-right:60px"> 府谷县公安局交通警察大队</span>
+	</p>
+	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
+	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px">%s年%s月%s日</span>
+	</p>
+	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
+	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px"><br/></span>
+	</p>
+	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
+	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px"><br/></span>
+	</p>
+	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px;">
+	    <br/>
+	</p>`
+
 	article := db.Article{
 		Subject:   c.FormValue("subject"),
 		Title:     c.FormValue("title"),
@@ -489,6 +500,7 @@ func previewHongtouArticle(c echo.Context) error {
 		Signature: c.FormValue("signature"),
 		From:      c.FormValue("from"),
 		Content:   template.HTML(c.FormValue("content")),
+		Attach:    template.HTML("<p>这是添加的</p>"),
 		Category:  c.FormValue("category"),
 		Year:      c.FormValue("year"),
 		No:        c.FormValue("no"),
@@ -510,7 +522,7 @@ func previewArticleById(c echo.Context) error {
 		log.Println(err)
 		return err
 	} else {
-		if c.QueryParam("isRed") == "true" {
+		if article.IsRed {
 			return c.Render(http.StatusOK, "hongtou", map[string]db.Any{"Auditing": true, "Article": article})
 		} else {
 			return c.Render(http.StatusOK, "preview", map[string]db.Any{"Auditing": true, "Article": article})
@@ -518,28 +530,18 @@ func previewArticleById(c echo.Context) error {
 	}
 }
 
-func previewHongtouArticleById(c echo.Context) error {
-	var article db.Article
-	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
-		log.Println(err)
-		return err
-	} else {
-		return c.Render(http.StatusOK, "hongtou", map[string]db.Any{"Auditing": true, "Article": article})
-	}
-}
-
 func showArticleById(c echo.Context) error {
-	if c.QueryParam("isRed") == "true" {
-		return showHongtouArticleById(c)
-	}
 
 	var article db.Article
-	var pre, next []db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
 		log.Println(err)
 		return err
 	}
+	if article.IsRed {
+		return showHongtouArticleById(c, article)
+	}
 
+	var pre, next []db.Article
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
 	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false, "isAuditing": true}, "time", 1, &pre); err != nil {
 		log.Println(err)
@@ -561,14 +563,8 @@ func showArticleById(c echo.Context) error {
 	return c.Render(http.StatusOK, "preview", data)
 }
 
-func showHongtouArticleById(c echo.Context) error {
-	var article db.Article
+func showHongtouArticleById(c echo.Context, article db.Article) error {
 	var pre, next []db.Article
-	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
-		log.Println(err)
-		return err
-	}
-
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
 	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true, "isAuditing": true}, "time", 1, &pre); err != nil {
 		log.Println(err)
@@ -599,7 +595,7 @@ func signArticle(c echo.Context) error {
 	if err := service.SignArticle(c.FormValue("id"), user.Department); err != nil {
 		return MyRedirect(c, "/error.html")
 	} else {
-		return MyRedirect(c, "/showHongtouArticle?id="+c.FormValue("id"))
+		return MyRedirect(c, "/showArticle?id="+c.FormValue("id"))
 	}
 }
 
@@ -609,21 +605,11 @@ func modifyArticlePage(c echo.Context) error {
 		log.Println(err)
 		return err
 	} else {
-		if c.QueryParam("isRed") == "true" {
+		if article.IsRed {
 			return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
 		} else {
 			return c.Render(http.StatusOK, "publish", map[string]db.Any{"Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
 		}
-	}
-}
-
-func modifyHongtouArticlePage(c echo.Context) error {
-	var article db.Article
-	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
-		log.Println(err)
-		return err
-	} else {
-		return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"Modify": true, "Article": article, "Subjects": service.GetAllSubjects()})
 	}
 }
 
@@ -716,14 +702,14 @@ func setArticle(c echo.Context) error {
 		log.Println(err)
 		return err
 	} else {
-		return MyRedirect(c, "/admin/page/admin?category="+c.FormValue("category"))
+		return MyRedirect(c, "/admin/page/admin?category="+c.FormValue("category")+"&isRed="+c.FormValue("isRed"))
 	}
 }
 
 func login(c echo.Context) error {
 	if user := service.LoginByName(c.FormValue("name"), c.FormValue("pwd")); user != nil {
 		c.(*CustomContext).SetSession("user", user)
-		return MyRedirect(c, "/admin/page/admin?category=文件简报&menu=文件简报")
+		return MyRedirect(c, "/admin/page/admin?category=交管简报&menu=文件简报&isRed=true")
 	} else {
 		return c.Render(http.StatusOK, "login", map[string]bool{"error": true})
 	}
@@ -758,24 +744,30 @@ func publishHongtouPage(c echo.Context) error {
 	return c.Render(http.StatusOK, "publish_hongtou", data)
 }
 
-func previewPage(c echo.Context) error {
-	if c.QueryParam("isRed") == "true" {
-		return c.Render(http.StatusOK, "hongtou", nil)
-	} else {
-		return c.Render(http.StatusOK, "preview", nil)
-	}
-}
-
 func hongtouPage(c echo.Context) error {
 	return c.Render(http.StatusOK, "hongtou", nil)
 }
 
 func listPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "list", nil)
+	data := make(map[string]db.Any, 1)
+
+	if c.QueryParam("class") != "" {
+		data["Class"] = c.QueryParam("class")
+	}
+	if c.QueryParam("category") != "" {
+		data["Category"] = c.QueryParam("category")
+		if _, ok := data["Class"]; !ok {
+			data["Class"] = GetClass(c.QueryParam("category"))
+		}
+	}
+
+	data["AllCategorys"] = GetAllCategorys(data["Class"].(string))
+
+	return c.Render(http.StatusOK, "list", data)
 }
 func adminPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category"))})
+	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "IsRed": c.QueryParam("isRed")})
 }
 func changePwdPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
@@ -797,17 +789,17 @@ func setArticlePage(c echo.Context) error {
 func saveRotaPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	rota, have := service.GetRota()
-	return c.Render(http.StatusOK, "rota", map[string]db.Any{"User": user, "First": !have, "Rota": rota})
+	return c.Render(http.StatusOK, "rota", map[string]db.Any{"User": user, "First": !have, "Rota": rota, "Menu": "网站管理"})
 }
 
 func addLinkPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"User": user})
+	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"User": user, "Menu": "网站管理"})
 }
 
 func linkListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "linklist", map[string]db.Any{"User": user})
+	return c.Render(http.StatusOK, "linklist", map[string]db.Any{"User": user, "Menu": "网站管理"})
 }
 
 func indexPage(c echo.Context) error {
@@ -843,7 +835,7 @@ func loginPage(c echo.Context) error {
 func addUserPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	deps := service.GetAllDeps()
-	return c.Render(http.StatusOK, "adduser", map[string]db.Any{"User": user, "Deps": deps})
+	return c.Render(http.StatusOK, "adduser", map[string]db.Any{"User": user, "Deps": deps, "Menu": "网站管理"})
 }
 
 func addDirectoryPage(c echo.Context) error {
@@ -855,7 +847,7 @@ func addDirectoryPage(c echo.Context) error {
 		return err
 	}
 
-	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"User": user, "Update": false, "Deps": deps})
+	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"User": user, "Update": false, "Deps": deps, "Menu": "网站管理"})
 }
 
 func directoryListPage(c echo.Context) error {
@@ -865,7 +857,7 @@ func directoryListPage(c echo.Context) error {
 		log.Println(err)
 		return err
 	}
-	return c.Render(http.StatusOK, "directorylist", map[string]db.Any{"User": user, "Deps": deps})
+	return c.Render(http.StatusOK, "directorylist", map[string]db.Any{"User": user, "Deps": deps, "Menu": "网站管理"})
 }
 
 func modifyDirectoryPage(c echo.Context) error {
@@ -875,17 +867,17 @@ func modifyDirectoryPage(c echo.Context) error {
 		log.Println(err)
 		return err
 	}
-	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Deps": deps, "Name": c.QueryParam("name"), "DepName": c.QueryParam("dep"), "Job": c.QueryParam("job"), "Tel": c.QueryParam("tel"), "Phone": c.QueryParam("phone")})
+	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Deps": deps, "Name": c.QueryParam("name"), "DepName": c.QueryParam("dep"), "Job": c.QueryParam("job"), "Tel": c.QueryParam("tel"), "Phone": c.QueryParam("phone"), "Menu": "网站管理"})
 }
 
 func modifyLinkPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name"), "Category": c.QueryParam("category"), "Url": c.QueryParam("url")})
+	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name"), "Category": c.QueryParam("category"), "Url": c.QueryParam("url"), "Menu": "网站管理"})
 }
 
 func depListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "deplist", map[string]db.Any{"User": user})
+	return c.Render(http.StatusOK, "deplist", map[string]db.Any{"User": user, "Menu": "网站管理"})
 }
 
 func subjectListPage(c echo.Context) error {
@@ -895,7 +887,7 @@ func subjectListPage(c echo.Context) error {
 
 func addDepPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"User": user, "Update": false})
+	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"User": user, "Update": false, "Menu": "网站管理"})
 }
 
 func addSubjectPage(c echo.Context) error {
@@ -910,7 +902,7 @@ func modifySubjectPage(c echo.Context) error {
 
 func modifyDepPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name")})
+	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name"), "Menu": "网站管理"})
 }
 
 func modifyUserPage(c echo.Context) error {
@@ -928,6 +920,8 @@ func modifyUserPage(c echo.Context) error {
 	case "部门":
 		data["BM"] = true
 	}
+
+	data["Menu"] = "网站管理"
 
 	return c.Render(http.StatusOK, "adduser", data)
 }
@@ -1052,7 +1046,7 @@ func userListPage(c echo.Context) error {
 		log.Println(err)
 		return err
 	} else {
-		return c.Render(http.StatusOK, "userlist", map[string]db.Any{"users": users, "User": user})
+		return c.Render(http.StatusOK, "userlist", map[string]db.Any{"users": users, "User": user, "Menu": "网站管理"})
 	}
 }
 
@@ -1226,7 +1220,7 @@ func uploadFile(c echo.Context) error {
 	if _, err = io.Copy(dst, src); err != nil {
 		return err
 	}
-	return c.JSON(http.StatusOK, map[string]string{"state": "SUCCESS", "url": fileName, "title": file.Filename, "origin": file.Filename})
+	return c.JSON(http.StatusOK, map[string]string{"state": "SUCCESS", "url": fileName, "title": file.Filename, "original": file.Filename, "fileType": "doc", "type": "doc"})
 }
 
 func imageManager(c echo.Context) error {
@@ -1277,7 +1271,18 @@ func Ten(a int) bool {
 }
 
 func GetClass(category string) string {
-	return clazz[category]
+	for k, v := range clazz {
+		for _, c := range v {
+			if c == category {
+				return k
+			}
+		}
+	}
+	return ""
+}
+
+func GetAllCategorys(class string) []string {
+	return clazz[class]
 }
 
 func AddSpace(s string) template.HTML {
