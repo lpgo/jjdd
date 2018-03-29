@@ -17,6 +17,7 @@ import (
 	"strconv"
 	//"strings"
 	//"github.com/Luxurioust/excelize"
+	//"fmt"
 	"log"
 	"time"
 )
@@ -124,6 +125,7 @@ func main() {
 	funmap["Two"] = Two
 	funmap["Ten"] = Ten
 	funmap["AddSpace"] = AddSpace
+	funmap["Format"] = time.Time.Format
 	temp.Funcs(funmap)
 	t := &Template{
 		templates: template.Must(temp.ParseGlob("views/*.html")),
@@ -469,7 +471,7 @@ func previewArticle(c echo.Context) error {
 //发布时预览
 func previewHongtouArticle(c echo.Context) error {
 
-	str := `<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
+	str1 := `<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
     <br/>
 	</p>
 	<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
@@ -480,7 +482,8 @@ func previewHongtouArticle(c echo.Context) error {
 	 &nbsp; &nbsp;<span style="font-family: 仿宋, FangSong; font-size: 21px;padding-right:60px"> 府谷县公安局交通警察大队</span>
 	</p>
 	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
-	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px">%s年%s月%s日</span>
+	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px">`
+	str2 := `</span>
 	</p>
 	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
 	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px"><br/></span>
@@ -492,6 +495,8 @@ func previewHongtouArticle(c echo.Context) error {
 	    <br/>
 	</p>`
 
+	year, month, day := GetChineseDate()
+
 	article := db.Article{
 		Subject:   c.FormValue("subject"),
 		Title:     c.FormValue("title"),
@@ -500,7 +505,7 @@ func previewHongtouArticle(c echo.Context) error {
 		Signature: c.FormValue("signature"),
 		From:      c.FormValue("from"),
 		Content:   template.HTML(c.FormValue("content")),
-		Attach:    template.HTML("<p>这是添加的</p>"),
+		Attach:    template.HTML(str1 + year + "年" + month + "月" + day + "日" + str2),
 		Category:  c.FormValue("category"),
 		Year:      c.FormValue("year"),
 		No:        c.FormValue("no"),
@@ -808,7 +813,8 @@ func indexPage(c echo.Context) error {
 	hotArticle := service.GetHotArticle()
 	imageArticles := service.GetImageArticles()
 	subjects := service.GetAllSubjects()
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"rota": rota, "links": links, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
+	trafficArticles := service.GetTrafficArticles()
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
 }
 
 func directoryPage(c echo.Context) error {
@@ -1292,4 +1298,88 @@ func AddSpace(s string) template.HTML {
 	} else {
 		return template.HTML(s)
 	}
+}
+
+func GetChineseDate() (string, string, string) {
+	now := time.Now()
+	var year, month, day string
+	for _, v := range itoa(now.Year()) {
+		year += getword(string(v))
+	}
+
+	if now.Month()+1 == 10 {
+		month = "十"
+	} else if now.Month()+1 > 10 {
+		month = "十" + getword(string(itoa(int(now.Month()))[1]))
+	} else {
+		month = getword(itoa(int(now.Month())))
+	}
+
+	if now.Day() < 10 {
+		day = getword(itoa(now.Day()))
+	} else if now.Day() < 20 {
+		day = "十" + getword(string(itoa(now.Day())[1]))
+	} else {
+		log.Println("------------", itoa(now.Day()))
+		if getword(string(itoa(now.Day())[1])) != "〇" {
+			day = getword(string(itoa(now.Day())[0])) + "十" + getword(string(itoa(now.Day())[1]))
+		} else {
+			day = getword(string(itoa(now.Day())[0])) + "十"
+		}
+	}
+	log.Println("-------------------", year, "--", month, "--", day)
+	return year, month, day
+}
+func getword(s string) string {
+	var str string
+	switch s {
+	case "1":
+		str = "一"
+	case "2":
+		str = "二"
+	case "3":
+		str = "三"
+	case "4":
+		str = "四"
+	case "5":
+		str = "五"
+	case "6":
+		str = "六"
+	case "7":
+		str = "七"
+	case "8":
+		str = "八"
+	case "9":
+		str = "九"
+	case "0":
+		str = "〇"
+
+	}
+	return str
+}
+
+func itoa(s int) string {
+	d := strconv.Itoa(s)
+	return d
+}
+
+func GetWeek(w time.Weekday) string {
+	var s string
+	switch w {
+	case time.Sunday:
+		s = "星期日"
+	case time.Monday:
+		s = "星期一"
+	case time.Tuesday:
+		s = "星期二"
+	case time.Saturday:
+		s = "星期六"
+	case time.Thursday:
+		s = "星期四"
+	case time.Wednesday:
+		s = "星期三"
+	case time.Friday:
+		s = "星期五"
+	}
+	return s
 }

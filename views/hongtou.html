@@ -209,120 +209,8 @@
 </head>
 
 <body>
-    <div id="header">
-        <div class="head_top">
-            <div class="wp_inner">
-                <div class="headz fl">
-                    <div class="fl">欢迎您访问某某县人民政府网！</div>
-                    <div class="fl" id="header_t"> <span id="header_login" class="user-login"><span id="login_info" style="display:none"><span style="margin-left:0px;"><a href="#"><font color="#0000ff"><b class="username"></b></font></a>&nbsp;<a class="rolename"></a> 欢迎您回来！&nbsp;<a href="#"><font color="#FF7F04"><b>会员中心</b></font></a> <a href="#" style="display:none" target="_blank"><font color="red">你有新信息(<u class="new_messages"></u>)</font></a> <a href="#" onclick="return ajax_logout()">安全退出</a></span></span><span id="login_link"><a href="#">注册</a> | <a href="#">登录</a></span>
-                        </span>
-                    </div>
-                </div>
-                <div class="head_dh fr">
-                    <ul>
-                        <li class="toggleCode"> <a class="phone" href="javascript:void(0)">手机版</a>
-                            <div class="codeDiv" style="display: none;"></div>
-                        </li>
-                        <li><span>|</span><a class="each_item goh" onclick="this.style.behavior=&#39;url(#default#homepage)&#39;;this.setHomePage(&#39;lanse&#39;);" href="javascript:void(0)">设为首页</a></li>
-                        <li><span>|</span><a class="each_item collect" onclick="try{window.external.AddFavorite(&#39;lanse&#39;, &#39;#&#39;);}catch(e){window.sidebar.addPanel(&#39;#&#39;, &#39;lanse&#39;, &#39;&#39;);}" href="javascript:alert('请按Ctrl+D组合键收藏');">收藏本站</a></li>
-                        <li><span>|</span><a class="cont" href="#" target="_blank">联系我们</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
-        (function() {
-            var num = $("#jsNav_9647 li").length;
-            $("#play_9647 ul li:first").css("display", "block");
-            $("#jsNav_9647 li:first").addClass("over");
-            var curr = 0;
-            $("#jsNav_9647 li").each(function(i) {
-                $(this).click(function() {
-                    curr = i;
-                    $("#play_9647 ul li").eq(i).css("z-index", "10").siblings("li").css("z-index", "1");
-                    $("#play_9647 ul li").eq(i).fadeIn(1500).siblings("li").fadeOut(1500);
-                    $(this).siblings("li").removeClass("over").end().addClass("over");
-                    return false;
-                });
-            });
-            //自动翻
-            var timer = setInterval(function() {
-                todo = (curr + 1) % num;
-                $("#jsNav_9647 li").eq(todo).click();
-            }, 9000);
+            <%template "headerindex" .%>
 
-            //鼠标悬停在触发器上时停止自动翻
-            $("#jsNav_9647 li").hover(
-                function() {
-                    clearInterval(timer);
-                },
-                function() {
-                    timer = setInterval(function() {
-                        todo = (curr + 1) % num;
-                        $("#jsNav_9647 li").eq(todo).click();
-                    }, 5000);
-                }
-            );
-        })();
-        </script>
-    </div>
-    <div class="head_logo wp_inner" style="background: transparent url('images/indextop.jpg') no-repeat;">
-        <div class="logo"><a href="#"><img src="/images/logo.gif" style="width: 45%;margin-left:220px;margin-top: -5px"></a></div>
-        <div class="head_right">
-            <div class="search_form">
-                <form action="search" target="_blank" method="get" name="form1" id="form1">
-                    <input type="text" value="" class="keyword" id="keyword" name="keyword">
-                    <input type="submit" class="submitbtn" value="" id="button" name="button">
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
-    <div id="nav">
-        <!--<div class="zuo"></div>-->
-        <!--<div class="you"></div>-->
-        <div class="nav_menu clearfix">
-            <ul id="menu_nav">
-                <li class=""><a href="#" target="" class="nav1">首   页</a> </li>
-                <li class=""><a href="743.shtml" target="" class="nav2">政府介绍</a>
-                    <dl style="display: none; left: 162px;">
-                        <dt><a href="1039.shtml" target="">政府概况</a></dt>
-                        <dt><a href="746.shtml" target="">经济发展与投资</a></dt>
-                        <dt><a href="1040.shtml" target="">自然地理</a></dt>
-                        <dt><a href="745.shtml" target="">城市名片</a></dt>
-                        <dt><a href="1003.shtml" target="">文化教育</a></dt>
-                        <dt><a href="1041.shtml" target="">城市大事记</a></dt>
-                    </dl>
-                </li>
-                <li class=""><a href="735.shtml" target="" class="nav3">政务公开</a>
-                    <dl style="display: none; left: 324px;">
-                        <dt><a href="1035.shtml" target="_blank">信息公开指南</a></dt>
-                        <dt><a href="773.shtml" target="_blank">领导之窗</a></dt>
-                        <dt><a href="707.shtml" target="_blank">信息公开目录</a></dt>
-                        <dt><a href="784.shtml" target="_blank">部门乡镇信息公开</a></dt>
-                        <dt><a href="#" target="_blank">依申请信息公开</a></dt>
-                        <dt><a href="#" target="_blank">信息公开年报</a></dt>
-                        <dt><a href="740.shtml" target="_blank">信息公开负责机构</a></dt>
-                        <dt><a href="8.shtml" target="_blank">政务公开评议</a></dt>
-                    </dl>
-                </li>
-                <li class=""><a href="788.shtml" target="" class="nav4">办事服务</a> </li>
-                <li class=""><a href="index.php/opinion-main" target="" class="nav5">网络问政</a> </li>
-                <li class=""><a href="734.shtml" target="" class="nav6">招商投资</a>
-                    <dl style="display: none; left: 810px;">
-                        <dt><a href="986.shtml" target="">招商资讯</a></dt>
-                        <dt><a href="767.shtml" target="">招商项目</a></dt>
-                        <dt><a href="983.shtml" target="">工业园区</a></dt>
-                        <dt><a href="766.shtml" target="">投资指南</a></dt>
-                        <dt><a href="971.shtml" target="">历年项目</a></dt>
-                        <dt><a href="768.shtml" target="">服务部门</a></dt>
-                        <dt><a href="984.shtml" target="">企业风采</a></dt>
-                    </dl>
-                </li>
-                <li class=""><a href="1116.shtml" target="" class="nav7">某某旅游</a> </li>
-            </ul>
-        </div>
-    </div>
     <script type="text/javascript">
     $(document).ready(function() {
         //**show_edit**//            
@@ -369,8 +257,8 @@
             }
         });
         </script>
-        <div class="nav mtop">
-            <a href="#">首页</a> &gt;&gt; <a href="1116.shtml">旅游频道</a> &gt;&gt; <a href="1241.shtml">旅游资讯</a> &gt;&gt; <a href="1242.shtml">旅游动态</a> &gt;&gt; 详细内容
+        <div class="nav mtop">您的位置：
+            <a href="/">首页</a> &gt;&gt; <a href="/list?class=<%.Article.Class%>"><%.Article.Class%></a> &gt;&gt; <a href="/list?category=<%.Article.Category%>"><%.Article.Category%></a> &gt;&gt;  详细内容
     
            
            
@@ -427,7 +315,7 @@
                             <%.Article.Content%><%.Article.Attach%>
                         </div>
                         <div class="clear"></div>
-                        <%if .Show%>
+                        <%if and .Show .Article.NeedSign%>
                         <div style="border: 1px solid #e6e4e4;margin: 10px 10px">
                             <div style="background-color: #dcdada;height: 20px;padding: 10px 10px;font-size: 1.1em;line-height: 20px;color: #555555">文件签收</div>
                             <style>
@@ -501,27 +389,8 @@
         </div>
         <div class="clear"></div>
     </div>
-    <div id="footer">
-        <div class="wp_inner">
-            <div class="foot">
-                <div class="foot1 fl"> <span id="_ideConac"> <a href="#" target="_blank"><img id="imgConac" vspace="0" hspace="0" border="0" src="/images/red.png" data-bd-imgshare-binded="1"></a> </span> </div>
-                <div class="foot2 fl">
-                    <div class="footnav"><a href="#">网站地图</a><span>|</span><a href="#">网站地图</a><span>|</span><a href="#">网站地图</a><span>|</span><a href="#">网站地图</a><span>|</span><a href="#">网站地图</a></div>
-                    <div class="footext"> 主办单位：某某县人民政府　承办单位：某某县电子政务信息中心　技术支持：24H
-                        <br> 备案编号：蜀ICP备14000601号 联系电话：0817-7777777　 邮箱地址：nanchong@live.cn </div>
-                </div>
-                <div class="foot3 fl">
-                    <div class="qrcode fl"> <a href="#" target="_blank" title="" style="text-decoration:none;"><img width="86" height="86" border="none" alt="" src="/images/0353d3ed7d1bfdc2.jpg"></a> </div>
-                    <div class="qrcode fr"> <a href="#" target="_blank" title="" style="text-decoration:none;"><img width="86" height="86" border="none" alt="" src="/images/0353d3ed7d1bfdc2.jpg"></a> </div>
-                </div>
-                <div class="clear"></div>
-                <div class="foot4">
-                    <span id="_span_jiucuo"><img onclick="Link(&#39;&#39;)" style="margin:0;border:0;cursor: pointer;" src="/images/jiucuo.png"></span>
-                </div>
-            </div>
-            <div id="footer_login" style="text-align:center;clear:both;font-size:14px;"></div>
-        </div>
-    </div>
+          <%template "footer" .%>
+
 
     <form action="/admin/publish" method="post">
     </form>

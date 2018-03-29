@@ -202,6 +202,14 @@ func GetImageArticles() []db.Article {
 	return articles
 }
 
+func GetTrafficArticles() []db.Article {
+	var articles = make([]db.Article, 20)
+	if err := db.FindManyOrder("article", bson.M{"isTraffic": true, "isAuditing": true}, "time", 8, &articles); err != nil {
+		log.Println(err)
+	}
+	return articles
+}
+
 func DelUser(id string) error {
 	return db.Delete("user", id)
 }
