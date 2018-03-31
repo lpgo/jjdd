@@ -155,7 +155,7 @@
                     <div class="newTab" id="tab1">
                         <div class="TabTitle" style="background: none">
                             <ul id="Tab0">
-                                <li class="active" onmouseover="nTabs(this,0);"><a style="font-size: 18px;font-weight: bold;" href="#">交管要闻</a></li>
+                                <li class="active" onmouseover="nTabs(this,0);"><a style="font-size: 18px;font-weight: bold;" href="/noLeftList?isTraffic=true">交管要闻</a></li>
                                <!--  <li>
                                     <input type="" name="" style="height:40px;width: 256px;margin-left:10px;margin-top:5px;padding-left: 10px;
     padding-right: 10px;font-size: 18px;border: 1px solid #1d7ad5;">
@@ -182,7 +182,7 @@
                 <div class="special fl">
                     <%range .subjects%>
                         <%if .IsHot%> 
-                    <a href="#"  title="" style="text-decoration:none;"><img width="1094" height="95" border="none" alt="" src="<%.Pic%>"></a>
+                    <a href="/noLeftList?subject=<%.Name%>"  title="" style="text-decoration:none;"><img width="1094" height="95" border="none" alt="" src="<%.Pic%>"></a>
                         <%end%>
                     <%end%>
                 </div>
@@ -193,20 +193,17 @@
                             <div class="boxTab fl boxtitle" id="tab2" style="border-right: none;">
                                 <div class="TabTitle boxtitle">
                                     <ul id="Tab2">
-                                        <li class="active" onmouseover="nTabs(this,0);"><a href="#">文件简报</a></li>
+                                        <li class="active" onmouseover="nTabs(this,0);"><a href="/list?class=文件简报">文件简报</a></li>
                                     </ul>
                                 </div>
                                 <div class="TabContent" style="border-right: none;height: 237px;">
                                     <div id="Tab2_Content0" style="display: block;">
                                         <div class="box-list">
                                             <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/27</span><a href="1244.shtml" target="_blank" title="²âÊÔÄÚÈÝ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1201.shtml" target="_blank" title="2011ÄêÆÎÌïÊÐº£Ñó»·¾³×´¿ö¹«±¨">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1202.shtml" target="_blank" title="ÀÏÕÅ0335×Ô¼º·¢µÃ²âÊÔÉ¾³ý">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
+                                                <%range $i,$v := .arts.文件简报%>
+                                                <li style="position: relative;"> <span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  title="<%$v.Title%>"><%Substring $v.Title 17%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;<%end%></li>
+                                                <%end%>
+                                                
                                                 <li class="clear"></li>
                                             </ul>
                                         </div>
@@ -223,50 +220,42 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
+                                            <li onclick="window.location.href='/list?category=交管简报'">交管简报</li>
+                                            <li onclick="window.location.href='/list?category=通知通报'">通知通报</li>
+                                            <li onclick="window.location.href='/list?category=人事文件'">人事文件</li>
+                                            <li onclick="window.location.href='/list?category=交安委文件'">交安委文件</li>
+                                            <li onclick="window.location.href='/list?category=大队活动'">大队活动</li>
                                         </ul>
                                     </div>
                                     <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank" style="position: relative;"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;中国打破了世界软件巨头规则&nbsp;<img style="position: absolute;top: -3px" src="images/new.gif"></a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank" style="position: relative;"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;中国打破了世界软件巨头规则&nbsp;<img style="position: absolute;top: -3px" src="images/new.gif"></a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank" style="position: relative;"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;中国打破了世界软件巨头规则&nbsp;<img style="position: absolute;top: -3px" src="images/new.gif"></a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank" style="position: relative;"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;中国打破了世界软件巨头规则&nbsp;<img style="position: absolute;top: -3px" src="images/new.gif"></a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;学英语送ipad2,45天突破听说</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;学外语，上北外！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank"><span style="color: #ff7600; ">[一线传真]</span>&nbsp;学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.交管简报%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交管简报]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
+                                            
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                                            <%range $i,$v := .arts.通知通报%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[通知通报]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.人事文件%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%> " style="position: relative;"><span style="color: #ff7600; ">[人事文件]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.交安委文件%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交安委文件]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
+                                            <li class="clear"></li>
+                                        </ul>
+                                        <ul class="infolist11" style="font-size:15px;color:#595959;">
+                                            <%range $i,$v := .arts.大队活动%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[大队活动]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                     </div>
@@ -473,7 +462,7 @@
                                 <%range .subjects%>
                                 <%if not .IsHot%>
                                 <li>
-                                    <div class="pic ztpic"><a href="http://www.SuperSlide2.com" ><img width="358" height="70" border="none" src="<%.Pic%>" /></a></div>
+                                    <div class="pic ztpic"><a href="/noLeftList?subject=<%.Name%>" ><img width="358" height="70" border="none" src="<%.Pic%>" /></a></div>
                                 </li>
                                 <%end%>
                                 <%end%>
@@ -755,72 +744,15 @@
                                 <th>发布数量</th>
                                 <th>采用数量</th>
                               </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
+                              <%range $i,$v := .statistics%>
+                                <tr>
+                                <td><%Add $i 1%></td>
+                                <td><%._id.from%></td>
+                                <td><%.count%></td>
+                                <td><%.all%></td>
                               </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>三道沟中队</td>
-                                <td>50</td>
-                                <td>40</td>
-                              </tr>
+                              <%end%>
+                              
                             </table>
                           </div>
                         <div class="new-bc" id="duchatongbao" style="padding-bottom: 10px;padding-top: 13px;display: none;">

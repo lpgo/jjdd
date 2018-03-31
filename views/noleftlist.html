@@ -1,10 +1,13 @@
-﻿<%define "search"%>
+﻿<%define "noleftlist"%>
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=GBK">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>府谷交警</title>
     <meta name="keywords" content="府谷交警">
     <meta name="description" content="">
@@ -167,57 +170,76 @@
     </style>
 </head>
 <body  ms-controller="fugujiaojing" >
+         <%template "headerindex" .%>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+//**show_edit**//                      
+        init_labelshows('header_t');
+//**menu**//
+        $('#menu_nav li>dl').hide();
+        $('#menu_nav li:first').addClass('over');
+        $('#menu_nav li').each(function () {
+            $(this).hover(
+                function () {
+                    $('#menu_nav li').removeClass();
+                    $('#menu_nav li>dl').hide();
+                    $(this).addClass('over');
+                    $(this).find('dl').show();
+                    $(this).find('dl').css({left: parseInt($(this).position().left) + 'px'});
+                },
+                function () {
+                    $(this).find('dl').hide();
+                }
+            )
+        });
+    })
+    $(".toggleCode").each(function () {
+        var code = $(this).find('.codeDiv');
+        $(this).hover(function () {
+            code.show();
+        }, function () {
+            code.hide();
+        });
+    })
+</script>
+
 
 <div id="content" class="container"> <!--中间内容部分-->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <div class="nav mtop" style="margin-top: 1em;margin-bottom: 1em;">
-        <div onclick="window.location.href='/'" style="float: left;margin-right: 1em;color: red;font-size: 1.3em;background:no-repeat url('../images/guohui1.png') ;background-position: 1px 2px;font-weight: bold;padding-left: 2em;">府谷交警</div>
-        <div class="search_form" style="float: left;width: 400px;">
-                <form>
-                    <input type="text" value="" ms-duplex="@searchValue" style="width: 300px;border: 1px solid #ccc" class="keyword" id="keyword" name="keyword">
-                    <input  style="cursor: pointer;" ms-on-click="search(@searchValue)" class="submitbtn" value="" id="button" name="button">
-                </form>
-        </div>
-    </div>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <div class="nav mtop">您的位置：
+        <a href="/">首页</a>
+        &gt;&gt; <%if eq .IsTraffic "true"%><a href="/noLeftList?isTraffic=true">交管要闻</a><%end%>
+        <%if .Subject%><a href="/noLeftList?subject=<%.Subject%>"><%.Subject%></a><%end%></div>
     <div class="govMain">
-        <div class="dt_right" style="width: 1038px">
-            <div class="border1" style="height: auto;">
-                <style type="text/css">
-                    .searchbody{
-                        margin: 1.6em 3em;
-                    }
-                    .searchbodyline{
-                        margin: 0.3em 0;
-                    }
-                </style>
-                <div class="searchbody"  ms-for="($index, el) in @arr" >
-                    <div class="searchbodyline"><a target="_blank" ms-attr="{href:'/showArticle?id='+el.id}" style="font-weight: 400;font-size: medium;color: blue;text-decoration: underline;"> <span ms-html="el.title| uppercase"></span></a></div>
-
-                    <div :visible="!el.pic" class="searchbodyline" style="font-size: 1.2em;">{{el.content}}</div>
-
-
-                    <div :visible="el.pic" class="searchbodyline" style="font-size: 1.2em;">
-                     <a href="#" style="float: left;height: 100px;width: 100px">
-                         <img ms-attr="{src:el.pic}"  src="../images/guohui.png" style="width: 100%;height: 100%">
-                     </a>   
-                     <div style="float: right;width: 850px">
-                          {{el.content}}
-                     </div>
-                     <div style="clear: both;"></div>
-                   </div>
-
-
-                    <div class="searchbodyline" style="color: #gray">发布时间：{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</div>
-
+        <div class="dt_right" style="width: 1028px">
+            <div class="border1">
+                <div class="head11">
+                    <span class="title19"><%if eq .IsTraffic "true"%>交管要闻<%end%><%if .Subject%><%.Subject%><%end%></span>
                 </div>
-
-                <div class="main1">                 
-                    <div class="mtop pages" id="page">
+                <div class="main1">
+                    <ul class="label_ul_b">
+                        <br>
+                        <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;&emsp;&emsp;{{el.title}}</a>
+                        </li>
+                        <br>
+                        <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}</a>
+                        </li>
+                        <br>
+                        <li ms-for="($index, el) in @arr3"  class="label_arrow_1" style="overflow: hidden;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}</a>
+                        </li>
+                        <li class="clear"></li>
+                    </ul>
+                    
+                   <div class="mtop pages" id="page">
                         共{{@pagenum}}页{{@count}}条
                         <a class="s1 s3"   ms-on-click="jump(1)">首页</a>
                         <a class="s1 s3"  ms-on-click="pre(@page)">&lt;&lt;</a>
                         <a class="s1 s3"   ms-on-click="pre(@page)">上一页</a>
-                        <span class="s1 s3" style="text-align: center;"><input ms-duplex="@page" ms-on-keyup="jump(@page)"  style="border: none;width: 30px"></span>
+                        <span class="s1 s3" style="text-align: center;"><input ms-on-keyup="jump(@page)"   ms-duplex="@page" style="border: none;width: 30px"></span>
                         <a class="s1 s3"  ms-on-click="next(@page)">下一页</a>
                         <a class="s1 s3"  ms-on-click="next(@page)">&gt;&gt;</a>
                         <a class="s1 s3"   ms-on-click="jump(@pagenum)">末页</a>
@@ -235,8 +257,11 @@
 
     <script src="/js/ku/avalon.js "></script>
     <script type="text/javascript">
-
+    	
 var meiyenum=15;
+var params = <%if eq .IsTraffic "true"%>"&isTraffic=true"<%end%><%if .Subject%>"&subject="+encodeURIComponent("<%.Subject%>")<%end%>;
+
+
 var net=function(page){
 
 }
@@ -257,6 +282,9 @@ var vm = avalon.define({
   $id: "fugujiaojing",
   isbox:false,
   arr: [],
+  arr1:[],
+  arr2:[],
+  arr3:[],
   count:0,
   pagenum:0,
   page:1,
@@ -266,7 +294,7 @@ var vm = avalon.define({
   search:function(sousuovalue){
     searchV=sousuovalue
    $.ajax({
-    url:"/searchArticle?searchValue="+sousuovalue,    //请求的url地址
+    url:"/searchArticle?class="+encodeURIComponent(iscl)+"&category="+encodeURIComponent(isca),    //请求的url地址
     dataType:"json",   //返回格式为json
     xhrFields: {
         withCredentials: true
@@ -277,7 +305,10 @@ var vm = avalon.define({
         
     },
     success:function(data,status){
-      vm.arr=data.data;
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
+
       vm.page=1;
       vm.count =data.count;
       vm.pagenum=parseInt(vm.count/meiyenum)+1;
@@ -311,8 +342,10 @@ var vm = avalon.define({
                   //请求前的处理
               },
               success:function(data,status){
-                vm.arr=data.data;
-                vm.count =data.count;
+                  vm.arr1=data.data.slice(0,5);
+                  vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
+                  vm.count =data.count;
                 vm.page=1;
                 vm.pagenum=parseInt(vm.count/meiyenum)+1;
               },
@@ -350,7 +383,7 @@ var vm = avalon.define({
   jump:function(page){
     vm.page=parseInt(page) ;
     $.ajax({
-    url:"/searchArticle?page="+page+"&searchValue="+vm.searchValue,    //请求的url地址
+    url:"/searchArticle?page="+page+params,    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
@@ -358,7 +391,9 @@ var vm = avalon.define({
         //请求前的处理
     },
     success:function(data,status){
-      vm.arr=data.data;
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
       vm.count =data.count;
       vm.pagenum=parseInt(vm.count/meiyenum)+1;
     },
@@ -375,7 +410,7 @@ var vm = avalon.define({
       return;
     }
     $.ajax({
-    url:"/searchArticle?page="+(page-1)+"&searchValue="+vm.searchValue,    //请求的url地址
+    url:"/searchArticle?page="+(page-1)+params,    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
@@ -383,7 +418,9 @@ var vm = avalon.define({
         //请求前的处理
     },
     success:function(data,status){
-      vm.arr=data.data;
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
       vm.page=page-1;
     },
     complete:function(){
@@ -400,7 +437,7 @@ var vm = avalon.define({
     }
 
    $.ajax({
-    url:"/searchArticle?page="+(page+1)+"&searchValue="+vm.searchValue,    //请求的url地址
+    url:"/searchArticle?page="+(page+1)+params,    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
@@ -408,7 +445,9 @@ var vm = avalon.define({
         //请求前的处理
     },
     success:function(data,status){
-      vm.arr=data.data;
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
       vm.page=page+1;
     },
     complete:function(){
@@ -425,7 +464,7 @@ var vm = avalon.define({
  })
 
 $.ajax({
-    url:"/searchArticle?page=1"+"&searchValue="+vm.searchValue,    //请求的url地址
+    url:"/searchArticle?page=1"+params,    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
@@ -433,7 +472,9 @@ $.ajax({
         //请求前的处理
     },
     success:function(data,status){
-      vm.arr=data.data;
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+    vm.arr3=data.data.slice(10,15);                
       vm.count =data.count;
       vm.page=1;
       vm.pagenum=parseInt(vm.count/meiyenum)+1;
@@ -452,7 +493,6 @@ $.ajax({
  //      for(var i=0;i< vm.arr.length;i++){
  //         vm.arr[i].ishidden=false;
  //    
-        
     </script>
 
 </body>

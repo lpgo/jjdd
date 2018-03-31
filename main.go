@@ -126,6 +126,9 @@ func main() {
 	funmap["Ten"] = Ten
 	funmap["AddSpace"] = AddSpace
 	funmap["Format"] = time.Time.Format
+	funmap["Add"] = Add
+	funmap["Substring"] = Substring
+	funmap["IsNew"] = IsNew
 	temp.Funcs(funmap)
 	t := &Template{
 		templates: template.Must(temp.ParseGlob("views/*.html")),
@@ -234,10 +237,13 @@ func main() {
 	e.Any("/showArticle", showArticleById)
 	e.Any("/signArticle", signArticle)
 	e.Any("/searchArticle", searchArticle)
+	e.Any("/statistics", statisticsPage)
 
 	e.GET("/directory", directoryPage)
 	e.GET("/search", searchPage)
 	e.GET("/list", listPage)
+	e.GET("/subjectList", subjectArticleListPage)
+	e.GET("/noLeftList", noLeftListPage)
 	e.GET("/", indexPage)
 	e.GET("/login.html", loginPage)
 	e.Any("/login", login)
@@ -619,9 +625,11 @@ func modifyArticlePage(c echo.Context) error {
 }
 
 func publishArticle(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
 	article := c.(*CustomContext).GetSession("article").(db.Article)
 	article.Time = time.Now()
 	article.Class = GetClass(article.Category)
+	article.Department = user.Department
 
 	if article.IsRed {
 		for _, dep := range service.GetAllDeps() {
@@ -770,6 +778,15 @@ func listPage(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "list", data)
 }
+
+func subjectArticleListPage(c echo.Context) error {
+	return c.Render(http.StatusOK, "subjectArticleList", map[string]db.Any{"Subject": c.QueryParam("subject"), "AllSubjects": service.GetAllSubjects()})
+}
+
+func noLeftListPage(c echo.Context) error {
+	return c.Render(http.StatusOK, "noleftlist", map[string]db.Any{"IsTraffic": c.QueryParam("isTraffic"), "Subject": c.QueryParam("subject")})
+}
+
 func adminPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "IsRed": c.QueryParam("isRed")})
@@ -788,7 +805,7 @@ func setArticlePage(c echo.Context) error {
 		return err
 	}
 
-	return c.Render(http.StatusOK, "setarticle", map[string]db.Any{"User": user, "Id": c.QueryParam("id"), "Article": article, "Menu": article.Class})
+	return c.Render(http.StatusOK, "setarticle", map[string]db.Any{"Clazz": clazz, "User": user, "Id": c.QueryParam("id"), "Article": article, "Menu": article.Class})
 }
 
 func saveRotaPage(c echo.Context) error {
@@ -814,7 +831,28 @@ func indexPage(c echo.Context) error {
 	imageArticles := service.GetImageArticles()
 	subjects := service.GetAllSubjects()
 	trafficArticles := service.GetTrafficArticles()
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
+
+	//统计
+	statistics := service.Statistics(true)
+	all := service.Statistics(false)
+	for _, e := range statistics {
+		for _, a := range all {
+			if e["_id"].(bson.M)["from"].(string) == a["_id"].(bson.M)["from"].(string) {
+				e["all"] = a["count"]
+			}
+		}
+	}
+
+	arts := map[string][]db.Article{}
+	//文章
+	for k, v := range clazz {
+		arts[k] = service.GetIndexArticle(k, "")
+		for _, c := range v {
+			arts[c] = service.GetIndexArticle(k, c)
+		}
+	}
+
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
 }
 
 func directoryPage(c echo.Context) error {
@@ -1177,12 +1215,34 @@ func searchArticle(c echo.Context) error {
 		cond["class"] = c.QueryParam("class")
 	}
 
+	if "true" == c.QueryParam("isTraffic") {
+		cond["isTraffic"] = true
+	}
+
+	if "true" == c.QueryParam("isRed") {
+		cond["isRed"] = true
+	}
+
+	if "true" == c.QueryParam("isImage") {
+		cond["isImage"] = true
+	}
+
+	if "" != c.QueryParam("subject") {
+		cond["subject"] = c.QueryParam("subject")
+	} else {
+		cond["subject"] = bson.M{"$ne": "不属于专题稿件"}
+	}
+
 	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
 		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetIndexArticlesByPage(1, 15, cond), "count": service.GetArticlesCount(cond)})
 	} else {
 		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetIndexArticlesByPage(page, 15, cond), "count": service.GetArticlesCount(cond)})
 	}
 
+}
+
+func statisticsPage(c echo.Context) error {
+	return c.JSON(http.StatusOK, service.Statistics(false))
 }
 
 func uploadImage(c echo.Context) error {
@@ -1266,6 +1326,10 @@ func MyRedirect(c echo.Context, url string) error {
 func logout(c echo.Context) error {
 	c.(*CustomContext).Destroy()
 	return MyRedirect(c, "/login.html")
+}
+
+func Add(a, b int) int {
+	return a + b
 }
 
 func Two(a int) bool {
@@ -1382,4 +1446,21 @@ func GetWeek(w time.Weekday) string {
 		s = "星期五"
 	}
 	return s
+}
+
+func Substring(s string, l int) string {
+	if len([]rune(s)) > l {
+		return string([]rune(s)[:l])
+	} else {
+		return s
+	}
+}
+
+func IsNew(t time.Time) bool {
+	now := time.Now()
+	if t.Year() == now.Year() && t.Month() == now.Month() && (now.Day()-t.Day() < 2) {
+		return true
+	} else {
+		return false
+	}
 }

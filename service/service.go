@@ -2,12 +2,14 @@ package service
 
 import (
 	"errors"
+	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"html/template"
 	"jjdd/db"
 	"log"
 	"regexp"
 	"strings"
+	"time"
 )
 
 func LoginByName(name, pwd string) *db.User {
@@ -27,7 +29,7 @@ func ChangePwd(name, oldPwd, newPwd string) error {
 func GetArticlesByPage(page, count int, cond bson.M) []db.Article {
 	var articles = make([]db.Article, count)
 
-	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "-time")
+	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "time")
 
 	if err != nil {
 		log.Println(err)
@@ -42,7 +44,7 @@ func GetArticlesByPage(page, count int, cond bson.M) []db.Article {
 func GetIndexArticlesByPage(page, count int, cond bson.M) []db.Article {
 	var articles = make([]db.Article, count)
 
-	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "-time")
+	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "time")
 
 	if err != nil {
 		log.Println(err)
@@ -186,6 +188,24 @@ func GetLinks() []db.Link {
 	return links
 }
 
+//获取首页文章（七条）
+func GetIndexArticle(class, category string) []db.Article {
+	var articles = make([]db.Article, 7)
+	cond := bson.M{"isAuditing": true}
+
+	if class != "" {
+		cond["class"] = class
+	}
+	if category != "" {
+		cond["category"] = category
+	}
+
+	if err := db.FindManyOrder("article", cond, "time", 7, &articles); err != nil {
+		log.Println(err)
+	}
+	return articles
+}
+
 func GetHotArticle() db.Article {
 	var article db.Article
 	if err := db.FindOne("article", bson.M{"isHot": true, "isAuditing": true}, &article); err != nil {
@@ -203,7 +223,7 @@ func GetImageArticles() []db.Article {
 }
 
 func GetTrafficArticles() []db.Article {
-	var articles = make([]db.Article, 20)
+	var articles = make([]db.Article, 8)
 	if err := db.FindManyOrder("article", bson.M{"isTraffic": true, "isAuditing": true}, "time", 8, &articles); err != nil {
 		log.Println(err)
 	}
@@ -292,4 +312,34 @@ func NoHtml(src string) string {
 	re, _ = regexp.Compile("\\s{2,}")
 	src = re.ReplaceAllString(src, "\n")
 	return src
+}
+
+//稿件统计(当月)
+func Statistics(auditing bool) []bson.M {
+	resp := []bson.M{}
+	query := func(c *mgo.Collection) error {
+		if auditing {
+			pipe := c.Pipe([]bson.M{
+				{"$match": bson.M{"isAuditing": true}},
+				//{"$project": bson.M{"time": bson.M{"$add": bson.D{{"$time", 28800000}}}, "com": 1, "driver": 1, "capacity": 1, "project": 1, "car": 1, "way": 1, "part": 1, "strength": 1, "price": 1, "total": 1, "carFee": 1, "autoFee": 1, "driverFee": 1}},
+				{"$group": bson.M{"_id": bson.M{"from": "$dep", "month": bson.M{"$month": "$time"}}, "count": bson.M{"$sum": 1}}},
+				{"$sort": bson.M{"count": -1}},
+				{"$match": bson.M{"_id.month": int(time.Now().Month())}},
+			})
+			return pipe.All(&resp)
+		} else {
+			pipe := c.Pipe([]bson.M{
+				//{"$match": bson.M{"isAuditing": true}},
+				//{"$project": bson.M{"time": bson.M{"$add": bson.D{{"$time", 28800000}}}, "com": 1, "driver": 1, "capacity": 1, "project": 1, "car": 1, "way": 1, "part": 1, "strength": 1, "price": 1, "total": 1, "carFee": 1, "autoFee": 1, "driverFee": 1}},
+				{"$group": bson.M{"_id": bson.M{"from": "$dep", "month": bson.M{"$month": "$time"}}, "count": bson.M{"$sum": 1}}},
+				{"$sort": bson.M{"count": -1}},
+				{"$match": bson.M{"_id.month": int(time.Now().Month())}},
+			})
+			return pipe.All(&resp)
+		}
+	}
+	if err := db.WitchCollection("article", query); err != nil {
+		log.Println(err)
+	}
+	return resp
 }
