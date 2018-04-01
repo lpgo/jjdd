@@ -31,59 +31,8 @@
 <![endif]-->
 </head>
 <body>
-<div id="header">
-  <div class="banner">
-    <div id="play_9647">
-      <ul class="clearfix">
-        <li style="display: block; z-index: 10;"><a href=""><img src="/images/navpic - 副本.jpg" width="100%" height="570"></a></li>
-      </ul>
-      <ul class="jsNav" id="jsNav_9647">
-        <li class="over">1</li>
-      </ul>
-    </div>
-  
-</div>
-  <div class="head_logo wp_inner">
-  	<div style="font-size: 1.1em;color: white;display: inline-block;float: left;">府谷县公安局交警大队欢迎您！</div>
-  	<div style="display: inline-block;float: right;color: white;font-size: 1.1em;">
-  		<span>旧版回顾</span>
-  		<span>|</span>
-  		<span>设为首页</span>
-  		 <span>|</span>
-  		<span>站内搜索</span>
-  	</div>
-  	<div style="display: inline-block;clear: both;"></div>
-    <div class="logo" style="width: 117px;margin-top: 77px;margin-left: -188px;"><a id="logopic" href="#"><img style="width: 163%;" src="images/guohui.png"></a></div>
-    <div class="logo" style="margin-top: 105px;margin-left: 42px; width: 334px;margin-left: -20px"><a id="logopic" href="#"><img style=" width: 178%;" src="images/dongtai.gif"></a></div>
-    <div class="head_right">
-      <!--<div class="search_form">-->
-        <!--<form action="search" target="_blank" method="get" name="form1" id="form1">-->
-          <!--<input type="text" value="" class="keyword" id="keyword" name="keyword">-->
-          <!--<input type="submit" class="submitbtn" value="" id="button" name="button">-->
-        <!--</form>-->
-      <!--</div>-->
-    </div>
-  </div>
-</div>
-<div id="nav">
-  <!---->
-  <div class="zuo" id="transobjzuo"></div>
-  <div class="you" id="transobjyou"></div>
-  <div class="nav_menu clearfix">
-    <ul id="menu_nav">
-      <li class=""><a href="#" target="" class="nav1 phoneicon" style="text-decoration: none!important;color: white;font-size: 18px">网站首页</a> </li>
-      <li class=""><a href="743.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav2 phoneicon">大队概括</a>
-      </li>
-      <li class=""><a href="735.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav3 phoneicon">文件简报</a>
-      </li>
-      <li class=""><a href="788.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav4 phoneicon">党建队建</a> </li>
-      <li class=""><a href="index.php/opinion-main" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav5 phoneicon">交管动态</a> </li>
-      <li class=""><a href="734.shtml" target="" style="text-decoration: none!important;color: white;font-size: 18px" class="nav6 phoneicon">学习园地</a>
-      </li>
-      <li class=""><a href="1116.shtml" style="text-decoration: none!important;color: white;font-size: 18px" target="" class="nav7 phoneicon">数据报送</a> </li>
-    </ul>
-  </div>
-</div>
+         <%template "headerindex" .%>
+
 <script type="text/javascript">
 $(document).ready(function(){
 //**show_edit**//					   
@@ -118,10 +67,10 @@ code.hide();
 <div id="content" class="container">
   <style type="text/css">
     .btnDep{
-      font-size: 1.4em;display: inline-block;margin: 10px;background-color: #136dc6;color: white;height: 2em;line-height: 2em;width: 8em!important;text-align: center;cursor: pointer;
+      font-size: 1.4em;display: inline-block;margin: 10px;background-color: #136dc6;border: 1px solid white;color: white;height: 2em;line-height: 2em;width: 7.8em!important;text-align: center;cursor: pointer;
     }
     .btnDep1{
-      font-size: 1.4em;display: inline-block;margin: 10px;background-color: #FFFFFF;border: 1px solid gray; color: black;height: 2em;line-height: 2em;width: 8em!important;text-align: center;cursor: pointer;
+      font-size: 1.4em;display: inline-block;margin: 10px;background-color: #FFFFFF;border: 1px solid gray; color: black;height: 2em;line-height: 2em;width: 7.8em!important;text-align: center;cursor: pointer;
     }
   </style>
   <div style="margin-top: 10px;margin-bottom: 10px;padding-left: 5px;">
@@ -132,7 +81,7 @@ code.hide();
     <%end%>
 
   </div>
-  <div style="margin-bottom: 10px;padding-left: 5px;text-align: center; color:#5c5c5c;height: 2em;line-height: 2em;background-color: #ccc;font-size: 1.4em;">
+  <div style="margin-bottom: 10px;padding-left: 5px;text-align: center; color:#5c5c5c;height: 2em;line-height: 2em;background-color: #ccc;font-size: 2em;">
     府谷县公安局交警大队联系电话表
   </div>
   <div style="margin-bottom: 10px;padding-left: 5px;text-align: left;padding-left: 1em;height: 2em;line-height: 2em;font-size: 1.4em;">
@@ -148,15 +97,15 @@ code.hide();
     <div style="display: inline-block;margin-left: 2em;">
       关键词：
       <input  type="text" id="searchKeyWord">
-      <button id="search" style="margin-left: 3px;background-color: #136dc6;color: white;border: none;">查询</button>
+      <button id="search" style="margin-left: 3px;background-color: #136dc6;color: white;border: none;height: 2em;width: 4em;">查询</button>
     </div>
   </div>
   <style type="text/css">
     table tr th{
-      height: 2em;line-height: 2em;
+      height: 3em;line-height: 3em;font-size: 1.2em;
     }
     table tr td{
-      height: 2em;line-height: 2em;
+      height: 3em;line-height: 3em;font-size: 1.2em;
 
     }
   </style>
@@ -172,29 +121,8 @@ code.hide();
    
      
   </table>
-<div id="footer">
-  <div class="wp_inner">
-    <div class="foot">
-      <div class="foot1 fl"> <span id="_ideConac"> <a href="#" target="_blank"><img id="imgConac" vspace="0" hspace="0" border="0" src="images/red.png" data-bd-imgshare-binded="1"></a> </span> </div>
-      <div class="foot2 fl">
-        <div class="footnav"><a href="#">ÍøÕ¾µØÍ¼</a><span>|</span><a href="#">ÍøÕ¾µØÍ¼</a><span>|</span><a href="#">ÍøÕ¾µØÍ¼</a><span>|</span><a href="#">ÍøÕ¾µØÍ¼</a><span>|</span><a href="#">ÍøÕ¾µØÍ¼</a></div>
-        <div class="footext"> Ö÷°ìµ¥Î»£ºÄ³Ä³ÏØÈËÃñÕþ¸®¡¡³Ð°ìµ¥Î»£ºÄ³Ä³ÏØµç×ÓÕþÎñÐÅÏ¢ÖÐÐÄ¡¡¼¼ÊõÖ§³Ö£º24H <br>
-          ±¸°¸±àºÅ£ºÊñICP±¸14000601ºÅ ÁªÏµµç»°£º0817-7777777¡¡ ÓÊÏäµØÖ·£ºnanchong@live.cn </div>
-      </div>
-      <div class="foot3 fl" style="padding-bottom: ">
-        <div class="qrcode fl"> <a href="#" target="_blank" title="" style="text-decoration:none;"><img width="86" height="86" border="none" alt="" src="images/0353d3ed7d1bfdc2.jpg"></a> </div>
-        <div class="qrcode fr"> <a href="#" target="_blank" title="" style="text-decoration:none;"><img width="86" height="86" border="none" alt="" src="images/0353d3ed7d1bfdc2.jpg"></a> </div>
-      </div>
-      <br>
-     <!--  <div class="clear"></div>
-      <div class="foot4">
+            <%template "footer" .%>
 
-      <span id="_span_jiucuo"><img onclick="Link(&#39;&#39;)" style="margin:0;border:0;cursor: pointer;" src="images/jiucuo.png"></span>
-      </div> -->
-    </div>
-    <div id="footer_login" style="text-align:center;clear:both;font-size:14px;height: 3em;"></div>
-  </div>
-</div>
 <style type="text/css">
   .lastTr{
     background-color: rgb(201, 220, 240);
