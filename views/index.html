@@ -295,21 +295,16 @@
                             <div class="boxTab fl" id="tab2" style="border-right: none;">
                                 <div class="TabTitle boxtitle">
                                     <ul id="Tab2">
-                                        <li class="active " onmouseover="nTabs(this,0);"><a href="#">党建队建</a></li>
+                                        <li class="active " onmouseover="nTabs(this,0);"><a href="/list?class=党建队建">党建队建</a></li>
                                     </ul>
                                 </div>
                                 <div class="TabContent" style="border-right: none;height: 237px;">
                                     <div id="Tab2_Content0" style="display: block;">
                                         <div class="box-list">
                                             <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/27</span><a href="1244.shtml" target="_blank" title="²âÊÔÄÚÈÝ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1201.shtml" target="_blank" title="2011ÄêÆÎÌïÊÐº£Ñó»·¾³×´¿ö¹«±¨">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1202.shtml" target="_blank" title="ÀÏÕÅ0335×Ô¼º·¢µÃ²âÊÔÉ¾³ý">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
-                                                <li class="clear"></li>
+                                                <%range $i,$v := .arts.党建队建%>
+                                                <li style="position: relative;"> <span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  title="<%$v.Title%>"><%Substring $v.Title 17%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;<%end%></li>
+                                                <%end%>
                                             </ul>
                                         </div>
                                     </div>
@@ -325,50 +320,34 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
+                                            <li onclick="window.location.href='/list?category=支部活动'">支部活动</li>
+                                            <li onclick="window.location.href='/list?category=纪律教育'">纪律教育</li>
+                                            <li onclick="window.location.href='/list?category=学习培训'">学习培训</li>
+                                            <li onclick="window.location.href='/list?category=交警风采'">交警风采</li>
                                         </ul>
                                     </div>
                                     <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">中国打破了世界软件巨头规则</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">口语：会说中文就能说英语！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">农场摘菜不如在线学外语好玩</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学英语送ipad2,45天突破听说</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.支部活动%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[支部活动]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                                            <%range $i,$v := .arts.纪律教育%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[纪律教育]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.学习培训%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[学习培训]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.交警风采%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交警风采]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                     </div>
@@ -479,21 +458,16 @@
                             <div class="boxTab fl" id="tab2" style="border-right: none;">
                                 <div class="TabTitle boxtitle">
                                     <ul id="Tab2">
-                                        <li class="active" onmouseover="nTabs(this,0);"><a href="#">交管动态</a></li>
+                                        <li class="active" onmouseover="nTabs(this,0);"><a href="/list?class=交管动态">交管动态</a></li>
                                     </ul>
                                 </div>
                                 <div class="TabContent" style="border-right: none;height: 237px;">
                                     <div id="Tab2_Content0" style="display: block;">
                                         <div class="box-list">
                                             <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/27</span><a href="1244.shtml" target="_blank" title="²âÊÔÄÚÈÝ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1201.shtml" target="_blank" title="2011ÄêÆÎÌïÊÐº£Ñó»·¾³×´¿ö¹«±¨">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1202.shtml" target="_blank" title="ÀÏÕÅ0335×Ô¼º·¢µÃ²âÊÔÉ¾³ý">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
-                                                <li class="clear"></li>
+                                                <%range $i,$v := .arts.交管动态%>
+                                                <li style="position: relative;"> <span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  title="<%$v.Title%>"><%Substring $v.Title 17%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;<%end%></li>
+                                                <%end%>
                                             </ul>
                                         </div>
                                     </div>
@@ -509,50 +483,34 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
+                                            <li onclick="window.location.href='/list?category=秩序整治'">秩序整治</li>
+                                            <li onclick="window.location.href='/list?category=事故预防'">事故预防</li>
+                                            <li onclick="window.location.href='/list?category=科技信息'">科技信息</li>
+                                            <li onclick="window.location.href='/list?category=交管宣传'">交管宣传</li>
                                         </ul>
                                     </div>
                                     <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">中国打破了世界软件巨头规则</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">口语：会说中文就能说英语！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">农场摘菜不如在线学外语好玩</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学英语送ipad2,45天突破听说</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.秩序整治%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[秩序整治]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                                            <%range $i,$v := .arts.事故预防%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[事故预防]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.科技信息%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[科技信息]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.交管宣传%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交管宣传]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                     </div>
@@ -579,21 +537,16 @@
                             <div class="boxTab fl" id="tab2" style="border-right: none;">
                                 <div class="TabTitle boxtitle">
                                     <ul id="Tab2">
-                                        <li class="active" onmouseover="nTabs(this,0);"><a href="#">学习园地</a></li>
+                                        <li class="active" onmouseover="nTabs(this,0);"><a href="/list?class=学习园地">学习园地</a></li>
                                     </ul>
                                 </div>
                                 <div class="TabContent" style="border-right: none;height: 237px;">
                                     <div id="Tab2_Content0" style="display: block;">
                                         <div class="box-list">
                                             <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/31</span><a href="1245.shtml" target="_blank" title="Ä³Ä³Õò½éÉÜ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/05/27</span><a href="1244.shtml" target="_blank" title="²âÊÔÄÚÈÝ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/04/20</span><a href="1236.shtml" target="_blank" title="¼¯ÍÅÄêÖÕºØËêÍí»áÂ¡ÖØ¾ÙÐÐ ×Ü²ÃÆÚÐí¼¯ÍÅÃ÷Ìì¸üÃÀºÃ">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1201.shtml" target="_blank" title="2011ÄêÆÎÌïÊÐº£Ñó»·¾³×´¿ö¹«±¨">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1202.shtml" target="_blank" title="ÀÏÕÅ0335×Ô¼º·¢µÃ²âÊÔÉ¾³ý">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
-                                                <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;">2016/03/25</span><a href="1203.shtml" target="_blank" title="2012ÄêÊÐÕþ¸®µÚÒ»´ÎÈ«Ìå»áÒéÕÙ¿ª">中国打破了世界软件巨头规则</a> </li>
-                                                <li class="clear"></li>
+                                                <%range $i,$v := .arts.学习园地%>
+                                                <li style="position: relative;"> <span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  title="<%$v.Title%>"><%Substring $v.Title 17%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;<%end%></li>
+                                                <%end%>
                                             </ul>
                                         </div>
                                     </div>
@@ -609,51 +562,34 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
-                                            <li>教育</li>
+                                            <li onclick="window.location.href='/list?category=法律法规'">法律法规</li>
+                                            <li onclick="window.location.href='/list?category=规章制度'">规章制度</li>
+                                            <li onclick="window.location.href='/list?category=经验调研'">经验调研</li>
+                                            <li onclick="window.location.href='/list?category=学习交流'">学习交流</li>
                                         </ul>
                                     </div>
                                     <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">中国打破了世界软件巨头规则</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">口语：会说中文就能说英语！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">农场摘菜不如在线学外语好玩</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学英语送ipad2,45天突破听说</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.法律法规%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[法律法规]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+                                            <%range $i,$v := .arts.规章制度%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[规章制度]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.经验调研%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[经验调研]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+                                            <%range $i,$v := .arts.学习交流%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[学习交流]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                     </div>
@@ -683,8 +619,8 @@
                 </div>
                 <div class="information-right fr">
                     <div class="boxNew">
-                        <div class="bt3" style="text-align: center;"> <span class="tit" style="padding-left: 46PX;cursor: pointer;" id="zhanneidaohangbtn">站内导航</span> <span class="tit" style="padding-left: 39PX;color: #3488e6;cursor: pointer;" id="meiyuejingxingbtn">每月警星</span></div>
-                        <div class="new-bc" id=zhanneidaohang style="padding-bottom: 1px;padding-top: 1px;height: 265px;">
+                        <div class="bt3" style="text-align: center;"> <span class="tit" style="padding-left: 46PX;cursor: pointer;" id="zhanneidaohangbtn">站内导航</span> <span onclick="window.location.href='/list?category=每月警星'" class="tit" style="padding-left: 39PX;color: #3488e6;cursor: pointer;" id="meiyuejingxingbtn">每月警星</span></div>
+                        <div class="new-bc" id=zhanneidaohang style="padding-bottom: 0px;padding-top: 0px;height: 265px;">
                             <table id="zhanneidaohang" style="border: none;">
                                 <tr>
                                     <td style="background-color:#fb6e52;" onclick="window.location.href='/login.html'"><img style="padding-bottom: 2px" src="images/peopleicon.png">
@@ -706,37 +642,22 @@
                                 </tr>
                             </table>
                         </div>
-                         <div class="new-bc" id="meiyuejingxing" style="padding-bottom: 10px;padding-top: 13px;display: none;padding-bottom: 14px">
-                            <table id="duchatongji" style="width: 100%;text-align: center;font-size: 12px;">
+                         <div class="new-bc" id="meiyuejingxing" style="padding-bottom: 10px;padding-top: 13px;display: none;padding-bottom: 14px;height: 238px;">
+                            <table id="duchatongji" style="width: 100%;text-align: center;font-size: 14px;">
+                                <%range .starArticles%>
                                 <tr>
-                                    <td class="title">平凡岗位的龙哥</td>
+                                    <td style="cursor: pointer;" class="title  teshuttitle" onclick="window.location.href='/showArticle?id=<%call $.Hex .Id%>'"><%Substring .Title 15%></td>
                                 </tr>
-                                <tr>
-                                    <td class="title">平凡岗位的龙哥</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">平凡岗位的龙哥</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">平凡岗位的龙哥</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">平凡岗位的龙哥</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">平凡岗位的龙哥</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">平凡岗位的龙哥</td>
-                                </tr>
+                                <%end%>
+                                
                             </table>
                         </div>
                        
                     </div>
                     <div class="boxNew" style="margin-top: 22px">
-                        <div class="bt3" style="text-align: center;"> <span class="tit" id="gaojiantongjibtn"  style="padding-left: 46PX;cursor: pointer;">稿件统计</span> <span class="tit" style="padding-left: 39PX;cursor: pointer;color:#3488e6 " id="duchatongbaobtn">督查通报</span></div>
+                        <div class="bt3" style="text-align: center;"> <span class="tit" id="gaojiantongjibtn"  style="padding-left: 46PX;cursor: pointer;">稿件统计</span> <span onclick="window.location.href='/list?category=督察通报'" class="tit" style="padding-left: 39PX;cursor: pointer;color:#3488e6 " id="duchatongbaobtn">督察通报</span></div>
 
-                         <div id="gaojiantongjibiao1"  class="new-bc" style="padding-bottom: 10px;height: 244px;overflow: scroll;">
+                         <div id="gaojiantongjibiao1"  class="new-bc" style="padding-bottom: 10px;height: 254px;overflow: scroll;">
                             <table id="gaojiantongjibiao"  style="width: 100%;text-align: center;font-size: 12px">
                               <tr>
                                 <th>序号</th>
@@ -755,33 +676,24 @@
                               
                             </table>
                           </div>
-                        <div class="new-bc" id="duchatongbao" style="padding-bottom: 10px;padding-top: 13px;display: none;">
-                            <table id="duchatongji" style="width: 100%;text-align: center;font-size: 12px">
+                        <div class="new-bc" id="duchatongbao" style="padding-bottom: 10px;padding-top: 13px;display: none;height: 241px;">
+                            <table id="duchatongji" style="width: 100%;text-align: center;font-size: 14px">
+
+                                <%range .duChaArticles%>
                                 <tr>
-                                    <td class="title">三道沟中队</td>
+                                    <td  style="cursor: pointer;" class="title teshuttitle" onclick="window.location.href='/showArticle?id=<%call $.Hex .Id%>'"><%Substring .Title 15%></td>
                                 </tr>
-                                <tr>
-                                    <td class="title">三道沟中队</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">三道沟中队</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">三道沟中队</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">三道沟中队</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">三道沟中队</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">三道沟中队</td>
-                                </tr>
+                                <%end%>
+                                
                             </table>
                         </div>
                     </div>
                 </div>
+                <style type="text/css">
+                    .teshuttitle:hover{
+                        color: rgb(52, 136, 230);
+                    }
+                </style>
                 <script type="text/javascript">
                     document.getElementById("gaojiantongjibtn").onmouseover = function(){
                        document.getElementById("gaojiantongjibtn").style.color = "white";

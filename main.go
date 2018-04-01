@@ -27,7 +27,11 @@ import (
 */
 
 var clazz map[string][]string = map[string][]string{
-	"文件简报": []string{"交管简报", "通知通报", "大队活动", "人事文件", "交安委文件"}}
+	"文件简报": []string{"交管简报", "通知通报", "大队活动", "人事文件", "交安委文件"},
+	"一级栏目": []string{"大队概括", "督察通报", "每月警星"},
+	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "交警风采"},
+	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
+	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流"}}
 
 type Any interface{}
 
@@ -244,6 +248,7 @@ func main() {
 	e.GET("/list", listPage)
 	e.GET("/subjectList", subjectArticleListPage)
 	e.GET("/noLeftList", noLeftListPage)
+	e.GET("/summarization", summarizationPage)
 	e.GET("/", indexPage)
 	e.GET("/login.html", loginPage)
 	e.Any("/login", login)
@@ -515,6 +520,7 @@ func previewHongtouArticle(c echo.Context) error {
 		Category:  c.FormValue("category"),
 		Year:      c.FormValue("year"),
 		No:        c.FormValue("no"),
+		Header:    c.FormValue("header"),
 		IsRed:     true,
 		Id:        bson.NewObjectId(),
 	}
@@ -541,6 +547,16 @@ func previewArticleById(c echo.Context) error {
 	}
 }
 
+func summarizationPage(c echo.Context) error {
+	id := service.GetSummarization()
+	var article db.Article
+	if err := db.GetById("article", id, &article); err != nil {
+		log.Println(err)
+		return err
+	}
+	return c.Render(http.StatusOK, "preview", map[string]db.Any{"Article": article, "Show": true, "Single": true})
+}
+
 func showArticleById(c echo.Context) error {
 
 	var article db.Article
@@ -554,11 +570,11 @@ func showArticleById(c echo.Context) error {
 
 	var pre, next []db.Article
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false, "isAuditing": true}, "time", 1, &pre); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false, "isAuditing": true, "category": article.Category}, "-time", 1, &pre); err != nil {
 		log.Println(err)
 		return err
 	}
-	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": false, "isAuditing": true}, "time", 1, &next); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": false, "isAuditing": true, "category": article.Category}, "time", 1, &next); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -577,11 +593,11 @@ func showArticleById(c echo.Context) error {
 func showHongtouArticleById(c echo.Context, article db.Article) error {
 	var pre, next []db.Article
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true, "isAuditing": true}, "time", 1, &pre); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true, "isAuditing": true, "category": article.Category}, "-time", 1, &pre); err != nil {
 		log.Println(err)
 		return err
 	}
-	if err := db.FindManyOrder1("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": true, "isAuditing": true}, "time", 1, &next); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": true, "isAuditing": true, "category": article.Category}, "time", 1, &next); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -737,6 +753,9 @@ func publishPage(c echo.Context) error {
 	if c.QueryParam("action") == "create" {
 		data["Create"] = true
 	}
+	if c.QueryParam("header") != "" {
+		data["Header"] = c.QueryParam("header")
+	}
 
 	if c.QueryParam("isRed") == "true" {
 		return c.Render(http.StatusOK, "publish_hongtou", data)
@@ -789,7 +808,7 @@ func noLeftListPage(c echo.Context) error {
 
 func adminPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "IsRed": c.QueryParam("isRed")})
+	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "IsRed": c.QueryParam("isRed"), "Header": c.QueryParam("header")})
 }
 func changePwdPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
@@ -831,6 +850,9 @@ func indexPage(c echo.Context) error {
 	imageArticles := service.GetImageArticles()
 	subjects := service.GetAllSubjects()
 	trafficArticles := service.GetTrafficArticles()
+	duChaArticles := service.GetDuChaArticles()
+	starArticles := service.GetStarArticles()
+	summarizationId := service.GetSummarization()
 
 	//统计
 	statistics := service.Statistics(true)
@@ -852,7 +874,7 @@ func indexPage(c echo.Context) error {
 		}
 	}
 
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
 }
 
 func directoryPage(c echo.Context) error {
@@ -1148,7 +1170,7 @@ func getLinkListByDepName(c echo.Context) error {
 
 func getDirectoryByName(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
-	if err := db.FindManyOrder1("directory", bson.M{"dep": c.QueryParam("depName")}, "order", 0, &deps); err != nil {
+	if err := db.FindManyOrder("directory", bson.M{"dep": c.QueryParam("depName")}, "order", 0, &deps); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -1157,7 +1179,7 @@ func getDirectoryByName(c echo.Context) error {
 
 func getLinkByName(c echo.Context) error {
 	var deps []db.Link = make([]db.Link, 5)
-	if err := db.FindManyOrder1("link", bson.M{"category": c.QueryParam("depName")}, "order", 0, &deps); err != nil {
+	if err := db.FindManyOrder("link", bson.M{"category": c.QueryParam("depName")}, "order", 0, &deps); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -1166,7 +1188,7 @@ func getLinkByName(c echo.Context) error {
 
 func searchDirectoryByName(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
-	if err := db.FindManyOrder1("directory", bson.M{"name": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
+	if err := db.FindManyOrder("directory", bson.M{"name": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -1175,7 +1197,7 @@ func searchDirectoryByName(c echo.Context) error {
 
 func searchDirectoryByJob(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
-	if err := db.FindManyOrder1("directory", bson.M{"job": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
+	if err := db.FindManyOrder("directory", bson.M{"job": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -1184,7 +1206,7 @@ func searchDirectoryByJob(c echo.Context) error {
 
 func searchDirectoryByTel(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
-	if err := db.FindManyOrder1("directory", bson.M{"tel": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
+	if err := db.FindManyOrder("directory", bson.M{"tel": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -1193,7 +1215,7 @@ func searchDirectoryByTel(c echo.Context) error {
 
 func searchDirectoryByPhone(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
-	if err := db.FindManyOrder1("directory", bson.M{"phone": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
+	if err := db.FindManyOrder("directory", bson.M{"phone": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
 		log.Println(err)
 		return err
 	}
@@ -1228,9 +1250,12 @@ func searchArticle(c echo.Context) error {
 	}
 
 	if "" != c.QueryParam("subject") {
-		cond["subject"] = c.QueryParam("subject")
-	} else {
-		cond["subject"] = bson.M{"$ne": "不属于专题稿件"}
+		if "no" == c.QueryParam("subject") {
+			cond["subject"] = bson.M{"$ne": "不属于专题稿件"}
+		} else {
+			cond["subject"] = c.QueryParam("subject")
+		}
+
 	}
 
 	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {

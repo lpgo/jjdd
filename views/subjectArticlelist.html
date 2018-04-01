@@ -209,13 +209,13 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <div class="nav mtop">您的位置：
         <a href="/">首页</a>
-        &gt;&gt; <a href="/subjectList">专项行动</a>
+        &gt;&gt; <a href="/subjectList?subject=no">专项行动</a>
         <%if .Subject%>&gt;&gt; <a href="/subjectList?subject=<%.Subject%>"><%.Subject%></a><%end%>
     </div>
     <div class="govMain">
         <div class="dt_left">
             <div class="left_nav">
-                <div class="head10" style="cursor: pointer;" onclick="window.location.href='/subjectList"><span class="title16"><a href="/subjectList"><%.Class%></a>专项行动</span></div>
+                <div class="head10" style="cursor: pointer;"><span class="title16"><a href="/subjectList?subject=no"></a>专项行动</a></span></div>
                 <div class="main3" style="padding:10px 10px 60px 10px;">
                     <ul class="menu_list_1" id="left_nav_url">
                         <%range .AllSubjects%>
@@ -245,7 +245,7 @@
         <div class="dt_right">
             <div class="border1">
                 <div class="head11">
-                    <span class="title19"><%if .Subject%><%.Subject%><%else%>专项行动<%end%></span>
+                    <span class="title19"><%if ne .Subject "no"%><%.Subject%><%else%>专项行动<%end%></span>
                 </div>
                 <div class="main1">
                     <ul class="label_ul_b">

@@ -38,6 +38,7 @@
                     <form action="/admin/modify" method="post" enctype="multipart/form-data"   onsubmit="return CheckPost();">
                     <input type="hidden" name="id" value="<%call .Hex .Article.Id%>">
                     <input type="hidden" name="category" value="<%.Article.Category%>">
+                    <input type="hidden" name="category" value="<%.Article.Header%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
@@ -91,6 +92,7 @@
                     <%if .Create%>
                     <form action="/admin/preview" method="post" enctype="multipart/form-data"   onsubmit="return CheckPost();">
                     <input type="hidden" name="category" value="<%.Category%>">
+                    <input type="hidden" name="header" value="<%if .Header%><%.Header%><%else%>hongtou.jpg<%end%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
@@ -143,6 +145,7 @@
                     <%if .Edit%>
                     <form action="/admin/preview" method="post" enctype="multipart/form-data"   onsubmit="return CheckPost();">
                     <input type="hidden" name="category" value="<%.Article.Category%>">
+                    <input type="hidden" name="header" value="<%.Article.Header%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件

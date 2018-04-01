@@ -8,8 +8,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>政府网站模板</title>
-    <meta name="keywords" content="政府方案">
+    <title>府谷交警</title>
+    <meta name="keywords" content="府谷交警">
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="/css/common.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -364,7 +364,7 @@
                             </div>
 
                         </div>
-
+                        <%if not .Single%>
                     	<div class="pager">
                             <div><strong><font color="red">上一篇：</font></strong>
                                 <%if .Pre%>
@@ -377,6 +377,7 @@
                                 <%else%>没有了<%end%>
                             </div>
                         </div>
+                        <%end%>
                        <div class="clear"></div>
 
                         <%end%>

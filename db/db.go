@@ -89,17 +89,6 @@ func FindPartOrder(collection string, condition Any, skip, limit int, dataPointe
 func FindManyOrder(collection string, condition Any, order string, limit int, dataPointer Any) error {
 	query := func(c *mgo.Collection) error {
 		if limit == 0 {
-			return c.Find(condition).Sort("-" + order).All(dataPointer)
-		} else {
-			return c.Find(condition).Sort("-" + order).Limit(limit).All(dataPointer)
-		}
-	}
-	return WitchCollection(collection, query)
-}
-
-func FindManyOrder1(collection string, condition Any, order string, limit int, dataPointer Any) error {
-	query := func(c *mgo.Collection) error {
-		if limit == 0 {
 			return c.Find(condition).Sort(order).All(dataPointer)
 		} else {
 			return c.Find(condition).Sort(order).Limit(limit).All(dataPointer)

@@ -29,7 +29,7 @@ func ChangePwd(name, oldPwd, newPwd string) error {
 func GetArticlesByPage(page, count int, cond bson.M) []db.Article {
 	var articles = make([]db.Article, count)
 
-	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "time")
+	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "-time")
 
 	if err != nil {
 		log.Println(err)
@@ -44,7 +44,7 @@ func GetArticlesByPage(page, count int, cond bson.M) []db.Article {
 func GetIndexArticlesByPage(page, count int, cond bson.M) []db.Article {
 	var articles = make([]db.Article, count)
 
-	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "time")
+	err := db.FindPartOrder("article", cond, (page-1)*count, count, &articles, "-time")
 
 	if err != nil {
 		log.Println(err)
@@ -200,7 +200,7 @@ func GetIndexArticle(class, category string) []db.Article {
 		cond["category"] = category
 	}
 
-	if err := db.FindManyOrder("article", cond, "time", 7, &articles); err != nil {
+	if err := db.FindManyOrder("article", cond, "-time", 7, &articles); err != nil {
 		log.Println(err)
 	}
 	return articles
@@ -216,7 +216,7 @@ func GetHotArticle() db.Article {
 
 func GetImageArticles() []db.Article {
 	var articles = make([]db.Article, 20)
-	if err := db.FindManyOrder("article", bson.M{"isImage": true, "isAuditing": true}, "time", 20, &articles); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"isImage": true, "isAuditing": true}, "-time", 20, &articles); err != nil {
 		log.Println(err)
 	}
 	return articles
@@ -224,10 +224,39 @@ func GetImageArticles() []db.Article {
 
 func GetTrafficArticles() []db.Article {
 	var articles = make([]db.Article, 8)
-	if err := db.FindManyOrder("article", bson.M{"isTraffic": true, "isAuditing": true}, "time", 8, &articles); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"isTraffic": true, "isAuditing": true}, "-time", 8, &articles); err != nil {
 		log.Println(err)
 	}
 	return articles
+}
+
+func GetDuChaArticles() []db.Article {
+	var articles = make([]db.Article, 7)
+	if err := db.FindManyOrder("article", bson.M{"category": "督察通报", "isAuditing": true}, "-time", 7, &articles); err != nil {
+		log.Println(err)
+	}
+	return articles
+}
+
+func GetStarArticles() []db.Article {
+	var articles = make([]db.Article, 7)
+	if err := db.FindManyOrder("article", bson.M{"category": "每月警星", "isAuditing": true}, "-time", 7, &articles); err != nil {
+		log.Println(err)
+	}
+	return articles
+}
+
+func GetSummarization() string {
+	var articles = make([]db.Article, 1)
+	if err := db.FindManyOrder("article", bson.M{"category": "大队概括", "isAuditing": true}, "-time", 1, &articles); err != nil {
+		log.Println(err)
+	}
+	if len(articles) > 0 {
+		return articles[0].Id.Hex()
+	} else {
+		return ""
+	}
+
 }
 
 func DelUser(id string) error {

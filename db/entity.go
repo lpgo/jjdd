@@ -74,6 +74,7 @@ type Article struct {
 	Signature  string        `bson:"signature" json:"signature"`   //签发人
 	From       string        `bson:"from" json:"from"`             //来源
 	Pic        string        `bson:"pic" json:"pic"`               //标题图片
+	Header     string        `bson:"header" json:"header"`         //红头图片路径
 	Content    template.HTML `bson:"content" json:"content"`       //内容
 	Attach     template.HTML `bson:"attach" json:"attach"`         //附加图章
 	Time       time.Time     `bson:"time" json:"time"`             //发表时间
