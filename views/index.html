@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Cache-Control" content="no-cache">
+        <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
         <meta http-equiv="Expires" content="0">
         <title>府谷交警</title>
         <meta name="keywords" content="Õþ¸®·½°¸">
@@ -31,6 +32,20 @@
             for (i = 0; i < tabList.length; i++) {
                 if (i == Num) {
                     thisObj.className = "active";
+                    document.getElementById(tabObj + "_Content" + i).style.display = "block";
+                } else {
+                    tabList[i].className = "normal";
+                    document.getElementById(tabObj + "_Content" + i).style.display = "none";
+                }
+            }
+        }
+        function nTabs1(thisObj, Num) {
+            if (thisObj.className == "active1") return;
+            var tabObj = thisObj.parentNode.id;
+            var tabList = document.getElementById(tabObj).getElementsByTagName("li");
+            for (i = 0; i < tabList.length; i++) {
+                if (i == Num) {
+                    thisObj.className = "active1";
                     document.getElementById(tabObj + "_Content" + i).style.display = "block";
                 } else {
                     tabList[i].className = "normal";
@@ -162,6 +177,7 @@
                                 </li>
                                 <li><a class="phoneicon" style="background:url(/images/search1.png) no-repeat;height: 50px;width: 50px;cursor: pointer;float: right;background-position: 0 10px"></a></li> -->
                             </ul>
+                            <span style="float: right;color: #ccc;color: #136dc6;cursor: pointer;margin-right: 21px;font-size: 14px;" onclick="window.location.href='/noLeftList?isTraffic=true'">更多>></span>
                         </div>
                         <div class="TabContent">
                             <div id="Tab0_Content0" style="display: block;">
@@ -624,7 +640,7 @@
                             <table id="zhanneidaohang" style="border: none;">
                                 <tr>
                                     <td style="background-color:#fb6e52;" onclick="window.location.href='/login.html'"><img style="padding-bottom: 2px" src="images/peopleicon.png">
-                                        <br>用户登录</td>
+                                        <br>后台登录</td>
                                     <td style="background-color:#28bc9c " onclick="window.location.href='/directory'"><img style="padding-bottom: 2px" src="images/tongxunlu.png">
                                         <br>通讯录</td>
                                 </tr>
@@ -771,20 +787,32 @@
                         </div>
                     </div>
                 </div>
+                <style type="text/css">
+                    .active1{
+                        color: white;
+                        background-color: #0763ca!important;
+                    }
+                    .active1 a{
+                        color: white!important; 
+                    }
+                </style>
                 <!--  µÚÆß°æ   ÓÑÇéÁ´½Ó -->
                 <div class="linkTab fl" style="width: 100%;">
                     <div class="TabTitle" style="background: none">
                         <ul id="Tab9">
-                            <li class="active" onmouseover="nTabs(this,0);"><a href="#" class="l1">1</a></li>
-                            <li class="normal" onmouseover="nTabs(this,1);"><a href="#" class="l1">2</a></li>
-                            <li class="normal" onmouseover="nTabs(this,2);"><a href="#" class="l1">3</a></li>
+                            <li class="active1" style="cursor: pointer;"  onmouseover="nTabs1(this,0);"><a  class="l1">全国公安部门导航</a></li>
+                            <li class="normal" style="cursor: pointer;"  onmouseover="nTabs1(this,1);"><a  class="l1">全国交警部门导航</a></li>
+                            <li class="normal"  style="cursor: pointer;" onmouseover="nTabs1(this,2);"><a  class="l1">车管应用系统导航</a></li>
+                            <li class="normal" style="cursor: pointer;"  onmouseover="nTabs1(this,3);"><a  class="l1">全省交警支队导航</a></li>
+                            <li class="normal" style="cursor: pointer;"  onmouseover="nTabs1(this,4);"><a  class="l1">全市交警大队导航</a></li>
+                            <li class="normal" style="cursor: pointer;"  onmouseover="nTabs1(this,5);"><a  class="l1">全县公安部门导航</a></li>
                         </ul>
                     </div>
                     <div class="TabContent">
                         <div id="Tab9_Content0" style="display: block;">
                             <ul class="friendLink">
                                 <%range .links%>
-                                    <%if eq .Category "1"%>
+                                    <%if eq .Category "全国公安部门导航"%>
                                         <li>
                                             <a href="<%.Url%>" target="_blank">
                                                 <%.Name%>
@@ -797,7 +825,7 @@
                         <div id="Tab9_Content1" class="none" style="display: none;">
                             <ul class="friendLink">
                                 <%range .links%>
-                                    <%if eq .Category "2"%>
+                                    <%if eq .Category "全国交警部门导航"%>
                                         <li>
                                             <a href="<%.Url%>" target="_blank">
                                                 <%.Name%>
@@ -807,10 +835,49 @@
                                             <%end%>
                             </ul>
                         </div>
-                        <div id="Tab9_Content2" class="none" style="display: none;">
+                       <div id="Tab9_Content2" class="none" style="display: none;">
                             <ul class="friendLink">
                                 <%range .links%>
-                                    <%if eq .Category "3"%>
+                                    <%if eq .Category "车管应用系统导航"%>
+                                        <li>
+                                            <a href="<%.Url%>" target="_blank">
+                                                <%.Name%>
+                                            </a>
+                                        </li>
+                                        <%end%>
+                                            <%end%>
+                            </ul>
+                        </div>
+                        <div id="Tab9_Content3" class="none" style="display: none;">
+                            <ul class="friendLink">
+                                <%range .links%>
+                                    <%if eq .Category "全省交警支队导航"%>
+                                        <li>
+                                            <a href="<%.Url%>" target="_blank">
+                                                <%.Name%>
+                                            </a>
+                                        </li>
+                                        <%end%>
+                                            <%end%>
+                            </ul>
+                        </div>
+                        <div id="Tab9_Content4" class="none" style="display: none;">
+                            <ul class="friendLink">
+                                <%range .links%>
+                                    <%if eq .Category "全市交警大队导航"%>
+                                        <li>
+                                            <a href="<%.Url%>" target="_blank">
+                                                <%.Name%>
+                                            </a>
+                                        </li>
+                                        <%end%>
+                                            <%end%>
+                            </ul>
+                        </div>
+                        <div id="Tab9_Content5" class="none" style="display: none;">
+                            <ul class="friendLink">
+                                <%range .links%>
+                                    <%if eq .Category "全县公安部门导航"%>
                                         <li>
                                             <a href="<%.Url%>" target="_blank">
                                                 <%.Name%>

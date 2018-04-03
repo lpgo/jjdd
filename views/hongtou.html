@@ -9,6 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>府谷交警</title>
+    <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <meta name="keywords" content="府谷交警">
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="/css/common.css">
@@ -270,8 +271,8 @@
                         <div class="xxfz" style="margin: 0;height: 49px">
                             <div class="fl">
                                     <%if .Auditing%>
-                                    <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass&category=<%.Article.Category%>'">审核通过</button>
-                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&category=<%.Article.Category%>'">不通过</button>
+                                    <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass&isRed=<%.Article.IsRed%>'">审核通过</button>
+                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&isRed=<%.Article.IsRed%>'">不通过</button>
                                     <%else%>
                                     <button class="buttonl"  style="background-color: #27a9f4;"   onclick="window.location.href='/admin/publish'">保存文章</button>
                                     <button class="buttonl"   onclick="window.location.href='/admin/page/publish?action=edit&category=<%.Article.Category%>&isRed=true'">返回编辑</button>

@@ -10,6 +10,7 @@
     <meta http-equiv="Expires" content="0">
     <title>府谷交警</title>
     <meta name="keywords" content="府谷交警">
+    <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="/css/common.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -256,7 +257,6 @@
     </style>
     <div id="content" class="container">
         <link rel="stylesheet" type="text/css" href="/css/style1.css">
-        <script type="text/javascript" src="/js/item.js"></script>
         <script type="text/javascript">
         var item_id = 1201,
             model = 'article',
@@ -282,8 +282,8 @@
                         <div class="xxfz" style="margin: 0;height: 49px">
                             <div class="fl">
                                     <%if .Auditing%>
-                                    <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass&category=<%.Article.Category%>'">审核通过</button>
-                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&category=<%.Article.Category%>'">不通过</button>
+                                    <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass&isRed=<%.Article.IsRed%>'">审核通过</button>
+                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&isRed=<%.Article.IsRed%>'">不通过</button>
                                     <%else%>
                                     <button class="buttonl"  style="background-color: #27a9f4;"   onclick="window.location.href='/admin/publish?category=<%.Article.Category%>'">保存文章</button>
                                     <button class="buttonl"   onclick="window.location.href='/admin/page/publish?action=edit&category=<%.Article.Category%>'">返回编辑</button>

@@ -1,4 +1,4 @@
-﻿<%define "admin"%>
+﻿<%define "zhongduiadmin"%>
     <html xmlns="http://www.w3.org/1999/xhtml">
 
     <head>
@@ -28,12 +28,10 @@
                 <%template "header" .%>
                     <div id="maincontent">
                         <div class="idea divclass" id="d1">
-                            <h2><%.Category%></h2>
+                            <h2>后台首页</h2>
                         </div>
                         <div class="idea divclass" id="d1" style="padding-top: 10px">
-                            <div style="display: inline-block;float: left;">
-                                <button class="buttonl" onclick="window.location.href='/admin/page/publish?category=<%.Category%>&action=create&isRed=<%.IsRed%>&header=<%.Header%>'">新增</button>
-                            </div>
+                            
                             <div style="display: inline-block;float: right;">
                                 <input id="sousuoname" style="vertical-align: middle; margin-left: 50em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" ms-duplex="@sousuovalue">
                                 <button style="height:40px;line-height: 38px;margin-left: 10px;width:80px;background-color: #006CE8;color:white;vertical-align: middle;" ms-on-click="sousuo(@sousuovalue)">搜索</button>

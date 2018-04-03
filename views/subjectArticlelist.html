@@ -10,6 +10,7 @@
     <meta http-equiv="Expires" content="0">
     <title>府谷交警</title>
     <meta name="keywords" content="府谷交警">
+    <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="/css/common.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -210,7 +211,7 @@
     <div class="nav mtop">您的位置：
         <a href="/">首页</a>
         &gt;&gt; <a href="/subjectList?subject=no">专项行动</a>
-        <%if .Subject%>&gt;&gt; <a href="/subjectList?subject=<%.Subject%>"><%.Subject%></a><%end%>
+        <%if ne .Subject "no"%>&gt;&gt; <a href="/subjectList?subject=<%.Subject%>"><%.Subject%></a><%end%>
     </div>
     <div class="govMain">
         <div class="dt_left">
@@ -248,18 +249,18 @@
                     <span class="title19"><%if ne .Subject "no"%><%.Subject%><%else%>专项行动<%end%></span>
                 </div>
                 <div class="main1">
-                    <ul class="label_ul_b">
+                      <ul class="label_ul_b">
                         <br>
-                        <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;&emsp;&emsp;{{el.title}}</a>
+                        <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;position: relative;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;&emsp;&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
                         </li>
                         <br>
-                        <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}</a>
+                        <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;position: relative;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
                         </li>
                         <br>
-                        <li ms-for="($index, el) in @arr3"  class="label_arrow_1" style="overflow: hidden;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}</a>
+                        <li ms-for="($index, el) in @arr3"  class="label_arrow_1" style="overflow: hidden;position: relative;">
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
                         </li>
                         <li class="clear"></li>
                     </ul>
@@ -334,6 +335,25 @@ var vm = avalon.define({
         
     },
     success:function(data,status){
+        data.data.forEach(function(item){
+        item.title=item.title.substring(0,34);
+        var d=new Date(item.time);
+        var year=d.getFullYear();
+        var month=d.getMonth();
+        var day=d.getDate();
+
+        var today=new Date();
+        var year1=today.getFullYear();
+        var month1=today.getMonth();
+        var day1=today.getDate();
+
+
+        if(year==year1&&month==month1){
+            if((day1-day)<2){
+                item['isNew']=true;
+            }
+        }
+      })
       vm.arr1=data.data.slice(0,5);
       vm.arr2=data.data.slice(5,10);
     vm.arr3=data.data.slice(10,15);                
@@ -371,6 +391,25 @@ var vm = avalon.define({
                   //请求前的处理
               },
               success:function(data,status){
+                data.data.forEach(function(item){
+        item.title=item.title.substring(0,34);
+        var d=new Date(item.time);
+        var year=d.getFullYear();
+        var month=d.getMonth();
+        var day=d.getDate();
+
+        var today=new Date();
+        var year1=today.getFullYear();
+        var month1=today.getMonth();
+        var day1=today.getDate();
+
+
+        if(year==year1&&month==month1){
+            if((day1-day)<2){
+                item['isNew']=true;
+            }
+        }
+      })
                   vm.arr1=data.data.slice(0,5);
                   vm.arr2=data.data.slice(5,10);
     vm.arr3=data.data.slice(10,15);                
@@ -420,6 +459,25 @@ var vm = avalon.define({
         //请求前的处理
     },
     success:function(data,status){
+        data.data.forEach(function(item){
+        item.title=item.title.substring(0,34);
+        var d=new Date(item.time);
+        var year=d.getFullYear();
+        var month=d.getMonth();
+        var day=d.getDate();
+
+        var today=new Date();
+        var year1=today.getFullYear();
+        var month1=today.getMonth();
+        var day1=today.getDate();
+
+
+        if(year==year1&&month==month1){
+            if((day1-day)<2){
+                item['isNew']=true;
+            }
+        }
+      })
       vm.arr1=data.data.slice(0,5);
       vm.arr2=data.data.slice(5,10);
     vm.arr3=data.data.slice(10,15);                
@@ -447,6 +505,25 @@ var vm = avalon.define({
         //请求前的处理
     },
     success:function(data,status){
+        data.data.forEach(function(item){
+        item.title=item.title.substring(0,34);
+        var d=new Date(item.time);
+        var year=d.getFullYear();
+        var month=d.getMonth();
+        var day=d.getDate();
+
+        var today=new Date();
+        var year1=today.getFullYear();
+        var month1=today.getMonth();
+        var day1=today.getDate();
+
+
+        if(year==year1&&month==month1){
+            if((day1-day)<2){
+                item['isNew']=true;
+            }
+        }
+      })
       vm.arr1=data.data.slice(0,5);
       vm.arr2=data.data.slice(5,10);
     vm.arr3=data.data.slice(10,15);                
@@ -474,6 +551,25 @@ var vm = avalon.define({
         //请求前的处理
     },
     success:function(data,status){
+        data.data.forEach(function(item){
+        item.title=item.title.substring(0,34);
+        var d=new Date(item.time);
+        var year=d.getFullYear();
+        var month=d.getMonth();
+        var day=d.getDate();
+
+        var today=new Date();
+        var year1=today.getFullYear();
+        var month1=today.getMonth();
+        var day1=today.getDate();
+
+
+        if(year==year1&&month==month1){
+            if((day1-day)<2){
+                item['isNew']=true;
+            }
+        }
+      })
       vm.arr1=data.data.slice(0,5);
       vm.arr2=data.data.slice(5,10);
     vm.arr3=data.data.slice(10,15);                
@@ -501,6 +597,25 @@ $.ajax({
         //请求前的处理
     },
     success:function(data,status){
+        data.data.forEach(function(item){
+        item.title=item.title.substring(0,34);
+        var d=new Date(item.time);
+        var year=d.getFullYear();
+        var month=d.getMonth();
+        var day=d.getDate();
+
+        var today=new Date();
+        var year1=today.getFullYear();
+        var month1=today.getMonth();
+        var day1=today.getDate();
+
+
+        if(year==year1&&month==month1){
+            if((day1-day)<2){
+                item['isNew']=true;
+            }
+        }
+      })
       vm.arr1=data.data.slice(0,5);
       vm.arr2=data.data.slice(5,10);
     vm.arr3=data.data.slice(10,15);                

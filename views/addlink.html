@@ -8,6 +8,7 @@
     <meta http-equiv="Expires" content="0">
     <meta name="description" content="府谷交警 内网">
     <link rel="stylesheet" type="text/css" href="/css/houtai.css">
+    <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/js/webuploader/webuploader.css">
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
     <meta http-equiv="Content-Language" content="zh-cn">
@@ -48,13 +49,19 @@
                      <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         类&emsp;别<span style="color: red">*</span>
                                 <%if .Update%>
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="1" <%if eq .Category "1"%>checked="checked"<%end%> >1
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="2" <%if eq .Category "2"%>checked="checked"<%end%> >2
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="3" <%if eq .Category "3"%>checked="checked"<%end%> >3
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全国公安部门导航" <%if eq .Category "1"%>checked="checked"<%end%> >全国公安部门导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全国交警部门导航" <%if eq .Category "2"%>checked="checked"<%end%> >全国交警部门导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="车管应用系统导航" <%if eq .Category "3"%>checked="checked"<%end%> >车管应用系统导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全省交警支队导航" <%if eq .Category "3"%>checked="checked"<%end%> >全省交警支队导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全市交警大队导航" <%if eq .Category "3"%>checked="checked"<%end%> >全市交警大队导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全县公安部门导航" <%if eq .Category "3"%>checked="checked"<%end%> >全县公安部门导航
                                 <%else%>
-                                 <input style="vertical-align: middle; margin-left: 2em;" type="radio" checked="checked" name="category" value="1"  >1
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="2" >2
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="3" >3
+                                 <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全国公安部门导航" checked="checked">全国公安部门导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全国交警部门导航" >全国交警部门导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="车管应用系统导航"  >车管应用系统导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全省交警支队导航"  >全省交警支队导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全市交警大队导航" >全市交警大队导航
+                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" value="全县公安部门导航"  >全县公安部门导航
                                 <%end%>
 
                     </div> 

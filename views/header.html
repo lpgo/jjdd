@@ -22,15 +22,17 @@
         <div class="navBar">
             <ul class="nav clearfix">
                 <li class="m  <%if eq .Menu "网站首页"%>on<%end%>">
-                    <h3><a target="_blank" href="/">网站首页</a></h3>
+                    <h3><a  href="/">网站首页</a></h3>
                 </li>
+                                
                  <li class="s">|</li>
+                 <%if eq .User.Role "大队"%>
                 <li class="m  <%if eq .Menu "文章审核"%>on<%end%>">
-                    <h3><a  href="/admin/page/user_list">文章审核</a></h3>
+                    <h3><a  href="#">文章审核</a></h3>
                 </li>
                 <li class="s">|</li>
                 <li class="m  <%if eq .Menu "网站管理"%>on<%end%>">
-                    <h3><a  href="/admin/page/user_list">网站管理</a></h3>
+                    <h3><a  href="#">网站管理</a></h3>
                 </li>
                 <li class="s">|</li>
                 <li class="m  <%if eq .Menu "一级栏目"%>on<%end%>">
@@ -41,6 +43,12 @@
                     <h3><a  href="#">文件简报</a></h3>
                 </li>
                 <li class="s">|</li>
+                <%else%>
+                <li class="m  <%if eq .Menu "后台首页"%>on<%end%>">
+                    <h3><a  href="/admin/page/zhongdui_admin">后台首页</a></h3>
+                </li>
+                <li class="s">|</li>
+                <%end%>
                 <li class="m  <%if eq .Menu "党建队建"%>on<%end%>">
                     <h3><a  href="#">党建队建</a></h3>
                 </li>
@@ -65,13 +73,17 @@
             </style>
             <ul class="subNav">
                 <li>你好，欢迎来到府谷交警管理后台！</li>
-                <li><a href="/admin/page/user_list">红头文件</a>|<a href="/admin/page/dep_list">普通文章</a></li>
+                <%if eq .User.Role "大队"%>
+                <li><a href="/admin/page/dadui_admin?isRed=true">红头文件</a>|<a href="/admin/page/dadui_admin?isRed=false">普通文章</a></li>
                 <li><a href="/admin/page/user_list">用户管理</a>|<a href="/admin/page/dep_list">部门管理</a>|<a href="/admin/page/directory_list">通讯录管理</a>|<a href="/admin/page/link_list">链接管理</a>|<a href="/admin/page/saveRota">值班管理</a>|<a href="/admin/page/subject_list">专题管理</a></li>
                 <li><a href="/admin/page/admin?category=大队概括">大队概括</a>|<a href="/admin/page/admin?category=督察通报&isRed=true&header=duchatongbao.gif">督察通报</a>|<a href="/admin/page/admin?category=每月警星">每月警星</a></li>
-                <li><a href="/admin/page/admin?category=交管简报&isRed=true">交管简报</a>|<a href="/admin/page/admin?category=通知通报&isRed=true">通知通报</a>|<a href="/admin/page/admin?category=人事文件&isRed=true">人事文件</a>|<a href="/admin/page/admin?category=交安委文件&isRed=true">交安委文件</a>|<a href="/admin/page/admin?category=大队活动">大队活动</a></li>
+                <li><a href="/admin/page/admin?category=交管简报&isRed=true&header=jiaoguanjianbao.gif">交管简报</a>|<a href="/admin/page/admin?category=通知通报&isRed=true">通知通报</a>|<a href="/admin/page/admin?category=人事文件&isRed=true">人事文件</a>|<a href="/admin/page/admin?category=交安委文件&isRed=true&header=jiaoanwei.jpg">交安委文件</a>|<a href="/admin/page/admin?category=大队活动">大队活动</a></li>
+                <%else%>
+                <li>你好，欢迎来到府谷交警管理后台！</li>
+                <%end%>
                 <li><a href="/admin/page/admin?category=支部活动">支部活动</a>|<a href="/admin/page/admin?category=纪律教育">纪律教育</a>|<a href="/admin/page/admin?category=学习培训">学习培训</a>|<a href="/admin/page/admin?category=交警风采">交警风采</a></li>
                 <li><a href="/admin/page/admin?category=秩序整治">秩序整治</a>|<a href="/admin/page/admin?category=事故预防">事故预防</a>|<a href="/admin/page/admin?category=科技信息">科技信息</a>|<a href="/admin/page/admin?category=交管宣传">交管宣传</a></li>
-                <li><a href="/admin/page/admin?category=法律法规">法律法规</a>|<a href="/admin/page/admin?category=规章制度">规章制度</a>|<a href="/admin/page/admin?category=经验调研=">经验调研</a>|<a href="/admin/page/admin?category=学习交流">学习交流</a></li>
+                <li><a href="/admin/page/admin?category=法律法规">法律法规</a>|<a href="/admin/page/admin?category=规章制度">规章制度</a>|<a href="/admin/page/admin?category=经验调研">经验调研</a>|<a href="/admin/page/admin?category=学习交流">学习交流</a></li>
 
                 
             </ul>
