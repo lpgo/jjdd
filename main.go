@@ -18,7 +18,7 @@ import (
 	"strings"
 	//"github.com/Luxurioust/excelize"
 	//"fmt"
-	"log"
+	//"log"
 	"time"
 )
 
@@ -117,8 +117,17 @@ func okGroup(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
+func customHTTPErrorHandler(err error, c echo.Context) {
+	code := http.StatusInternalServerError
+	if he, ok := err.(*echo.HTTPError); ok && he.Code == code {
+		c.Logger().Error(err)
+		c.Redirect(http.StatusMovedPermanently, "/error.html")
+	}
+
+}
+
 func main() {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	//log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	e := echo.New()
 
@@ -141,7 +150,9 @@ func main() {
 	e.Static("/", "public")
 
 	//日志
-	e.Use(middleware.Logger())
+	/*e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))*/
 	e.Use(middleware.Recover())
 	e.Use(middleware.Gzip())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -265,6 +276,8 @@ func main() {
 	e.POST("/imageManager", imageManager)
 	//处理微信支付回调
 	//e.Post("/mch", weixin.MchServer)
+
+	e.HTTPErrorHandler = customHTTPErrorHandler
 	e.Start(":80")
 
 }
@@ -278,7 +291,7 @@ func addLink(c echo.Context) error {
 		Order:    service.GetLinksCount(c.FormValue("category")) + 1,
 	}
 	if err := db.Add("link", link); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return MyRedirect(c, "/error.html")
 	} else {
 		return MyRedirect(c, "/admin/page/link_list")
@@ -294,7 +307,7 @@ func addUser(c echo.Context) error {
 		Role:       c.FormValue("role"),
 	}
 	if err := service.AddUser(user); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return c.Render(http.StatusOK, "adduser", map[string]bool{"NameError": true})
 	} else {
 		return userListPage(c)
@@ -309,7 +322,7 @@ func addDep(c echo.Context) error {
 	}
 
 	if err := service.AddDep(dep); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return c.Render(http.StatusOK, "adddep", map[string]bool{"NameError": true})
 	} else {
 		return MyRedirect(c, "/admin/page/dep_list")
@@ -331,7 +344,7 @@ func addSubject(c echo.Context) error {
 	}
 
 	if err := db.Add("subject", sub); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return MyRedirect(c, "/admin/page/subject_list")
@@ -349,7 +362,7 @@ func addDirectory(c echo.Context) error {
 		Order:      service.GetDirectorysCount(c.FormValue("dep")) + 1,
 	}
 	if err := db.Add("directory", dir); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return c.Render(http.StatusOK, "adddirectory", nil)
 	} else {
 		return MyRedirect(c, "/admin/page/directory_list")
@@ -368,7 +381,7 @@ func saveRota(c echo.Context) error {
 		Tel:     params["tel"][0],
 	}
 	if err := db.Upsert("rota", rota); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return MyRedirect(c, "/admin/page/saveRota")
@@ -377,7 +390,7 @@ func saveRota(c echo.Context) error {
 
 func delArticle(c echo.Context) error {
 	if err := service.DelArticle(c.QueryParam("id")); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return c.NoContent(http.StatusOK)
@@ -386,7 +399,7 @@ func delArticle(c echo.Context) error {
 
 func delUser(c echo.Context) error {
 	if err := service.DelUser(c.QueryParam("id")); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return c.NoContent(http.StatusOK)
@@ -395,7 +408,7 @@ func delUser(c echo.Context) error {
 
 func delDep(c echo.Context) error {
 	if err := service.DelDep(c.QueryParam("id")); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return c.NoContent(http.StatusOK)
@@ -404,7 +417,7 @@ func delDep(c echo.Context) error {
 
 func delSubject(c echo.Context) error {
 	if err := db.Delete("subject", c.QueryParam("id")); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return c.NoContent(http.StatusOK)
@@ -413,7 +426,7 @@ func delSubject(c echo.Context) error {
 
 func delDirectory(c echo.Context) error {
 	if err := service.DelDirectory(c.QueryParam("id")); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return c.NoContent(http.StatusOK)
@@ -422,7 +435,7 @@ func delDirectory(c echo.Context) error {
 
 func delLink(c echo.Context) error {
 	if err := service.DelLink(c.QueryParam("id")); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return c.NoContent(http.StatusOK)
@@ -462,7 +475,7 @@ func getArticles(c echo.Context) error {
 	}
 
 	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(1, 15, cond), "count": service.GetArticlesCount(cond)})
 	} else {
 		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetArticlesByPage(page, 15, cond), "count": service.GetArticlesCount(cond)})
@@ -549,7 +562,7 @@ func previewHongtouArticle(c echo.Context) error {
 func previewArticleById(c echo.Context) error {
 	var article db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		if article.IsRed {
@@ -563,7 +576,7 @@ func previewArticleById(c echo.Context) error {
 func viewArticle(c echo.Context) error {
 	var article db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		if article.IsRed {
@@ -578,7 +591,7 @@ func summarizationPage(c echo.Context) error {
 	id := service.GetSummarization()
 	var article db.Article
 	if err := db.GetById("article", id, &article); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.Render(http.StatusOK, "preview", map[string]db.Any{"Article": article, "Show": true, "Single": true})
@@ -588,7 +601,7 @@ func showArticleById(c echo.Context) error {
 
 	var article db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	if article.IsRed {
@@ -598,11 +611,11 @@ func showArticleById(c echo.Context) error {
 	var pre, next []db.Article
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
 	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false, "isAuditing": true, "category": article.Category}, "-time", 1, &pre); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": false, "isAuditing": true, "category": article.Category}, "time", 1, &next); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 
@@ -621,11 +634,11 @@ func showHongtouArticleById(c echo.Context, article db.Article) error {
 	var pre, next []db.Article
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
 	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true, "isAuditing": true, "category": article.Category}, "-time", 1, &pre); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": true, "isAuditing": true, "category": article.Category}, "time", 1, &next); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 
@@ -657,7 +670,7 @@ func modifyArticlePage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	var article db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		if article.IsRed {
@@ -681,7 +694,7 @@ func publishArticle(c echo.Context) error {
 	}
 
 	if err := db.Add("article", &article); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
 		return MyRedirect(c, "/admin/page/admin?category="+article.Category)
@@ -694,7 +707,7 @@ func auditingArticle(c echo.Context) error {
 		pass = true
 	}
 	if err := db.UpdateById("article", c.QueryParam("id"), bson.M{"$set": bson.M{"isAuditing": pass}}); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
 		return MyRedirect(c, "/admin/page/dadui_admin?isRed="+c.QueryParam("isRed"))
@@ -724,7 +737,7 @@ func modifyArticle(c echo.Context) error {
 
 	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
 		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No}}); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
 		return MyRedirect(c, "/admin/page/admin?category="+article.Category)
@@ -755,10 +768,10 @@ func setArticle(c echo.Context) error {
 	}
 
 	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": update}); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
-		return MyRedirect(c, "/admin/page/admin?category="+c.FormValue("category")+"&isRed="+c.FormValue("isRed"))
+		return MyRedirect(c, "/admin/page/dadui_admin?isRed="+c.FormValue("isRed"))
 	}
 }
 
@@ -860,7 +873,7 @@ func setArticlePage(c echo.Context) error {
 
 	var article db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 
@@ -920,7 +933,7 @@ func indexPage(c echo.Context) error {
 func directoryPage(c echo.Context) error {
 	var deps []db.Department = make([]db.Department, 10)
 	if err := db.GetAll("department", &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.Render(http.StatusOK, "directory", map[string]db.Any{"Deps": deps})
@@ -949,7 +962,7 @@ func addDirectoryPage(c echo.Context) error {
 
 	var deps []db.Department = make([]db.Department, 10)
 	if err := db.GetAll("department", &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 
@@ -960,7 +973,7 @@ func directoryListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	var deps []db.Department = make([]db.Department, 10)
 	if err := db.GetAll("department", &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.Render(http.StatusOK, "directorylist", map[string]db.Any{"User": user, "Deps": deps, "Menu": "网站管理"})
@@ -970,7 +983,7 @@ func modifyDirectoryPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	var deps []db.Department = make([]db.Department, 10)
 	if err := db.GetAll("department", &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Deps": deps, "Name": c.QueryParam("name"), "DepName": c.QueryParam("dep"), "Job": c.QueryParam("job"), "Tel": c.QueryParam("tel"), "Phone": c.QueryParam("phone"), "Menu": "网站管理"})
@@ -1034,7 +1047,7 @@ func modifyUserPage(c echo.Context) error {
 
 func modifyUser(c echo.Context) error {
 	if err := db.UpdateById("user", c.FormValue("id"), bson.M{"$set": bson.M{"dep": c.FormValue("dep"), "role": c.FormValue("role")}}); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return userListPage(c)
@@ -1044,7 +1057,7 @@ func modifyUser(c echo.Context) error {
 func changePwd(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	if err := service.ChangePwd(user.Name, c.FormValue("oldpass"), c.FormValue("newpass1")); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return MyRedirect(c, "/admin/logout")
@@ -1056,7 +1069,7 @@ func modifyDep(c echo.Context) error {
 		count := service.GetDepsCount()
 		var oldDep db.Department
 		if err := db.GetById("department", c.FormValue("id"), &oldDep); err != nil {
-			log.Println(err)
+			c.Logger().Warn(err)
 			return err
 		}
 
@@ -1064,14 +1077,14 @@ func modifyDep(c echo.Context) error {
 			db.UpdateByCond("department", bson.M{"order": bson.M{"$gt": oldDep.Order}}, bson.M{"$inc": bson.M{"order": -1}})
 			db.UpdateById("department", c.FormValue("id"), bson.M{"$set": bson.M{"order": count}})
 		} else if order > 0 { //
-			log.Println("oldordder: ", oldDep.Order, ";order: ", order)
+			c.Logger().Warn("oldordder: ", oldDep.Order, ";order: ", order)
 			db.UpdateByCond("department", bson.M{"order": bson.M{"$gt": oldDep.Order}}, bson.M{"$inc": bson.M{"order": -1}})
 			db.UpdateByCond("department", bson.M{"order": bson.M{"$gte": order}}, bson.M{"$inc": bson.M{"order": 1}})
 			db.UpdateById("department", c.FormValue("id"), bson.M{"$set": bson.M{"order": order}})
 		}
 	}
 	if err := db.UpdateById("department", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("depname")}}); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return directoryListPage(c)
@@ -1082,12 +1095,12 @@ func modifySubject(c echo.Context) error {
 	if c.FormValue("isHot") == "true" {
 		db.UpdateByCond("subject", bson.M{"isHot": true}, bson.M{"$set": bson.M{"isHot": false}})
 		if err := db.UpdateById("subject", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("subjectName"), "pic": c.FormValue("pic"), "isHot": true}}); err != nil {
-			log.Println(err)
+			c.Logger().Warn(err)
 			return err
 		}
 	} else {
 		if err := db.UpdateById("subject", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("subjectName"), "pic": c.FormValue("pic"), "isHot": false}}); err != nil {
-			log.Println(err)
+			c.Logger().Warn(err)
 			return err
 		}
 	}
@@ -1099,7 +1112,7 @@ func modifyDirectory(c echo.Context) error {
 		count := service.GetDirectorysCount(c.FormValue("dep"))
 		var oldDir db.Directory
 		if err := db.GetById("directory", c.FormValue("id"), &oldDir); err != nil {
-			log.Println(err)
+			c.Logger().Warn(err)
 			return err
 		}
 
@@ -1114,7 +1127,7 @@ func modifyDirectory(c echo.Context) error {
 
 	}
 	if err := db.UpdateById("directory", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("directoryName"), "dep": c.FormValue("dep"), "job": c.FormValue("job"), "tel": c.FormValue("tel"), "phone": c.FormValue("phone")}}); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return MyRedirect(c, "/admin/page/dep_list")
@@ -1125,7 +1138,7 @@ func modifyLink(c echo.Context) error {
 		count := service.GetLinksCount(c.FormValue("category"))
 		var oldDir db.Link
 		if err := db.GetById("link", c.FormValue("id"), &oldDir); err != nil {
-			log.Println(err)
+			c.Logger().Warn(err)
 			return err
 		}
 
@@ -1139,7 +1152,7 @@ func modifyLink(c echo.Context) error {
 		}
 	}
 	if err := db.UpdateById("link", c.FormValue("id"), bson.M{"$set": bson.M{"name": c.FormValue("linkName"), "category": c.FormValue("category"), "url": c.FormValue("url")}}); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return MyRedirect(c, "/admin/page/link_list")
@@ -1149,7 +1162,7 @@ func userListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	users := make([]db.User, 10)
 	if err := db.FindMany("user", nil, &users); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	} else {
 		return c.Render(http.StatusOK, "userlist", map[string]db.Any{"users": users, "User": user, "Menu": "网站管理"})
@@ -1211,7 +1224,7 @@ func getLinkListByDepName(c echo.Context) error {
 func getDirectoryByName(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
 	if err := db.FindManyOrder("directory", bson.M{"dep": c.QueryParam("depName")}, "order", 0, &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, map[string]db.Any{"data": deps})
@@ -1220,7 +1233,7 @@ func getDirectoryByName(c echo.Context) error {
 func getLinkByName(c echo.Context) error {
 	var deps []db.Link = make([]db.Link, 5)
 	if err := db.FindManyOrder("link", bson.M{"category": c.QueryParam("depName")}, "order", 0, &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, map[string]db.Any{"data": deps})
@@ -1229,7 +1242,7 @@ func getLinkByName(c echo.Context) error {
 func searchDirectoryByName(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
 	if err := db.FindManyOrder("directory", bson.M{"name": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, map[string]db.Any{"data": deps})
@@ -1238,7 +1251,7 @@ func searchDirectoryByName(c echo.Context) error {
 func searchDirectoryByJob(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
 	if err := db.FindManyOrder("directory", bson.M{"job": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, map[string]db.Any{"data": deps})
@@ -1247,7 +1260,7 @@ func searchDirectoryByJob(c echo.Context) error {
 func searchDirectoryByTel(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
 	if err := db.FindManyOrder("directory", bson.M{"tel": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, map[string]db.Any{"data": deps})
@@ -1256,7 +1269,7 @@ func searchDirectoryByTel(c echo.Context) error {
 func searchDirectoryByPhone(c echo.Context) error {
 	var deps []db.Directory = make([]db.Directory, 5)
 	if err := db.FindManyOrder("directory", bson.M{"phone": bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchKeyWord"), Options: "ixs"}}}, "order", 0, &deps); err != nil {
-		log.Println(err)
+		c.Logger().Warn(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, map[string]db.Any{"data": deps})
@@ -1449,14 +1462,14 @@ func GetChineseDate() (string, string, string) {
 	} else if now.Day() < 20 {
 		day = "十" + getword(string(itoa(now.Day())[1]))
 	} else {
-		log.Println("------------", itoa(now.Day()))
+
 		if getword(string(itoa(now.Day())[1])) != "〇" {
 			day = getword(string(itoa(now.Day())[0])) + "十" + getword(string(itoa(now.Day())[1]))
 		} else {
 			day = getword(string(itoa(now.Day())[0])) + "十"
 		}
 	}
-	log.Println("-------------------", year, "--", month, "--", day)
+
 	return year, month, day
 }
 func getword(s string) string {

@@ -2,7 +2,7 @@
     <div id="header_index">
         <h1><a href="/index.html" title="" style="float:left;"></a></h1>
         <div id="searchui" style="margin-right: 3em;width: 360px">
-            <span style="color: white">&emsp;<%.User.Department%>&emsp;&emsp;<%.User.Name%>&emsp;&emsp;</span><span style="color: white" id="time"></span><a href="/admin/page/changePwd" style="margin-left: 2em;color: #F5DC2F;">修改密码</a><a href="/admin/logout" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
+            <span style="color: white">&emsp;<%.User.Department%>&emsp;&emsp;<%.User.Name%>&emsp;&emsp;</span><span style="color: white" id="time"></span><span><a href="/admin/page/changePwd" style="margin-left: 2em;color: #F5DC2F;">修改密码</a><a href="/admin/logout" style="margin-left: 2em;color: #F5DC2F;">退出</a></span>
         </div>
         <script type="text/javascript">
         var element = document.getElementById('time');
@@ -89,7 +89,7 @@
             </ul>
         </div>
     </div>
-    <script type="text/javascript">
-    jQuery(".navBar").slide({ titCell: ".nav .m", mainCell: ".subNav", delayTime: 0, triggerTime: 0, returnDefault: true });
+    <script type="text/javascript"> 
+        jQuery(".navBar").slide({ titCell: ".nav .m", mainCell: ".subNav", trigger:"click" });
     </script>
     <%end%>
