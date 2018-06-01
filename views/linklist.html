@@ -9,7 +9,7 @@
     <meta http-equiv="Expires" content="0">
     <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/css/houtai.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="zh-cn">
     <meta http-equiv="imagetoolbar" content="false">
     <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
@@ -22,8 +22,12 @@
 </script>
 <![endif]-->
 
-    <body ms-controller="fugujiaojing" id="homefirst">
-        <div id="wrapper">
+ <style type="text/css">
+            .ms-controller{
+               visibility: hidden
+            }
+        </style>
+        <body ms-controller="fugujiaojing" id="homefirst"  class="ms-controller">        <div id="wrapper">
             <%template "header" .%>
             
             <div id="maincontent">
@@ -32,7 +36,7 @@
                 </div>
                 <div class="idea divclass" id="d1" style="padding-top: 10px">
                     <div style="display: inline-block;float: left;">
-                        <button class="buttonl"  onclick="window.location.href='/admin/page/add_link'">新增链接</button>
+                        <button class="buttonl"  onclick="window.location.href='/admin/page/add_link?category='+encodeURIComponent(dep)">新增链接</button>
                     </div>
                     <div style="display: inline-block;float: right;">
                         <!--  <input id="sousuoname" style="vertical-align: middle; margin-left: 50em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" ms-duplex="@sousuovalue">
@@ -41,12 +45,15 @@
                     <div style="clear: both;"></div>
                 </div>
                 <div  class="idea divclass" id="d1" style="padding-top: 10px">
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全国公安部门导航')" checked="checked" name="category" value="全国公安部门导航" >&emsp;全国公安部门导航
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全国交警部门导航')" name="category" value="全国交警部门导航" >&emsp;全国交警部门导航
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('车管应用系统导航')" name="category" value="车管应用系统导航" >&emsp;车管应用系统导航
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全省交警支队导航')" name="category" value="全省交警支队导航" >&emsp;全省交警支队导航
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全市交警大队导航')" name="category" value="全市交警大队导航" >&emsp;全市交警大队导航
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全县公安部门导航')" name="category" value="全县公安部门导航" >&emsp;全县公安部门导航
+                    <form name="test">
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全国公安部门导航')" checked="checked" name="category" value="全国公安部门导航" id="category1" >&emsp;<label for="category1">全国公安部门导航</label>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全国交警部门导航')" name="category" value="全国交警部门导航"  id="category2" >&emsp;<label for="category2">全国交警部门导航</label>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('车管应用系统导航')" name="category" value="车管应用系统导航"  id="category3" >&emsp;<label for="category3">车管应用系统导航</label>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全省交警支队导航')" name="category" value="全省交警支队导航"  id="category4" >&emsp;<label for="category4">全省交警支队导航</label>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全市交警大队导航')" name="category" value="全市交警大队导航"  id="category5" >&emsp;<label for="category5">全市交警大队导航</label>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全县公安部门导航')" name="category" value="全县公安部门导航"  id="category6" >&emsp;<label for="category6">全县公安部门导航</label>
+                    </form>
+
                 </div>
                 <div class="idea divclass" id="d3" style="padding:0;border: 1px solid #aaa;border-top: none;margin-bottom: 10px">
                     <div class="cleardiv " style="width: 100%;background-color: #E8E7E3!important;border-bottom: 1px solid #E8E7E3;height: 40px;line-height: 40px;font-weight: bold;">
@@ -59,7 +66,7 @@
                      <div  ms-for="($index, el) in @arr" class="cleardiv hoverdiv" ms-mouseover="@divmouseover($index)" ms-mouseleave="@divmouseout($index)" style="width: 100%;border-bottom: 1px solid #E8E7E3!important;height: 40px;line-height: 40px">
                         <div class="cleardiv" style="width: 10%;float: left;text-align: center;">{{(@page-1)*@pagemeiye+$index+1}}</div>
                         <div class="cleardiv" style="width: 20%;float: left;text-align:center;">{{el.name}}</div>
-                        <div class="cleardiv" style="width: 20%;float: left;text-align:center;"><span ms-if="!el.ishidden" style="color: white">.</span> <span ms-if="el.ishidden"><a  style="color: #d9534f" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  <a style="color: #f0ad4e" ms-attr="{href:'/admin/page/modify_link?id='+ el.id+'&category='+el.category+'&name='+el.name+'&url='+el.url}">修改</a></span></div>
+                        <div class="cleardiv" style="width: 20%;float: left;text-align:center;"><span ms-if="!el.ishidden" style="color: white">.</span> <span ms-if="el.ishidden"><a  style="color: #d9534f" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  <a style="color: #f0ad4e" href="#" ms-on-click="modify(el.id,el.category,el.name,el.url)">修改</a></span></div>
                         <div class="cleardiv" style="width: 40%;float: left;text-align:center;"> <a target="_blank" ms-attr="{href:el.url}"> {{el.url}}</a></div>
                         </div>
                        

@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/css/houtai.css">
     <link rel="stylesheet" type="text/css" href="/js/webuploader/webuploader.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="zh-cn">
     <meta http-equiv="imagetoolbar" content="false">
     <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
@@ -51,17 +51,17 @@
 
                     <%if .Update%>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        排&nbsp;&emsp;&nbsp;序 <span style="color: red"></span>
+                        排&nbsp;&emsp;&nbsp;序 <span style="color: white">*</span>
                         <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="sort" value=""> 
                     </div> 
                     <%end%>
                     <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
                     &emsp;&emsp;
-                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/dep_list'">
+                    <input style="width:80px;height: 40px;line-height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;"  type="button"  name="取消" value="取消"  onclick="window.location.href='/admin/page/dep_list'">
 
                 </form>
             </div>
-                        </div>
+        </div>
 
             <div id="footer " style="text-align: center;">
                         <p id="p2 " style="margin-left: 0;">
@@ -73,7 +73,7 @@
         
         <script type="text/javascript" charset="utf-8"  src="/js/ku/avalon.js"></script>
         <script type="text/javascript" charset="utf-8"  src="/js/houtaifabu.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="/js/jquerygao.js"></script>
         <script type="text/javascript" charset="utf-8"  src="/js/webuploader/webuploader.js"></script>
 
 </body>

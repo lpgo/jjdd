@@ -67,10 +67,10 @@ code.hide();
 <div id="content" class="container">
   <style type="text/css">
     .btnDep{
-      font-size: 1.4em;display: inline-block;margin: 10px;background-color: #136dc6;border: 1px solid white;color: white;height: 2em;line-height: 2em;width: 7.8em!important;text-align: center;cursor: pointer;
+      font-size: 1.4em;display:inline-block; _zoom:1;*display:inline;margin: 10px;background-color: #136dc6;border: 1px solid white;color: white;height: 2em;line-height: 2em;width: 7.8em!important;text-align: center;cursor: pointer;
     }
     .btnDep1{
-      font-size: 1.4em;display: inline-block;margin: 10px;background-color: #FFFFFF;border: 1px solid gray; color: black;height: 2em;line-height: 2em;width: 7.8em!important;text-align: center;cursor: pointer;
+      font-size: 1.4em;display:inline-block; _zoom:1;*display:inline;margin: 10px;background-color: #FFFFFF;border: 1px solid gray; color: black;height: 2em;line-height: 2em;width: 7.8em!important;text-align: center;cursor: pointer;
     }
   </style>
   <div style="margin-top: 10px;margin-bottom: 10px;padding-left: 5px;">
@@ -85,19 +85,19 @@ code.hide();
     府谷县公安局交警大队联系电话表
   </div>
   <div style="margin-bottom: 10px;padding-left: 5px;text-align: left;padding-left: 1em;height: 2em;line-height: 2em;font-size: 1.4em;">
-    <div style="display: inline-block;">
+    <div style="display:inline-block; _zoom:1;*display:inline;">
       条件：
-      <select id="tiaojian">
+      <select id="tiaojian" style="height:2em;line-height:2em;">
         <option>姓名</option>
         <option>职务</option>
         <option>手机号</option>
         <option>固话</option>
       </select>
     </div>
-    <div style="display: inline-block;margin-left: 2em;">
-      关键词：
-      <input  type="text" id="searchKeyWord">
-      <button id="search" style="margin-left: 3px;background-color: #136dc6;color: white;border: none;height: 2em;width: 4em;">查询</button>
+    <div style="display:inline-block; _zoom:1;*display:inline;margin-left: 2em;">
+      <span style="height: 2em;line-height: 2em;">关键词：</span> 
+      <input  type="text" id="searchKeyWord" style="height:1.6em;line-height:1.6em;">
+      <button id="search" style="margin-left: 3px;background-color: #136dc6;color: white;border: none;height: 2em;line-height: 2em;width: 4em;">查询</button>
     </div>
   </div>
   <style type="text/css">
@@ -146,15 +146,15 @@ code.hide();
         var url;
         var type=$("#tiaojian").val();
         if(type=='姓名'){
-            url="/searchDirectoryByName?searchKeyWord="+searchKeyWord;
+            url="/searchDirectoryByName?searchKeyWord="+encodeURIComponent(searchKeyWord);
         }else if(type=="职务"){
-            url="/searchDirectoryByJob?searchKeyWord="+searchKeyWord;
+            url="/searchDirectoryByJob?searchKeyWord="+encodeURIComponent(searchKeyWord);
 
         }else if(type=="固话"){
-            url="/searchDirectoryByTel?searchKeyWord="+searchKeyWord;
+            url="/searchDirectoryByTel?searchKeyWord="+encodeURIComponent(searchKeyWord);
          
         }else if(type=="手机号"){
-            url="/searchDirectoryByPhone?searchKeyWord="+searchKeyWord;
+            url="/searchDirectoryByPhone?searchKeyWord="+encodeURIComponent(searchKeyWord);
        
         }
          $.ajax({
@@ -166,20 +166,19 @@ code.hide();
         async:true,//请求是否异步，默认为异步，这也是ajax重要特性
         type:"GET",   //请求方式
         beforeSend:function(){
-            
         },
         success:function(data,status){
           var data=data.data;
-          var str;
+          var str="";
           for(var i=0;i<data.length;i++){
             if(i%2==0){
-              str+=" <tr class='firstTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td ><td >"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
+              str+="<tr class='firstTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td ><td >"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
             }else{
-              str+=  " <tr class='lastTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td><td>"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
+              str+="<tr class='lastTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td><td>"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
             }
           }
          $(".removeDate").remove();
-         $("table").append(str);
+         $("#mytable").append(str);
 
         },
         complete:function(){
@@ -199,7 +198,7 @@ code.hide();
         var dep=e.currentTarget.innerText;
 
         $.ajax({
-        url:"/getDirectoryByname1?depName="+dep,    //请求的url地址
+        url:"/getDirectoryByname1?depName="+encodeURIComponent($.trim(dep)),    //请求的url地址
         dataType:"json",   //返回格式为json
         xhrFields: {
             withCredentials: true
@@ -207,20 +206,20 @@ code.hide();
         async:true,//请求是否异步，默认为异步，这也是ajax重要特性
         type:"GET",   //请求方式
         beforeSend:function(){
-            
         },
         success:function(data,status){
           var data=data.data;
-          var str;
+          var str="";
           for(var i=0;i<data.length;i++){
             if(i%2==0){
-              str+=" <tr class='firstTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td ><td >"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
+              str+="<tr class='firstTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td><td >"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
             }else{
-              str+=  " <tr class='lastTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td><td>"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
+              str+="<tr  class='firstTr removeDate'><td>"+data[i].name+"</td><td>"+data[i].job+"</td><td>"+data[i].tel+"</td><td>"+data[i].phone+"</td><td>"+data[i].dep+"</td></tr>"
             }
           }
+
          $(".removeDate").remove();
-         $("table").append(str);
+         $("#mytable").append(str);
 
         },
         complete:function(){

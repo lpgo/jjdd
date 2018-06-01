@@ -23,8 +23,23 @@
         <script type="text/javascript" src="js/zh-cn(1).js"></script>
         <script type="text/javascript" src="js/jquery1.42.min.js"></script>
         <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
-        <script type="text/javascript" src="js/DD_belatedPNG.js"></script>
         <script type="text/javascript">
+        
+        
+        <%if .notice%>
+        if(document.referrer.indexOf(window.location.host)==-1){
+
+            var a= window.screen.height;
+            var b= window.screen.width;
+
+            var left=(b-600)/2;
+            var top=(a-400)/2;
+
+            window.open("/notice","_blank","toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, width=600, height=400,left="+left+",top=200")
+
+        }
+        <%end%>
+            
         function nTabs(thisObj, Num) {
             if (thisObj.className == "active") return;
             var tabObj = thisObj.parentNode.id;
@@ -54,13 +69,11 @@
             }
         }
         </script>
-        <!--[if IE 6]>
-<script src="DD_belatedPNG.js"></script>
-<script>
-  DD_belatedPNG.fix('#logopic img');
-  DD_belatedPNG.fix('.phoneicon');
-</script>
-<![endif]-->
+        
+
+
+
+
     </head>
 
     <body>
@@ -171,13 +184,13 @@
                         <div class="TabTitle" style="background: none">
                             <ul id="Tab0">
                                 <li class="active" onmouseover="nTabs(this,0);"><a style="font-size: 18px;font-weight: bold;" href="/noLeftList?isTraffic=true">交管要闻</a></li>
+                                 <li  onmouseover="nTabs(this,1);"><a style="font-size: 18px;font-weight: bold;" href="/noLeftList?isLeader=true">领导讲话</a></li>
                                <!--  <li>
                                     <input type="" name="" style="height:40px;width: 256px;margin-left:10px;margin-top:5px;padding-left: 10px;
     padding-right: 10px;font-size: 18px;border: 1px solid #1d7ad5;">
                                 </li>
                                 <li><a class="phoneicon" style="background:url(/images/search1.png) no-repeat;height: 50px;width: 50px;cursor: pointer;float: right;background-position: 0 10px"></a></li> -->
                             </ul>
-                            <span style="float: right;color: #ccc;color: #136dc6;cursor: pointer;margin-right: 21px;font-size: 14px;" onclick="window.location.href='/noLeftList?isTraffic=true'">更多>></span>
                         </div>
                         <div class="TabContent">
                             <div id="Tab0_Content0" style="display: block;">
@@ -185,7 +198,18 @@
                                     <ul class="infolist11" style="font-size:15px;color:#595959;">
 
                                         <%range .trafficArticles%>
-                                        <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;"><%Format .Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex .Id%>"  title="<%.Title%>"><%.Title%></a> </li>
+                                        <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;"><%Format .Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex .Id%>"  title="<%.Title%>"><span style="color: red"> <%if .IsTop%>[置顶]<%end%></span>&nbsp;<%.Title%></a> </li>
+                                        <%end%>
+                                        <li class="clear"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="Tab0_Content1" style="display: none;">
+                                <div class="newList">
+                                    <ul class="infolist11" style="font-size:15px;color:#595959;">
+
+                                        <%range .leaderArticles%>
+                                        <li style=";"> <span class="label_datatime" style="font-size:14px;color:#595959;"><%Format .Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex .Id%>"  title="<%.Title%>"><span style="color: red"> <%if .IsTop%>[置顶]<%end%></span>&nbsp;<%.Title%></a> </li>
                                         <%end%>
                                         <li class="clear"></li>
                                     </ul>
@@ -236,14 +260,14 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
-                                            <li onclick="window.location.href='/list?category=交管简报'">交管简报</li>
-                                            <li onclick="window.location.href='/list?category=通知通报'">通知通报</li>
-                                            <li onclick="window.location.href='/list?category=人事文件'">人事文件</li>
-                                            <li onclick="window.location.href='/list?category=交安委文件'">交安委文件</li>
-                                            <li onclick="window.location.href='/list?category=大队活动'">大队活动</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('交管简报')">交管简报</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('通知通报')">通知通报</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('人事文件')">人事文件</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('交安委文件')">交安委文件</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('大队活动')">大队活动</li>
                                         </ul>
                                     </div>
-                                    <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
+                                    <div class="bd TabContent" style="border-left: none;padding-bottom: 5px;height: 245px">
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
                                             <%range $i,$v := .arts.交管简报%>
                                             <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交管简报]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
@@ -336,13 +360,13 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
-                                            <li onclick="window.location.href='/list?category=支部活动'">支部活动</li>
-                                            <li onclick="window.location.href='/list?category=纪律教育'">纪律教育</li>
-                                            <li onclick="window.location.href='/list?category=学习培训'">学习培训</li>
-                                            <li onclick="window.location.href='/list?category=交警风采'">交警风采</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('支部活动')">支部活动</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('纪律教育')">纪律教育</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('学习培训')">学习培训</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('交警风采')">交警风采</li>
                                         </ul>
                                     </div>
-                                    <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
+                                    <div class="bd TabContent" style="border-left: none;padding-bottom: 5px;height: 245px">
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
                                             <%range $i,$v := .arts.支部活动%>
                                             <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[支部活动]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
@@ -372,79 +396,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="information-right fr">
+                <div class="information-right fr" style="height: 643px;overflow: scroll">
                     <div class="boxNew">
-                        <div class="bt3"> <span class="tit">今日值班</span> <span class="more"></span> </div>
+                        <div class="bt3" style="cursor: pointer;" onclick="zhibanbiao()"> <span class="tit">今日值班</span> <span style="cursor: pointer;"  class="more">更多</span> </div> 
+                        <script type="text/javascript">
+                            function zhibanbiao(){
+                                var date=new Date();
+                                var year = date.getFullYear();
+                                var month = (date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+                                var day = date.getDate() >= 10 ? date.getDate() : '0' + date.getDate();
+                                var time=year+"-"+month+"-"+day;
+                                window.location.href="/zhibanbiao?dep="+encodeURIComponent("大队")+"&time="+time;
+                            }
+                        </script>
                         <div class="new-bc">
                             <table id="zhibanbiao">
                                 <tr>
                                     <td colspan="3" style=" background-color: #ececec;padding-bottom: 0.7em;padding-top: 0.7em;font-size: 20px;font-weight: bold;line-height: 1.3em;"><%.week%>
                                         <br><%Format .now "2006年01月02日"%> </td>
                                 </tr>
-                                <%with .rota%>
-                                    <tr>
-                                        <td>值班领导</td>
-                                        <td colspan="2">
-                                            <%AddSpace .Lingdao%>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>带班组长</td>
-                                        <td colspan="2">
-                                            <%AddSpace .Zuzhang%>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="2">处警人员</td>
-                                        <%range $k,$v := .Chujing%>
-                                            <td>
-                                                <%AddSpace $v%>
-                                            </td>
-                                            <%if Two $k%>
-                                    </tr>
-                                    <tr>
-                                        <%end%>
-                                            <%end%>
-                                                <tr>
-                                                    <td rowspan="3">值班人员</td>
-                                                    <%range $k,$v := .Zhiban%>
-                                                        <td>
-                                                            <%AddSpace $v%>
-                                                        </td>
-                                                        <%if Two $k%>
-                                                </tr>
-                                                <tr>
-                                                    <%end%>
-                                                        <%end%>
-                                                            <tr>
-                                                                <td rowspan="2">备勤人员</td>
-                                                                <%range $k,$v := .Beiqing%>
-                                                                    <td>
-                                                                        <%AddSpace $v%>
-                                                                    </td>
-                                                                    <%if Two $k%>
-                                                            </tr>
-                                                            <tr>
-                                                                <%end%>
-                                                                    <%end%>
-                                                                        <tr>
-                                                                            <td rowspan="3">接警人员</td>
-                                                                            <%range $k,$v := .Jiejing%>
-                                                                                <td>
-                                                                                    <%AddSpace $v%>
-                                                                                </td>
-                                                                                <%if Two $k%>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <%end%>
-                                                                                <%end%>
-                                                                                    <tr>
-                                                                                        <td>值班电话</td>
-                                                                                        <td colspan="2">
-                                                                                            <%.Tel%>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <%end%>
+                                <%.rota%>
                             </table>
                         </div>
                     </div>
@@ -499,13 +470,13 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
-                                            <li onclick="window.location.href='/list?category=秩序整治'">秩序整治</li>
-                                            <li onclick="window.location.href='/list?category=事故预防'">事故预防</li>
-                                            <li onclick="window.location.href='/list?category=科技信息'">科技信息</li>
-                                            <li onclick="window.location.href='/list?category=交管宣传'">交管宣传</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('秩序整治')">秩序整治</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('事故预防')">事故预防</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('科技信息')">科技信息</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('交管宣传')">交管宣传</li>
                                         </ul>
                                     </div>
-                                    <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
+                                    <div class="bd TabContent" style="border-left: none;padding-bottom: 5px;height: 245px">
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
                                             <%range $i,$v := .arts.秩序整治%>
                                             <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[秩序整治]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
@@ -578,13 +549,13 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
-                                            <li onclick="window.location.href='/list?category=法律法规'">法律法规</li>
-                                            <li onclick="window.location.href='/list?category=规章制度'">规章制度</li>
-                                            <li onclick="window.location.href='/list?category=经验调研'">经验调研</li>
-                                            <li onclick="window.location.href='/list?category=学习交流'">学习交流</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('法律法规')">法律法规</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('规章制度')">规章制度</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('经验调研')">经验调研</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('学习交流')">学习交流</li>
                                         </ul>
                                     </div>
-                                    <div class="bd TabContent" style="border-left: none;padding-bottom: 5px">
+                                    <div class="bd TabContent" style="border-left: none;padding-bottom: 5px ;height: 245px">
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
                                             <%range $i,$v := .arts.法律法规%>
                                             <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[法律法规]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
@@ -633,28 +604,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="information-right fr">
+                <div class="information-right fr" style="overflow: hidden;">
                     <div class="boxNew">
-                        <div class="bt3" style="text-align: center;"> <span class="tit" style="padding-left: 46PX;cursor: pointer;" id="zhanneidaohangbtn">站内导航</span> <span onclick="window.location.href='/list?category=每月警星'" class="tit" style="padding-left: 39PX;color: #3488e6;cursor: pointer;" id="meiyuejingxingbtn">每月警星</span></div>
+                        <div class="bt3" style="text-align: center;"> <span class="tit" style="padding-left: 46PX;cursor: pointer;" id="zhanneidaohangbtn">站内导航</span> <span onclick="window.location.href='/list?category='+encodeURIComponent('每月警星')" class="tit" style="padding-left: 39PX;color: #3488e6;cursor: pointer;" id="meiyuejingxingbtn">每月警星</span></div>
                         <div class="new-bc" id=zhanneidaohang style="padding-bottom: 0px;padding-top: 0px;height: 265px;">
                             <table id="zhanneidaohang" style="border: none;">
                                 <tr>
-                                    <td style="background-color:#fb6e52;" onclick="window.location.href='/login.html'"><img style="padding-bottom: 2px" src="images/peopleicon.png">
-                                        <br>后台登录</td>
+                                    <td style="background-color:#fb6e52;" onclick="window.location.href='/login.html'"><img style="margin-bottom:  2px" src="images/peopleicon.png">
+                                        <div style="margin-top:4px;">后台登录</div>
+
+                                    </td>
                                     <td style="background-color:#28bc9c " onclick="window.location.href='/directory'"><img style="padding-bottom: 2px" src="images/tongxunlu.png">
-                                        <br>通讯录</td>
+                                        <div style="margin-top:4px;">通讯录</div>
+
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td style="background-color:#f59026 "><img style="padding-bottom: 2px" src="images/shuju.png">
-                                        <br> 站内搜索</td>
-                                    <td style="background-color:#8ab436 "><img style="padding-bottom: 2px" src="images/xiazai.png">
-                                        <br>软件下载</td>
+                                    <td style="background-color:#f59026" onclick="window.location.href='/search'"><img style="padding-bottom: 2px" src="images/shuju.png">
+                                        <div style="margin-top:4px;">站内搜索</div>
+                                    </td>
+                                    <td style="background-color:#8ab436"  onclick="window.location.href='http://download.jaq.sh/xfxz'"><img style="padding-bottom: 2px" src="images/xiazai.png">
+                                        <div style="margin-top:4px;">软件下载</div>
+
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td style="background-color:#90c0f9 "><img style="padding-bottom: 2px" src="images/search.png">
-                                        <br>搜索引擎</td>
-                                    <td style="background-color:#f9455a "><img style="padding-bottom: 2px" src="images/oapingtai.png">
-                                        <br>OA平台</td>
+                                    <td style="background-color:#90c0f9 " onclick="window.location.href='http://ssyq.zx.ga/keySearch.trs'"><img style="padding-bottom: 2px" src="images/search.png">
+                                        <div style="margin-top:4px;">搜索引擎</div>
+
+                                    </td>
+                                    <td style="background-color:#f9455a " onclick="window.location.href='http://10.177.65.220:7001/defaultroot/login.jsp'"><img style="padding-bottom: 2px" src="images/oapingtai.png">
+                                        <div style="margin-top:4px;">OA平台</div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -671,7 +652,7 @@
                        
                     </div>
                     <div class="boxNew" style="margin-top: 22px">
-                        <div class="bt3" style="text-align: center;"> <span class="tit" id="gaojiantongjibtn"  style="padding-left: 46PX;cursor: pointer;">稿件统计</span> <span onclick="window.location.href='/list?category=督察通报'" class="tit" style="padding-left: 39PX;cursor: pointer;color:#3488e6 " id="duchatongbaobtn">督察通报</span></div>
+                        <div class="bt3" style="text-align: center;"> <span class="tit" id="gaojiantongjibtn"  style="padding-left: 46PX;cursor: pointer;">稿件统计</span> <span onclick="window.location.href='/list?category='+encodeURIComponent('督察通报')" class="tit" style="padding-left: 39PX;cursor: pointer;color:#3488e6 " id="duchatongbaobtn">督察通报</span></div>
 
                          <div id="gaojiantongjibiao1"  class="new-bc" style="padding-bottom: 10px;height: 254px;overflow: scroll;">
                             <table id="gaojiantongjibiao"  style="width: 100%;text-align: center;font-size: 12px">

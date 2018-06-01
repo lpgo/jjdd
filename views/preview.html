@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
@@ -283,29 +283,36 @@
                             <div class="fl">
                                     <%if .Auditing%>
                                     <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass&isRed=<%.Article.IsRed%>'">审核通过</button>
-                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&isRed=<%.Article.IsRed%>'">不通过</button>
+                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="nopass()">不通过</button>
+                                    <script type="text/javascript">
+                                        function nopass(){
+                                            var reason=window.prompt("请输入拒绝原因",""); 
+                                             if (reason!=null && reason!=""){ 
+                                                window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&isRed=<%.Article.IsRed%>&reason='+encodeURIComponent(reason);
+
+                                              }
+                                          }
+
+                                    </script>
+
+
                                     <%else%>
-                                    <button class="buttonl"  style="background-color: #27a9f4;"   onclick="window.location.href='/admin/publish?category=<%.Article.Category%>'">保存文章</button>
-                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish?action=edit&category=<%.Article.Category%>'">返回编辑</button>
+                                    <button class="buttonl"  style="background-color: #27a9f4;"   onclick="window.location.href='/admin/publish?category='+encodeURIComponent('<%.Article.Category%>')">保存文章</button>
+                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish?action=edit&category='+encodeURIComponent('<%.Article.Category%>')">返回编辑</button>
                                     <%end%>
                             </div>
                         </div>
                         <%end%>
 
                         <div class="intr_title" style="color: #136dc6"><%.Article.Title%></div>
-                        <div class="ht_date" style="text-align:center;font-size:14px;color:#666;border-bottom: #0071cf 2px solid;padding-bottom: 11px">发布时间：<span id="time"></span>&nbsp;&nbsp;&nbsp;&nbsp;来源：<%.Article.From%> &nbsp;&nbsp;&nbsp;&nbsp;作者：<%.Article.Creator%> &nbsp;&nbsp;&nbsp;&nbsp;浏览量：<span class="item_views"><%.Article.Hits%></span>
+                        <div class="ht_date" style="text-align:center;font-size:14px;color:#666;border-bottom: #0071cf 2px solid;padding-bottom: 11px">发布时间：<span id="time"><%Format .Article.Time "2006/01/02 15:04:05"%></span>&nbsp;&nbsp;&nbsp;&nbsp;来源：<%.Article.From%> &nbsp;&nbsp;&nbsp;&nbsp;作者：<%.Article.Creator%> &nbsp;&nbsp;&nbsp;&nbsp;浏览量：<span class="item_views"><%.Article.Hits%></span>
                         </div>
                         <div class="conTxt">
-                        	<br>
+                            <br>
                             <%.Article.Content%>
                         </div>
                         <div class="clear"></div>
-                        <script type="text/javascript">
-                        	var str=<%.Article.Time%>;
-                        	var d=new Date(str);
-                        	str=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+""+"&nbsp;&nbsp;"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
-                            document.getElementById('time').innerHTML=str;
-                        </script>
+                        
                         <!--
                         <div style="border: 1px solid #e6e4e4;margin: 10px 10px">
                             <div style="background-color: #dcdada;height: 20px;padding: 10px 10px;font-size: 1.1em;line-height: 20px;color: #555555">文件签收</div>
@@ -365,7 +372,7 @@
 
                         </div>
                         <%if not .Single%>
-                    	<div class="pager">
+                        <div class="pager">
                             <div><strong><font color="red">上一篇：</font></strong>
                                 <%if .Pre%>
                                 <a href="/showArticle?id=<%call .Hex .Pre.Id%>" title="<%.Pre.Title%>"><%.Pre.Title%></a>
@@ -393,8 +400,8 @@
     </form>
 
 </body>
-	<script type="text/javascript">
-		function _addFavorite() {
+    <script type="text/javascript">
+        function _addFavorite() {
       var url = window.location;
       var title = document.title;
       var ua = navigator.userAgent.toLowerCase();
@@ -418,6 +425,6 @@
           alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
       }
   }    
-	</script>
+    </script>
 </html>
 <%end%>

@@ -1,169 +1,189 @@
-﻿<%define "rota"%>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+﻿<%define "rotalist"%>
+<!DOCTYPE html>
+<html>
 <head>
-    <title>府谷交警内网后台管理程序</title>
-    <meta name="description" content="府谷交警 内网">
-    <link rel="stylesheet" type="text/css" href="/css/houtai.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-    <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
-    <meta http-equiv="Content-Language" content="zh-cn">
-    <meta http-equiv="imagetoolbar" content="false">
-    <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
-    <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
-    <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
-    <!--[if IE 6]>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>府谷交警</title>
+<meta name="keywords" content="">
+<meta name="description" content=""> 
+<link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/label.css">
+<link href="/css/index.css" type="text/css" rel="stylesheet">
+<link href="/css/index1.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="/js/config.js"></script>
+<script type="text/javascript" src="/js/util.js"></script>
+<script type="text/javascript" src="/js/zh-cn.js"></script>
+<script type="text/javascript" src="/js/zh-cn(1).js"></script>
+<script type="text/javascript" src="/js/jquery1.42.min.js"></script>
+<script type="text/javascript" src="/js/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript" src="/js/DD_belatedPNG.js"></script>
+
+
+<!--[if IE 6]>
 <script src="DD_belatedPNG.js"></script>
 <script>
+  DD_belatedPNG.fix('#logopic img');
   DD_belatedPNG.fix('.phoneicon');
 </script>
 <![endif]-->
+</head>
+<body>
+         <%template "headerindex" .%>
 
-    <body ms-controller="fugujiaojing" id="homefirst">
-        <div id="wrapper">
-            <%template "header" .%>
+<script type="text/javascript">
+$(document).ready(function(){
+//**show_edit**//					   
+init_labelshows('header_t');
+//**menu**//
+$('#menu_nav li>dl').hide();
+$('#menu_nav li:first').addClass('over');
+$('#menu_nav li').each(function () {
+$(this).hover(
+function(){
+$('#menu_nav li').removeClass();
+$('#menu_nav li>dl').hide();
+$(this).addClass('over');
+$(this).find('dl').show();
+$(this).find('dl').css({left:parseInt($(this).position().left) + 'px'});
+},
+function(){
+$(this).find('dl').hide();
+}
+)
+});
+})
+$(".toggleCode").each(function(){
+var code = $(this).find('.codeDiv');
+$(this).hover(function() {
+code.show();
+}, function() {
+code.hide();
+});
+})
+</script>
+<div id="content" class="container">
+  <style type="text/css">
+    .btnDep{
+      font-size: 1.4em;display:inline-block; _zoom:1;*display:inline;margin: 10px;background-color: #136dc6;border: 1px solid white;color: white;height: 2em;line-height: 2em;width: 7.8em!important;text-align: center;cursor: pointer;
+    }
+    .btnDep1{
+      font-size: 1.4em;display:inline-block; _zoom:1;*display:inline;margin: 10px;background-color: #FFFFFF;border: 1px solid gray; color: black;height: 2em;line-height: 2em;width: 7.8em!important;text-align: center;cursor: pointer;
+    }
+  </style>
+  
+  <div style="margin-bottom: 10px;padding-left: 5px;text-align: center;color:#5c5c5c;height: 2em;line-height: 2em;background-color: #ccc;font-size: 2em;">
+    <script type="text/javascript">
+      var timestr="<%.Time%>";
+      var dep="<%.Dep%>";
+      var year=timestr.split("-")[0];
+      var month=timestr.split("-")[1];
+      var day=timestr.split("-")[2];
+      var curDate = new Date(year,(month-1),day);
+      var preDate = new Date(curDate.getTime() - 24*60*60*1000); //前一天
+      var nextDate = new Date(curDate.getTime() + 24*60*60*1000); //后一天
+
+      var preyear = preDate.getFullYear();
+      var premonth = (preDate.getMonth() + 1) >= 10 ? (preDate.getMonth() + 1) : '0' + (preDate.getMonth() + 1);
+      var preday = preDate.getDate() >= 10 ? preDate.getDate() : '0' + preDate.getDate();
+      var pretime=preyear+"-"+premonth+"-"+preday;
+
+      var nextyear = nextDate.getFullYear();
+      var nextmonth = (nextDate.getMonth() + 1) >= 10 ? (nextDate.getMonth() + 1) : '0' + (nextDate.getMonth() + 1);
+      var nextday = nextDate.getDate() >= 10 ? nextDate.getDate() : '0' + nextDate.getDate();
+      var nexttime=nextyear+"-"+nextmonth+"-"+nextday;
+
+
+
+      function pre(){
+        window.location.href="/zhibanbiao?dep="+encodeURIComponent(dep)+"&time="+pretime;
+      }
+      function next(){
+        window.location.href="/zhibanbiao?dep="+encodeURIComponent(dep)+"&time="+nexttime;
+
+      }
+    </script>
+    <span onclick="pre()" style="float: left;cursor: pointer;font-size: 0.7em;padding-left: 1em;color: red">前一天</span>
+    <span onclick="next()" style="float: right;cursor: pointer;font-size: 0.7em;padding-right: 1em;color: red;">后一天</span>
+
+        <span >府谷县公安局交警大队<%.Time%><%.Dep%>值班表</span>
+
+  </div>
+  <div style="margin-top: 10px;margin-bottom: 10px;padding-left: 5px;">
+      <!-- <div onclick="window.location.href='/zhibanbiao?dep=大队&time=<%.Time%>'" class='btnDep<%if eq .Dep "大队"%> btnDep1<%end%>'>
+        大队
+      </div> -->
+      <%range .Deps%>
+       <div onclick="window.location.href='/zhibanbiao?dep='+encodeURIComponent('<%.Name%>')+'&time=<%$.Time%>'" class='btnDep<%if eq $.Dep .Name%> btnDep1<%end%>'>
+        <%.Name%>
+      </div>
+      <%end%>
+
+  </div>
+ 
+
+  <style type="text/css">
+    table tr th{
+      height: 3em;line-height: 3em;font-size: 1.2em;
+    }
+    table tr td{
+      height: 3em;line-height: 3em;font-size: 1.2em;
+
+    }
+     td{
+    border: 1px solid #eeeeee!important;
+    padding: 0.2em;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    }
+  </style>
+  <table  id="mytable" style="width: 60%;text-align: center;border-bottom: 1px solid #ccc;margin: 0 auto;background-color: #fffef3;font-size: 1.3em;color: black">
+    <tr id="tableth">
+      <%.Rota%>
+    
+    </tr>
+   
+     
+  </table>
+            <%template "footer" .%>
+
+<style type="text/css">
+  .lastTr{
+    background-color: rgb(201, 220, 240);
+  }
+  .firstTr{
+    background-color:#FFFFFF;
+  }
+
+</style>
+ 
+</div>
+<script type="text/javascript">
+  function searchphone(dep,name){
+     $.ajax({
+        url:"/searchphone?dep="+encodeURIComponent(dep)+"&name="+name,    //请求的url地址
+        dataType:"json",   //返回格式为json
+        xhrFields: {
+            withCredentials: true
+         },
+        async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+        type:"GET",   //请求方式
+        beforeSend:function(){
             
-            <div id="maincontent">
-                <div class="idea divclass" id="d1">
-                    <h2>值班表设置</h2>
-                </div>
-                
-                <div class="idea divclass" id="d3" style="padding:0;border: 1px solid #aaa;border-top: none;margin-bottom: 10px">
-            <form method="post" action="/admin/saveRota">
-                 <input style="float: right;margin: 1em;height: 3em;line-height: 2em;color: white;background-color: #006CE8;padding: 4px 6px" type="submit" value="保存修改" >
-                 <div style="clear: both;"></div>
-            <table id="zhibanbiao">
-              <tr >
-                <td colspan="3" style=" background-color: #ececec;padding-bottom: 0.7em;padding-top: 0.7em;font-size: 20px;font-weight: bold;line-height: 1.3em;">星期五<br>2017年12月29日 </td>
-              </tr>
-              <%if .First%>
-              <tr>
-                <td style="width: 20%">值班领导</td>
-                <td ><input class="editTd" type="text" name="lingdao" > </td>
-              </tr>
-               <tr>
-                <td>带班组长</td>
-                <td ><input class="editTd" type="text" name="zuzhang" > </td>
-              </tr>
-               <tr>
-                <td rowspan="2">处警人员</td>
-                <td ><input class="editTd" type="text" name="chujing" > </td>
-                <td ><input class="editTd" type="text" name="chujing" > </td>
-              </tr>
-              <tr>
-                <td ><input class="editTd" type="text" name="chujing" > </td>
-                <td ><input class="editTd" type="text" name="chujing" > </td>
-
-              </tr>
-               <tr>
-                <td rowspan="3">值班人员</td>
-                <td ><input class="editTd" type="text" name="zhiban" > </td>
-                <td ><input class="editTd" type="text" name="zhiban" > </td>
-              </tr>
-              <tr>
-                <td ><input class="editTd" type="text" name="zhiban" > </td>
-                <td ><input class="editTd" type="text" name="zhiban" > </td>
-              </tr>
-              <tr>
-                <td ><input class="editTd" type="text" name="zhiban" > </td>
-                <td ><input class="editTd" type="text" name="zhiban" > </td>
-              </tr>
-               <tr>
-                <td rowspan="2">备勤人员</td>
-                <td ><input class="editTd" type="text" name="beiqing" > </td>
-                <td ><input class="editTd" type="text" name="beiqing" > </td>
-              </tr>
-              <tr>
-                <td ><input class="editTd" type="text" name="beiqing" > </td>
-                <td ><input class="editTd" type="text" name="beiqing" > </td>
-              </tr>
-               <tr>
-                <td rowspan="3">接警人员</td>
-                <td ><input class="editTd" type="text" name="jiejing" > </td>
-                <td ><input class="editTd" type="text" name="jiejing" > </td>
-              </tr>
-              <tr>
-                <td ><input class="editTd" type="text" name="jiejing" > </td>
-                <td ><input class="editTd" type="text" name="jiejing" > </td>
-              </tr>
-              <tr>
-                <td ><input class="editTd" type="text" name="jiejing" > </td>
-                <td ><input class="editTd" type="text" name="jiejing" > </td>
-              </tr>  
-              <tr>
-                <td >值班电话</td>
-                <td colspan="2"><input class="editTd" type="text" name="tel" > </td>
-              </tr>
-              <%else%>
-                <tr>
-                <td style="width: 20%">值班领导</td>
-                <td ><input class="editTd" type="text" name="lingdao" value="<%.Rota.Lingdao%>"> </td>
-              </tr>
-               <tr>
-                <td>带班组长</td>
-                <td ><input class="editTd" type="text" name="zuzhang" value="<%.Rota.Zuzhang%>"> </td>
-              </tr>
-               <tr>
-                <td rowspan="2">处警人员</td>
-                <%range $k,$v := .Rota.Chujing%>
-                  <td ><input class="editTd" type="text" name="chujing" value="<%$v%>"> </td>
-                  <%if Two $k%>
-                    </tr>
-                    <tr>
-                  <%end%>
-                <%end%>
-               <tr>
-                <td rowspan="3">值班人员</td>
-                <%range $k,$v := .Rota.Zhiban%>
-                  <td ><input class="editTd" type="text" name="zhiban" value="<%$v%>"> </td>
-                  <%if Two $k%>
-                    </tr>
-                    <tr>
-                  <%end%>
-                <%end%>
-               <tr>
-                <td rowspan="2">备勤人员</td>
-                <%range $k,$v := .Rota.Beiqing%>
-                  <td ><input class="editTd" type="text" name="beiqing" value="<%$v%>"> </td>
-                  <%if Two $k%>
-                    </tr>
-                    <tr>
-                  <%end%>
-                <%end%>
-               <tr>
-                <td rowspan="3">接警人员</td>
-                <%range $k,$v := .Rota.Jiejing%>
-                  <td ><input class="editTd" type="text" name="jiejing" value="<%$v%>"> </td>
-                  <%if Two $k%>
-                    </tr>
-                    <tr>
-                  <%end%>
-                <%end%> 
-              <tr>
-                <td >值班电话</td>
-                <td colspan="2"><input class="editTd" type="text" name="tel" value="<%.Rota.Tel%>"> </td>
-              </tr>
-              <%end%>                    
-            </table>
-           </form>       
-
-                </div>
-                    <div id="footer " style="text-align: center;">
-                        <p id="p2 " style="margin-left: 0;margin-top: 200px">
-                            <a style="color: #636161;font-size: 0.8em; " target="_blank " title="府谷县公安局交警大队 ">府谷县公安局交警大队版权所有 保留一切权利</a>
-                            <a target="_blank "></a>
-                        </p>
-                     </div>
-                </div>
-               
-            </div>
-    </body>
-    <style type="text/css">
-        #zhibanbiao{border:1px solid #eeeeee;width: 60%;margin: 0 auto; text-align: center;color: #333333;font-size: 15px}
-        #zhibanbiao td{border:1px solid #eeeeee!important;padding: 0.2em;padding-top: 5px;padding-bottom: 5px;height: 3em;line-height: 3em;}
-        .editTd{
-            background-color: #d6ffe2;color: black;cursor: pointer;width: 100%;height: 100%;padding: 0px 6px;text-align: center;
-        }
-    </style>
+        }, 
+        success:function(data,status){
+          if(data.success){
+            alert(data.data.dep+" "+data.data.name+" "+data.data.phone);
+          }
+        },
+        error:function(){
+            //请求出错处理
+          }
+      });
+  }
+</script>
+</body>
 </html>
 <%end%>

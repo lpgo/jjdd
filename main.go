@@ -15,10 +15,10 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
+	//"strings"
 	//"github.com/Luxurioust/excelize"
 	//"fmt"
-	//"log"
+	"log"
 	"time"
 )
 
@@ -26,9 +26,10 @@ import (
 	创建标准的RESTful  api
 */
 
+//文章类型
 var clazz map[string][]string = map[string][]string{
 	"文件简报": []string{"交管简报", "通知通报", "人事文件", "交安委文件", "大队活动"},
-	"一级栏目": []string{"大队概括", "督察通报", "每月警星"},
+	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
 	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "交警风采"},
 	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
 	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流"}}
@@ -80,20 +81,7 @@ func apiGroup(next echo.HandlerFunc) echo.HandlerFunc {
 		if cc, ok := c.(*CustomContext); !ok {
 			return errors.New("server cc error")
 		} else {
-			if user, o := cc.GetSession("user").(*db.User); o {
-				path := c.Path()
-				if user.Role != "大队" {
-					if strings.HasPrefix(path, "/admin/page/admin") {
-						category := c.QueryParam("category")
-						ss := []string{"交管简报", "通知通报", "大队活动", "人事文件", "交安委文件", "大队概括", "督察通报", "每月警星"}
-						for _, s := range ss {
-							if s == category {
-								return c.Redirect(http.StatusMovedPermanently, "/login.html")
-							}
-						}
-					}
-
-				}
+			if _, o := cc.GetSession("user").(*db.User); o {
 				return next(c)
 			}
 			return c.Redirect(http.StatusMovedPermanently, "/login.html")
@@ -111,6 +99,13 @@ func noCache(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
+func refresh(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		c.Echo().Renderer = newRenderer()
+		return next(c)
+	}
+}
+
 func okGroup(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		return next(c)
@@ -122,15 +117,13 @@ func customHTTPErrorHandler(err error, c echo.Context) {
 	if he, ok := err.(*echo.HTTPError); ok && he.Code == code {
 		c.Logger().Error(err)
 		c.Redirect(http.StatusMovedPermanently, "/error.html")
+	} else {
+		c.Logger().Error(err)
 	}
 
 }
 
-func main() {
-	//log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	e := echo.New()
-
+func newRenderer() *Template {
 	temp := template.New("jjdd")
 	temp.Delims("<%", "%>")
 
@@ -142,23 +135,33 @@ func main() {
 	funmap["Add"] = Add
 	funmap["Substring"] = Substring
 	funmap["IsNew"] = IsNew
+	funmap["Include"] = Include
 	temp.Funcs(funmap)
-	t := &Template{
+	return &Template{
 		templates: template.Must(temp.ParseGlob("views/*.html")),
 	}
-	e.Renderer = t
+}
+
+func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
+	e := echo.New()
+	e.Renderer = newRenderer()
 	e.Static("/", "public")
 
 	//日志
-	/*e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "method=${method}, uri=${uri}, status=${status}\n",
-	}))*/
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "uri=${uri}, status=${status}\n",
+	}))
 	e.Use(middleware.Recover())
 	e.Use(middleware.Gzip())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins:     []string{"http://localhost"},
 		AllowCredentials: true,
 	}))
+
+	//热更新模板，发布时去除
+	e.Use(refresh)
 	e.Use(noCache)
 
 	//Session控制
@@ -200,6 +203,10 @@ func main() {
 	admin.GET("/page/subject_list", subjectListPage)
 	admin.GET("/page/modify_subject", modifySubjectPage)
 
+	admin.GET("/page/add_notice", addNoticePage)
+	admin.GET("/page/notice_list", noticeListPage)
+	admin.GET("/page/modify_notice", modifyNoticePage)
+
 	/*----------------操作--------*/
 	//文章
 	admin.Any("/publish", publishArticle)
@@ -231,6 +238,8 @@ func main() {
 
 	//值班表
 	admin.Any("/saveRota", saveRota)
+	admin.Any("/addRotas", addRotas)
+	admin.Any("/getRotas", getRotas)
 
 	//链接
 	admin.Any("/addLink", addLink)
@@ -244,6 +253,17 @@ func main() {
 	admin.Any("/getSubjectList", getSubjectList)
 	admin.Any("/delSubject", delSubject)
 	admin.Any("/modifySubject", modifySubject)
+
+	admin.Any("/addNotice", addNotice)
+	admin.Any("/getNoticeList", getNoticeList)
+	admin.Any("/delNotice", delNotice)
+	admin.Any("/modifyNotice", modifyNotice)
+	admin.Any("/setNotice", setNotice)
+	admin.Any("/cancelNotice", cancelNotice)
+	e.Any("/haveNotice", haveNotice)
+
+	//获取审核未通过数量
+	admin.Any("/noPassCount", noPassCount)
 
 	admin.Any("/logout", logout)
 
@@ -266,9 +286,15 @@ func main() {
 	e.GET("/", indexPage)
 	e.GET("/login.html", loginPage)
 	e.Any("/login", login)
+	e.Any("/notice", noticePage)
+	e.Any("/zhibanbiao", rotaListPage)
+	e.Any("/searchphone", searchPhone)
+	//test
 
 	//登录
 	//e.POST("/login", login)
+
+	e.Any("/download", download)
 
 	//文件上传
 	e.POST("/uploadImage", uploadImage)
@@ -280,6 +306,19 @@ func main() {
 	e.HTTPErrorHandler = customHTTPErrorHandler
 	e.Start(":80")
 
+}
+
+func download(c echo.Context) error {
+	header := c.Response().Header()
+
+	f, err := os.Open("public/firefox.exe")
+	if err != nil {
+		return err
+	}
+	info, _ := f.Stat()
+	info.Size()
+	header["Content-Length"] = []string{string(info.Size())}
+	return c.Stream(http.StatusOK, "application/x-msdownload", f)
 }
 
 func addLink(c echo.Context) error {
@@ -299,13 +338,20 @@ func addLink(c echo.Context) error {
 }
 
 func addUser(c echo.Context) error {
+	params, _ := c.FormParams()
 	user := db.User{
-		Id:         bson.NewObjectId(),
-		Name:       c.FormValue("name"),
-		Password:   "888888",
-		Department: c.FormValue("dep"),
-		Role:       c.FormValue("role"),
+		Id:          bson.NewObjectId(),
+		Name:        c.FormValue("name"),
+		Password:    "888888",
+		Department:  c.FormValue("dep"),
+		Role:        c.FormValue("role"),
+		Authorities: params["quanxian"],
 	}
+
+	if user.Role == "中队" {
+		user.Authorities = append(user.Authorities, "后台首页")
+	}
+
 	if err := service.AddUser(user); err != nil {
 		c.Logger().Warn(err)
 		return c.Render(http.StatusOK, "adduser", map[string]bool{"NameError": true})
@@ -369,6 +415,23 @@ func addDirectory(c echo.Context) error {
 	}
 }
 
+func addNotice(c echo.Context) error {
+	notice := db.Notice{
+		Id:      bson.NewObjectId(),
+		Title:   c.FormValue("title"),
+		Content: c.FormValue("content"),
+		Dep:     c.FormValue("dep"),
+		IsShow:  false,
+		Time:    time.Now(),
+	}
+	if err := db.Add("notice", notice); err != nil {
+		c.Logger().Warn(err)
+		return c.Render(http.StatusOK, "addnotice", nil)
+	} else {
+		return MyRedirect(c, "/admin/page/notice_list")
+	}
+}
+
 func saveRota(c echo.Context) error {
 	params, _ := c.FormParams()
 	rota := db.Rota{
@@ -380,11 +443,72 @@ func saveRota(c echo.Context) error {
 		Jiejing: params["jiejing"],
 		Tel:     params["tel"][0],
 	}
-	if err := db.Upsert("rota", rota); err != nil {
+	if err := db.UpsertByCond("rota", bson.M{"time": params["time"][0]}, rota); err != nil {
 		c.Logger().Warn(err)
 		return err
 	} else {
 		return MyRedirect(c, "/admin/page/saveRota")
+	}
+}
+
+//新的保存值班表
+func addRotas(c echo.Context) error {
+	var rota db.ZRota
+	c.Bind(&rota)
+
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	if user.Role == "大队" {
+		rota.Dep = "大队"
+	} else {
+		rota.Dep = user.Department
+	}
+
+	startTime := c.QueryParam("starttime")
+	endTime := c.QueryParam("endtime")
+
+	start := service.ToRotaTime(startTime)
+	end := service.ToRotaTime(endTime)
+
+	for t := start; t.Before(end); t = t.AddDate(0, 0, 1) {
+		rota.Time = t
+		if err := db.UpsertByCond("zrota", bson.M{"time": t, "dep": rota.Dep}, rota); err != nil {
+			c.Logger().Warn(err)
+		}
+	}
+
+	rota.Time = end
+	if err := db.UpsertByCond("zrota", bson.M{"time": end, "dep": rota.Dep}, rota); err != nil {
+		c.Logger().Warn(err)
+		return err
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"success": true})
+	}
+}
+
+func getRotas(c echo.Context) error {
+	var dep string
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	if user.Role == "大队" {
+		dep = "大队"
+	} else {
+		dep = user.Department
+	}
+
+	startTime := c.QueryParam("starttime")
+	endTime := c.QueryParam("endtime")
+
+	start := service.ToRotaTime(startTime)
+	end := service.ToRotaTime(endTime)
+
+	c.Logger().Error("====", start, end)
+
+	rotas := []db.ZRota{}
+	if err := db.FindMany("zrota", bson.D{bson.DocElem{Name: "dep", Value: dep}, bson.DocElem{Name: "time", Value: bson.M{"$gte": start}}, bson.DocElem{Name: "time", Value: bson.M{"$lte": end}}}, &rotas); err != nil {
+		c.Logger().Warn(err)
+		return err
+	} else {
+		c.Logger().Error(rotas)
+		return c.JSON(http.StatusOK, rotas)
 	}
 }
 
@@ -442,6 +566,15 @@ func delLink(c echo.Context) error {
 	}
 }
 
+func delNotice(c echo.Context) error {
+	if err := service.DelNotice(c.QueryParam("id")); err != nil {
+		c.Logger().Warn(err)
+		return err
+	} else {
+		return c.NoContent(http.StatusOK)
+	}
+}
+
 func getArticles(c echo.Context) error {
 	cond := make(bson.M, 1)
 	if "" != c.QueryParam("searchValue") {
@@ -449,6 +582,11 @@ func getArticles(c echo.Context) error {
 	}
 	if "true" == c.QueryParam("isRed") {
 		cond["isRed"] = true
+	}
+	if "false" == c.QueryParam("isPass") {
+		cond["isPass"] = false
+	} else if "true" == c.QueryParam("isPass") {
+		cond["true"] = true
 	}
 	if "false" == c.QueryParam("isRed") {
 		cond["isRed"] = false
@@ -610,11 +748,11 @@ func showArticleById(c echo.Context) error {
 
 	var pre, next []db.Article
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false, "isAuditing": true, "category": article.Category}, "-time", 1, &pre); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": false, "isPass": true, "category": article.Category}, "-time", 1, &pre); err != nil {
 		c.Logger().Warn(err)
 		return err
 	}
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": false, "isAuditing": true, "category": article.Category}, "time", 1, &next); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": false, "isPass": true, "category": article.Category}, "time", 1, &next); err != nil {
 		c.Logger().Warn(err)
 		return err
 	}
@@ -633,11 +771,11 @@ func showArticleById(c echo.Context) error {
 func showHongtouArticleById(c echo.Context, article db.Article) error {
 	var pre, next []db.Article
 	db.UpdateById("article", c.QueryParam("id"), bson.M{"$inc": bson.M{"hits": 1}})
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true, "isAuditing": true, "category": article.Category}, "-time", 1, &pre); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$lt": article.Time}, "isRed": true, "isPass": true, "category": article.Category}, "-time", 1, &pre); err != nil {
 		c.Logger().Warn(err)
 		return err
 	}
-	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": true, "isAuditing": true, "category": article.Category}, "time", 1, &next); err != nil {
+	if err := db.FindManyOrder("article", bson.M{"time": bson.M{"$gt": article.Time}, "isRed": true, "isPass": true, "category": article.Category}, "time", 1, &next); err != nil {
 		c.Logger().Warn(err)
 		return err
 	}
@@ -668,15 +806,17 @@ func signArticle(c echo.Context) error {
 
 func modifyArticlePage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
+
 	var article db.Article
 	if err := db.GetById("article", c.QueryParam("id"), &article); err != nil {
 		c.Logger().Warn(err)
 		return err
 	} else {
+		navBar, subNav := service.CreateMenuHtml(user, article.Category)
 		if article.IsRed {
-			return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"User": user, "Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
+			return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
 		} else {
-			return c.Render(http.StatusOK, "publish", map[string]db.Any{"User": user, "Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
+			return c.Render(http.StatusOK, "publish", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
 		}
 	}
 }
@@ -706,7 +846,7 @@ func auditingArticle(c echo.Context) error {
 	if c.QueryParam("result") == "pass" {
 		pass = true
 	}
-	if err := db.UpdateById("article", c.QueryParam("id"), bson.M{"$set": bson.M{"isAuditing": pass}}); err != nil {
+	if err := db.UpdateById("article", c.QueryParam("id"), bson.M{"$set": bson.M{"isAuditing": true, "isPass": pass, "reason": c.QueryParam("reason")}}); err != nil {
 		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
@@ -736,11 +876,16 @@ func modifyArticle(c echo.Context) error {
 	}
 
 	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
-		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No}}); err != nil {
+		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No, "isAuditing": false, "time": time.Now()}}); err != nil {
 		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
-		return MyRedirect(c, "/admin/page/admin?category="+article.Category)
+		user := c.(*CustomContext).GetSession("user").(*db.User)
+		if user.Role == "大队" {
+			return MyRedirect(c, "/admin/page/dadui_admin?isRed=true")
+		} else {
+			return MyRedirect(c, "/admin/page/zhongdui_admin")
+		}
 	}
 
 }
@@ -762,9 +907,18 @@ func setArticle(c echo.Context) error {
 	} else {
 		update["isTraffic"] = false
 	}
+	if c.FormValue("isTop") != "" {
+		update["isTop"] = true
+	} else {
+		update["isTop"] = false
+	}
 
 	if update["isHot"].(bool) {
 		db.UpdateByCond("article", bson.M{"isHot": true}, bson.M{"$set": bson.M{"isHot": false}})
+	}
+
+	if update["isTop"].(bool) {
+		db.UpdateByCond("article", bson.M{"isTop": true, "isTraffic": update["isTraffic"], "category": c.FormValue("category")}, bson.M{"$set": bson.M{"isTop": false}})
 	}
 
 	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": update}); err != nil {
@@ -791,7 +945,8 @@ func login(c echo.Context) error {
 
 func publishPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "Subjects": service.GetAllSubjects()}
+	navBar, subNav := service.CreateMenuHtml(user, c.QueryParam("category"))
+	data := map[string]db.Any{"navBar": navBar, "subNav": subNav, "Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "Subjects": service.GetAllSubjects()}
 	if c.QueryParam("action") == "edit" {
 		data["Edit"] = true
 	}
@@ -811,7 +966,8 @@ func publishPage(c echo.Context) error {
 
 func publishHongtouPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	data := map[string]db.Any{"Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Subjects": service.GetAllSubjects()}
+	navBar, subNav := service.CreateMenuHtml(user, c.QueryParam("category"))
+	data := map[string]db.Any{"navBar": navBar, "subNav": subNav, "Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Subjects": service.GetAllSubjects()}
 	if c.QueryParam("action") == "edit" {
 		data["Edit"] = true
 	}
@@ -848,24 +1004,28 @@ func subjectArticleListPage(c echo.Context) error {
 }
 
 func noLeftListPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "noleftlist", map[string]db.Any{"IsTraffic": c.QueryParam("isTraffic"), "Subject": c.QueryParam("subject")})
+	return c.Render(http.StatusOK, "noleftlist", map[string]db.Any{"IsLeader": c.QueryParam("isLeader"), "IsTraffic": c.QueryParam("isTraffic"), "Subject": c.QueryParam("subject")})
 }
 
 func adminPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "admin", map[string]db.Any{"User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "IsRed": c.QueryParam("isRed"), "Header": c.QueryParam("header")})
+	navBar, subNav := service.CreateMenuHtml(user, c.QueryParam("category"))
+	return c.Render(http.StatusOK, "admin", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "IsRed": c.QueryParam("isRed"), "Header": c.QueryParam("header")})
 }
 func zhongduiAdminPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "zhongduiadmin", map[string]db.Any{"User": user, "Menu": "后台首页"})
+	navBar, subNav := service.CreateMenuHtml(user, "后台首页")
+	return c.Render(http.StatusOK, "zhongduiadmin", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "后台首页", "IsPass": c.QueryParam("isPass")})
 }
 func daduiAdminPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "daduiadmin", map[string]db.Any{"User": user, "Category": c.QueryParam("category"), "Menu": "文章审核", "IsRed": c.QueryParam("isRed"), "Header": c.QueryParam("header")})
+	navBar, subNav := service.CreateMenuHtml(user, "红头文件")
+	return c.Render(http.StatusOK, "daduiadmin", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Category": c.QueryParam("category"), "Menu": "文章审核", "IsRed": c.QueryParam("isRed"), "Header": c.QueryParam("header")})
 }
 func changePwdPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "changepwd", map[string]db.Any{"User": user})
+	navBar, subNav := service.CreateMenuHtml(user, c.QueryParam("category"))
+	return c.Render(http.StatusOK, "changepwd", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "后台首页"})
 }
 
 func setArticlePage(c echo.Context) error {
@@ -876,33 +1036,74 @@ func setArticlePage(c echo.Context) error {
 		c.Logger().Warn(err)
 		return err
 	}
-
-	return c.Render(http.StatusOK, "setarticle", map[string]db.Any{"Clazz": clazz, "User": user, "Id": c.QueryParam("id"), "Article": article, "Menu": article.Class})
+	navBar, subNav := service.CreateMenuHtml(user, article.Category)
+	return c.Render(http.StatusOK, "setarticle", map[string]db.Any{"navBar": navBar, "subNav": subNav, "Clazz": clazz, "User": user, "Id": c.QueryParam("id"), "Article": article, "Menu": article.Class})
 }
 
 func saveRotaPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	rota, have := service.GetRota()
-	return c.Render(http.StatusOK, "rota", map[string]db.Any{"User": user, "First": !have, "Rota": rota, "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "值班管理")
+	rota := service.GetRota()
+	return c.Render(http.StatusOK, "rota", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Rota": rota, "Menu": "网站管理"})
 }
 
 func addLinkPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"User": user, "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "链接管理")
+	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "网站管理", "Category": c.QueryParam("category")})
 }
 
 func linkListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "linklist", map[string]db.Any{"User": user, "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "链接管理")
+	return c.Render(http.StatusOK, "linklist", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "网站管理"})
+}
+
+func addNoticePage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	navBar, subNav := service.CreateMenuHtml(user, "通知管理")
+	return c.Render(http.StatusOK, "addnotice", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "网站管理", "Update": false})
+}
+
+func modifyNoticePage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	var notice db.Notice
+	if err := db.GetById("notice", c.QueryParam("id"), &notice); err != nil {
+		c.Logger().Warn(err)
+	}
+	navBar, subNav := service.CreateMenuHtml(user, "通知管理")
+	return c.Render(http.StatusOK, "addnotice", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "网站管理", "Update": true, "Data": notice})
+}
+
+func noticeListPage(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	navBar, subNav := service.CreateMenuHtml(user, "通知管理")
+	return c.Render(http.StatusOK, "noticelist", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "网站管理"})
+}
+
+func rotaListPage(c echo.Context) error {
+
+	dep := c.QueryParam("dep")
+	time := service.ToRotaTime(c.QueryParam("time"))
+
+	var rota db.ZRota
+	if err := db.FindOne("zrota", bson.M{"dep": dep, "time": time}, &rota); err != nil {
+		c.Logger().Error(err)
+	}
+
+	deps := service.GetAllDeps()
+
+	return c.Render(http.StatusOK, "rotalist", map[string]db.Any{"Dep": dep, "Time": c.QueryParam("time"), "Deps": deps, "Rota": service.RotaToHtml(rota)})
 }
 
 func indexPage(c echo.Context) error {
-	rota, _ := service.GetRota()
+	rota := service.GetRota()
 	links := service.GetLinks()
 	hotArticle := service.GetHotArticle()
 	imageArticles := service.GetImageArticles()
 	subjects := service.GetAllSubjects()
 	trafficArticles := service.GetTrafficArticles()
+	leaderArticles := service.GetLeaderArticles()
 	duChaArticles := service.GetDuChaArticles()
 	starArticles := service.GetStarArticles()
 	summarizationId := service.GetSummarization()
@@ -927,7 +1128,16 @@ func indexPage(c echo.Context) error {
 		}
 	}
 
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
+	var notice bool
+	if db.GetCount("notice", bson.M{"isShow": true}) > 0 {
+		notice = true
+	}
+
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"notice": notice, "leaderArticles": leaderArticles, "summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
+}
+
+func noticePage(c echo.Context) error {
+	return c.Render(http.StatusOK, "notice", service.GetNotice(c.FormValue("id")))
 }
 
 func directoryPage(c echo.Context) error {
@@ -953,12 +1163,14 @@ func loginPage(c echo.Context) error {
 
 func addUserPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
+	navBar, subNav := service.CreateMenuHtml(user, "用户管理")
 	deps := service.GetAllDeps()
-	return c.Render(http.StatusOK, "adduser", map[string]db.Any{"User": user, "Deps": deps, "Menu": "网站管理"})
+	return c.Render(http.StatusOK, "adduser", map[string]db.Any{"Auth": []string{}, "navBar": navBar, "subNav": subNav, "User": user, "Deps": deps, "Menu": "网站管理"})
 }
 
 func addDirectoryPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
+	navBar, subNav := service.CreateMenuHtml(user, "通讯录管理")
 
 	var deps []db.Department = make([]db.Department, 10)
 	if err := db.GetAll("department", &deps); err != nil {
@@ -966,7 +1178,11 @@ func addDirectoryPage(c echo.Context) error {
 		return err
 	}
 
-	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"User": user, "Update": false, "Deps": deps, "Menu": "网站管理"})
+	dn := c.QueryParam("dep")
+	if dn == "搜索结果" {
+		dn = deps[0].Name
+	}
+	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"navBar": navBar, "subNav": subNav, "DepName": dn, "User": user, "Update": false, "Deps": deps, "Menu": "网站管理"})
 }
 
 func directoryListPage(c echo.Context) error {
@@ -976,7 +1192,8 @@ func directoryListPage(c echo.Context) error {
 		c.Logger().Warn(err)
 		return err
 	}
-	return c.Render(http.StatusOK, "directorylist", map[string]db.Any{"User": user, "Deps": deps, "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "通讯录管理")
+	return c.Render(http.StatusOK, "directorylist", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Deps": deps, "Menu": "网站管理"})
 }
 
 func modifyDirectoryPage(c echo.Context) error {
@@ -986,42 +1203,50 @@ func modifyDirectoryPage(c echo.Context) error {
 		c.Logger().Warn(err)
 		return err
 	}
-	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Deps": deps, "Name": c.QueryParam("name"), "DepName": c.QueryParam("dep"), "Job": c.QueryParam("job"), "Tel": c.QueryParam("tel"), "Phone": c.QueryParam("phone"), "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "通讯录管理")
+	return c.Render(http.StatusOK, "adddirectory", map[string]db.Any{"navBar": navBar, "subNav": subNav, "Id": c.QueryParam("id"), "User": user, "Update": true, "Deps": deps, "Name": c.QueryParam("name"), "DepName": c.QueryParam("dep"), "Job": c.QueryParam("job"), "Tel": c.QueryParam("tel"), "Phone": c.QueryParam("phone"), "Menu": "网站管理"})
 }
 
 func modifyLinkPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name"), "Category": c.QueryParam("category"), "Url": c.QueryParam("url"), "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "链接管理")
+	return c.Render(http.StatusOK, "addlink", map[string]db.Any{"navBar": navBar, "subNav": subNav, "Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name"), "Category": c.QueryParam("category"), "Url": c.QueryParam("url"), "Menu": "网站管理"})
 }
 
 func depListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "deplist", map[string]db.Any{"User": user, "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "部门管理")
+	return c.Render(http.StatusOK, "deplist", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "网站管理"})
 }
 
 func subjectListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "subjectlist", map[string]db.Any{"User": user, "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "专题管理")
+	return c.Render(http.StatusOK, "subjectlist", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Menu": "网站管理"})
 }
 
 func addDepPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"User": user, "Update": false, "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "部门管理")
+	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Update": false, "Menu": "网站管理"})
 }
 
 func addSubjectPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "addsubject", map[string]db.Any{"User": user, "Update": false, "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "专题管理")
+	return c.Render(http.StatusOK, "addsubject", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Update": false, "Menu": "网站管理"})
 }
 
 func modifySubjectPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "addsubject", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Modify": true, "Name": c.QueryParam("name"), "Pic": c.QueryParam("pic"), "IsHot": c.QueryParam("isHot"), "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "专题管理")
+	return c.Render(http.StatusOK, "addsubject", map[string]db.Any{"navBar": navBar, "subNav": subNav, "Id": c.QueryParam("id"), "User": user, "Modify": true, "Name": c.QueryParam("name"), "Pic": c.QueryParam("pic"), "IsHot": c.QueryParam("isHot"), "Menu": "网站管理"})
 }
 
 func modifyDepPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name"), "Menu": "网站管理"})
+	navBar, subNav := service.CreateMenuHtml(user, "部门管理")
+	return c.Render(http.StatusOK, "adddep", map[string]db.Any{"navBar": navBar, "subNav": subNav, "Id": c.QueryParam("id"), "User": user, "Update": true, "Name": c.QueryParam("name"), "Menu": "网站管理"})
 }
 
 func modifyUserPage(c echo.Context) error {
@@ -1040,17 +1265,67 @@ func modifyUserPage(c echo.Context) error {
 		data["BM"] = true
 	}
 
+	var u db.User
+	if err := db.GetById("user", c.QueryParam("id"), &u); err != nil {
+		c.Logger().Error(err)
+		return err
+	}
+	data["Auth"] = u.Authorities
 	data["Menu"] = "网站管理"
-
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	data["User"] = user
+	navBar, subNav := service.CreateMenuHtml(user, "用户管理")
+	data["navBar"] = navBar
+	data["subNav"] = subNav
 	return c.Render(http.StatusOK, "adduser", data)
 }
 
 func modifyUser(c echo.Context) error {
-	if err := db.UpdateById("user", c.FormValue("id"), bson.M{"$set": bson.M{"dep": c.FormValue("dep"), "role": c.FormValue("role")}}); err != nil {
+	params, _ := c.FormParams()
+	if c.FormValue("role") == "中队" {
+		params["quanxian"] = append(params["quanxian"], "后台首页")
+	}
+	if err := db.UpdateById("user", c.FormValue("id"), bson.M{"$set": bson.M{"dep": c.FormValue("dep"), "role": c.FormValue("role"), "authorities": params["quanxian"]}}); err != nil {
 		c.Logger().Warn(err)
 		return err
 	} else {
 		return userListPage(c)
+	}
+}
+
+func modifyNotice(c echo.Context) error {
+	if err := db.UpdateById("notice", c.FormValue("id"), bson.M{"$set": bson.M{"dep": c.FormValue("dep"), "title": c.FormValue("title"), "content": c.FormValue("content")}}); err != nil {
+		c.Logger().Warn(err)
+		return err
+	} else {
+		return MyRedirect(c, "/admin/page/notice_list")
+	}
+}
+
+func setNotice(c echo.Context) error {
+	db.UpdateByCond("notice", bson.M{"isShow": true}, bson.M{"$set": bson.M{"isShow": false}})
+	if err := db.UpdateById("notice", c.FormValue("id"), bson.M{"$set": bson.M{"isShow": true}}); err != nil {
+		c.Logger().Warn(err)
+		return err
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"success": true})
+	}
+}
+
+func cancelNotice(c echo.Context) error {
+	if err := db.UpdateById("notice", c.FormValue("id"), bson.M{"$set": bson.M{"isShow": false}}); err != nil {
+		c.Logger().Warn(err)
+		return err
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"success": true})
+	}
+}
+
+func haveNotice(c echo.Context) error {
+	if db.GetCount("notice", bson.M{"isShow": true}) > 0 {
+		return c.JSON(http.StatusOK, map[string]db.Any{"have": true})
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"have": false})
 	}
 }
 
@@ -1062,6 +1337,11 @@ func changePwd(c echo.Context) error {
 	} else {
 		return MyRedirect(c, "/admin/logout")
 	}
+}
+
+func noPassCount(c echo.Context) error {
+	user := c.(*CustomContext).GetSession("user").(*db.User)
+	return c.JSON(http.StatusOK, map[string]db.Any{"success": true, "count": db.GetCount("article", bson.M{"dep": user.Department, "isPass": false})})
 }
 
 func modifyDep(c echo.Context) error {
@@ -1160,12 +1440,13 @@ func modifyLink(c echo.Context) error {
 
 func userListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
+	navBar, subNav := service.CreateMenuHtml(user, "用户管理")
 	users := make([]db.User, 10)
 	if err := db.FindMany("user", nil, &users); err != nil {
 		c.Logger().Warn(err)
 		return err
 	} else {
-		return c.Render(http.StatusOK, "userlist", map[string]db.Any{"users": users, "User": user, "Menu": "网站管理"})
+		return c.Render(http.StatusOK, "userlist", map[string]db.Any{"navBar": navBar, "subNav": subNav, "users": users, "User": user, "Menu": "网站管理"})
 	}
 }
 
@@ -1193,15 +1474,23 @@ func getSubjectList(c echo.Context) error {
 	}
 }
 
-func getDirectoryList(c echo.Context) error {
+func getNoticeList(c echo.Context) error {
+	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
+		return err
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetNoticesByPage(page), "count": service.GetNoticesCount()})
+	}
+}
 
-	return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetDirectorysByName(c.QueryParam("searchValue"))})
+func getDirectoryList(c echo.Context) error {
+	data := service.GetDirectorysByName(c.QueryParam("searchValue"))
+	return c.JSON(http.StatusOK, map[string]db.Any{"data": data, "count": len(data)})
 
 }
 
 func getLinkList(c echo.Context) error {
-
-	return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetLinksByName(c.QueryParam("searchValue"))})
+	data := service.GetLinksByName(c.QueryParam("searchValue"))
+	return c.JSON(http.StatusOK, map[string]db.Any{"data": data, "count": len(data)})
 
 }
 
@@ -1276,7 +1565,7 @@ func searchDirectoryByPhone(c echo.Context) error {
 }
 
 func searchArticle(c echo.Context) error {
-	cond := bson.M{"isAuditing": true}
+	cond := bson.M{"isPass": true}
 
 	if "" != c.QueryParam("searchValue") {
 		cond["title"] = bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchValue"), Options: "ixs"}}
@@ -1311,12 +1600,23 @@ func searchArticle(c echo.Context) error {
 
 	}
 
+	c.Logger().Print(cond)
+
 	if page, err := strconv.Atoi(c.QueryParam("page")); err != nil {
 		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetIndexArticlesByPage(1, 15, cond), "count": service.GetArticlesCount(cond)})
 	} else {
 		return c.JSON(http.StatusOK, map[string]db.Any{"data": service.GetIndexArticlesByPage(page, 15, cond), "count": service.GetArticlesCount(cond)})
 	}
 
+}
+
+func searchPhone(c echo.Context) error {
+	var d db.Directory
+	if err := db.FindOne("directory", bson.M{"dep": c.FormValue("dep"), "name": c.FormValue("name")}, &d); err != nil {
+		return c.JSON(http.StatusOK, map[string]db.Any{"success": false})
+	} else {
+		return c.JSON(http.StatusOK, map[string]db.Any{"success": true, "data": d})
+	}
 }
 
 func statisticsPage(c echo.Context) error {
@@ -1541,4 +1841,13 @@ func IsNew(t time.Time) bool {
 	} else {
 		return false
 	}
+}
+
+func Include(slice []string, s string) bool {
+	for _, v := range slice {
+		if v == s {
+			return true
+		}
+	}
+	return false
 }

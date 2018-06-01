@@ -9,7 +9,7 @@
     <meta http-equiv="Expires" content="0">
     <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/css/houtai.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="zh-cn">
     <meta http-equiv="imagetoolbar" content="false">
     <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
@@ -23,8 +23,12 @@
 </script>
 <![endif]-->
 
-    <body ms-controller="fugujiaojing" id="homefirst">
-        <div id="wrapper">
+ <style type="text/css">
+            .ms-controller{
+               visibility: hidden
+            }
+        </style>
+        <body ms-controller="fugujiaojing" id="homefirst"  class="ms-controller">        <div id="wrapper">
                        <%template "header" .%>
 
             
@@ -53,7 +57,7 @@
                      <div  ms-for="($index, el) in @arr" class="cleardiv hoverdiv" ms-mouseover="@divmouseover($index)" ms-mouseleave="@divmouseout($index)" style="width: 100%;border-bottom: 1px solid #E8E7E3!important;height: 40px;line-height: 40px">
                         <div class="cleardiv" style="width: 10%;float: left;text-align: center;">{{(@page-1)*@pagemeiye+$index+1}}</div>
                         <div class="cleardiv" style="width: 20%;float: left;text-align:center;">{{el.name}}</div>
-                        <div class="cleardiv" style="width: 30%;float: left;text-align:center;"><span ms-if="!el.ishidden" style="color: white">.</span> <span ms-if="el.ishidden"><a  style="color: #d9534f" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  <a style="color: #f0ad4e" ms-attr="{href:'/admin/page/modify_dep?id='+ el.id+'&name='+el.name}">修改</a></span></div>
+                        <div class="cleardiv" style="width: 30%;float: left;text-align:center;"><span ms-if="!el.ishidden" style="color: white">.</span> <span ms-if="el.ishidden"><a  style="color: #d9534f" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  <a style="color: #f0ad4e" href="#" ms-on-click="modify(el.id,el.name)">修改</a></span></div>
                         <div class="cleardiv" style="width: 20%;float: left;text-align:center;">{{el.order}}</div>
                         </div>
                        

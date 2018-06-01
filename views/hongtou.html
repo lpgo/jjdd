@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
@@ -272,10 +272,22 @@
                             <div class="fl">
                                     <%if .Auditing%>
                                     <button class="buttonl" style="background-color: #3cc24c;" onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=pass&isRed=<%.Article.IsRed%>'">审核通过</button>
-                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&isRed=<%.Article.IsRed%>'">不通过</button>
+                                    <button  class="buttonl"  style="background-color: #ee4b47;"  onclick="nopass()">不通过</button>
+
+                                     <script type="text/javascript">
+                                        function nopass(){
+                                            var reason=window.prompt("请输入拒绝原因",""); 
+                                             if (reason!=null && reason!=""){ 
+                                                window.location.href='/admin/auditing?id=<%call .Hex .Article.Id%>&result=noPass&isRed=<%.Article.IsRed%>&reason='+encodeURIComponent(reason);
+
+                                              }
+                                        }
+
+                                    </script>
+
                                     <%else%>
                                     <button class="buttonl"  style="background-color: #27a9f4;"   onclick="window.location.href='/admin/publish'">保存文章</button>
-                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish?action=edit&category=<%.Article.Category%>&isRed=true'">返回编辑</button>
+                                    <button class="buttonl"   onclick="window.location.href='/admin/page/publish?action=edit&category='+encodeURIComponent('<%.Article.Category%>')+'&isRed=true'">返回编辑</button>
                                     <%end%>
                             </div>
                         </div>
@@ -285,31 +297,26 @@
                         <!--打印内容开始-->
                         <table style="font-size:14px;color:#666;margin: 0 auto;">
                           <tr>  
-                            <td>拟稿:</td>
+                            <td>&emsp;拟稿:</td>
                             <td><%.Article.Creator%></td>
                             <td>&emsp;</td>
-                            <td>审核:</td>
+                            <td>&emsp;审核:</td>
                             <td><%.Article.Assessor%></td>
                             <td>&emsp;</td>
-                            <td>签发:</td>
+                            <td>&emsp;签发:</td>
                             <td><%.Article.Signature%></td>
                             <td>&emsp;</td>
-                            <td>来源:</td>
+                            <td>&emsp;来源:</td>
                             <td><%.Article.From%></td>
                             <td>&emsp;</td>
-                            <td>发布时间:</td>
-                            <td><span  id="time"></span></td>
+                            <td>&emsp;发布时间:</td>
+                            <td><span  id="time"><%Format .Article.Time "2006/01/02 15:04:05"%></span></td>
                             <td>&emsp;</td>
-                            <td>浏览次数:</td>
+                            <td>&emsp;浏览次数:</td>
                             <td><%.Article.Hits%>次</td>
                           </tr>
                         </table>
-                        <script type="text/javascript">
-                            var str=<%.Article.Time%>;
-                            var d=new Date(str);
-                            str=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+""+"&nbsp;&nbsp;"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
-                            document.getElementById('time').innerHTML=str;
-                        </script>
+                        
                         <div style="padding-top: 230px;text-align: center;font-size: 20px;font-family: '仿宋'">府公交&nbsp;﹝<%.Article.Year%>﹞&nbsp;<%.Article.No%>号</div>
                         <div class="intr_title" style="padding-top: 158px;color: #000;"><%.Article.Title%></div>
                         <div class="conTxt">
@@ -326,6 +333,7 @@
                             }
                             </style>
                             <table style="width: 100%;padding-top: 1em;padding-bottom: 1em" id="qianshou">
+                                <tr style="border: none!important;height: 2em;"> </tr>
                                 <tr>
                                     <td style="color: green">已签收:</td>
                                     <%range $i,$v := .Article.Signed%>
@@ -336,9 +344,7 @@
                                     <%end%>
                                     <%end%>
                                 </tr>
-                                <tr>
-                                    <td style="border: none!important;">&emsp;</td>
-                                </tr>
+                                <tr style="border: none!important;height: 2em;"> </tr>
                                 <tr>
                                     <td style="color: red">未签收:</td>
                                     <%range .Article.UnSign%>

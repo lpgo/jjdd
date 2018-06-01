@@ -10,10 +10,9 @@
     <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/css/houtai.css">
     <link rel="stylesheet" type="text/css" href="/js/webuploader/webuploader.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="zh-cn">
     <meta http-equiv="imagetoolbar" content="false">
-    <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
     <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
     <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
    
@@ -49,15 +48,16 @@
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         主要专题 <span style="color: white">*</span>
                        &nbsp;
-                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="isHot" value="true" <%if eq .IsHot "true"%>checked='checked'<%end%>>
+                        <input type="checkbox" style="border: none;vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;" name="isHot" value="true" <%if eq .IsHot "true"%>checked='checked'<%end%>>
                     </div>
                    
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         专题图片 &nbsp;<input id="imagename" type="hidden" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 22em;" name="pic" value="<%.Pic%>">
                         <div id="picker" style="display: inline-block;vertical-align: middle;margin-left: 2em;">上传</div>
-                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;width: 54px;height: 42px;line-height: 42px;border-radius: 3px;color: white;text-align: center;background-color: #3cc24c;;cursor: pointer;display:inline-block;">查看图片</div>
+                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;width: 54px;height: 42px;line-height: 42px;border-radius: 3px;color: white;text-align: left;background-color: #3cc24c;;cursor: pointer;display:inline-block;">查看图片</div>
                      
-                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;height: 42px;line-height: 42px;border-radius: 3px;color: gray;text-align: center;">提示：普通专题请选用长宽比为 <span style="color: red">5.3</span> 的图片(如：<span style="color: red">342*65</span>),主要专题请选用长宽比为11.5的图片(如：<span style="color: red">1090*95</span>)</div>
+                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;height: 42px;line-height: 42px;border-radius: 3px;color: gray;text-align: left;">提示：普通专题请选用长宽比为 <span style="color: red">5.3</span> 的图片(如：<span style="color: red">342*65</span>),主要专题请选用长宽比为11.5的图片(如：<span style="color: red">1090*95</span>)</div>
+                    </div>
                            <script type="text/javascript">
                            $("#chakan").click(function(){
                                 window.open("<%.Pic%>")
@@ -76,21 +76,21 @@
                       <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         主要专题 <span style="color: white">*</span>
                        &nbsp;
-                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="isHot" value="true">
+                        <input type="checkbox" style="border: none;vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;" name="isHot" value="true">
                     </div>
                    
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         专题图片 &nbsp;<input id="imagename" type="hidden" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 22em;" name="pic" v>
                         <div id="picker" style="display: inline-block;vertical-align: middle;margin-left: 2em;">上传</div>
-                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;width: 54px;height: 42px;line-height: 42px;border-radius: 3px;color: white;text-align: center;background-color: #3cc24c;;cursor: pointer;display: none;">查看图片</div>
+                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;width: 54px;height: 42px;line-height: 42px;border-radius: 3px;color: white;text-align: left;background-color: #3cc24c;;cursor: pointer;display: none;">查看图片</div>
 
-                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;height: 42px;line-height: 42px;border-radius: 3px;color: gray;text-align: center;display: inline-block;">提示：普通专题请选用长宽比为 <span style="color: red">5.3</span> 的图片(如：<span style="color: red">342*65</span>),主要专题请选用长宽比为11.5的图片(如：<span style="color: red">1090*95</span>)</div>
-
+                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;height: 42px;line-height: 42px;border-radius: 3px;color: gray;text-align: left;display: inline-block;">提示：普通专题请选用长宽比为 <span style="color: red">5.3</span> 的图片(如：<span style="color: red">342*65</span>),主要专题请选用长宽比为11.5的图片(如：<span style="color: red">1090*95</span>)</div>
+                    </div>
                     </div>
                     <%end%>
                      <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
                     &emsp;&emsp;
-                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/subject_list'">
+                    <input style="width:80px;height: 40px;line-height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;"  type="button"  name="取消" value="取消"  onclick="window.location.href='/admin/page/subject_list'">
                 </form>
             </div>
                         </div>
@@ -102,83 +102,77 @@
                 </p>
             </div>
         </div>
-        <script type="text/javascript" charset="utf-8" src="/js/ku/ueditor.config.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/ku/editor_api.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/ku/avalon.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/houtaifabu.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="/js/jquerygao.js"></script>
         <script type="text/javascript" charset="utf-8"  src="/js/webuploader/webuploader.js"></script>
 
 </body>
     <script type="text/javascript">
-    UE.getEditor('editor');
-    var cantijiao=false;
-   var uploader = WebUploader.create({
 
-        // 选完文件后，是否自动上传。
-        auto: true,
+       var cantijiao=false;
+       var uploader = WebUploader.create({
 
-        // swf文件路径
-        swf: '/js/webuploader/Uploader.swf',
+            // 选完文件后，是否自动上传。
+            auto: true,
 
-        // 文件接收服务端。
-        server: '/uploadImage',
+            // swf文件路径
+            swf: '/js/webuploader/Uploader.swf',
 
-        // 选择文件的按钮。可选。
-        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-        pick: '#picker',
-        fileVal:"upfile", 
-        // 只允许选择图片文件。
-        accept: {
-            title: 'Images',
-            extensions: 'gif,jpg,jpeg,bmp,png',
-            mimeTypes: 'image/*'
+            // 文件接收服务端。
+            server: '/uploadImage',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker',
+            fileVal:"upfile", 
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        uploader.on( 'uploadSuccess', function(file, res) {
+            alert("上传图片成功！")
+            $("#imagename").val(res.url);
+            $("#chakan").css('display','inline-block');
+            $("#chakan").unbind();
+            $("#chakan").click(function(){
+                window.open(res.url)
+            })
+        });
+
+            // 文件上传失败，显示上传出错。
+        uploader.on( 'uploadError', function( file ) {
+           alert("上传图片错误，请重新上传！")
+        });
+
+            // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on( 'uploadComplete', function( file ) {
+
+        });
+
+         function myTrim(x) {
+            return x.replace(/^\s+|\s+$/gm,'');
         }
-    });
-    uploader.on( 'uploadSuccess', function(file, res) {
-        alert("上传图片成功！")
-        $("#imagename").val(res.url);
-        $("#chakan").css('display','inline-block');
-        $("#chakan").unbind();
-        $("#chakan").click(function(){
-            window.open(res.url)
-        })
-    });
 
-        // 文件上传失败，显示上传出错。
-    uploader.on( 'uploadError', function( file ) {
-       alert("上传图片错误，请重新上传！")
-    });
-
-        // 完成上传完了，成功或者失败，先删除进度条。
-    uploader.on( 'uploadComplete', function( file ) {
-
-    });
-
-     function myTrim(x) {
-        return x.replace(/^\s+|\s+$/gm,'');
-    }
-
-     function CheckPost ()
-       {  
-         dep.subjectName.value=myTrim(dep.subjectName.value);
-        dep.imagename.value=myTrim(dep.imagename.value);
-       
-
-        if (myTrim(dep.subjectName.value) == "")
-          {
-              alert("请专题标题！");
-              dep.title.focus();
-              return false;
-          }
-        if (myTrim(dep.imagename.value) == "")
-          {
-              alert("请上传图片!");
-              return false;
-          }
-          
-         return true;
-       }
+         function CheckPost () {  
+            dep.subjectName.value=myTrim(dep.subjectName.value);
+            dep.imagename.value=myTrim(dep.imagename.value);
+           
+            if (myTrim(dep.subjectName.value) == "")
+              {
+                  alert("请专题标题！");
+                  dep.title.focus();
+                  return false;
+              }
+            if (myTrim(dep.imagename.value) == "")
+              {
+                  alert("请上传图片!");
+                  return false;
+              }
+              
+             return true;
+           }
 
 </script>
 

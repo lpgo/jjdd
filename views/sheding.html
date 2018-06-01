@@ -10,29 +10,22 @@
     <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/css/houtai.css">
     <link rel="stylesheet" type="text/css" href="/js/webuploader/webuploader.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="zh-cn">
     <meta http-equiv="imagetoolbar" content="false">
     <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
     <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
     <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
    
-    <!--[if IE 6]>
-<script src="DD_belatedPNG.js"></script>
-<script>
-  DD_belatedPNG.fix('.phoneicon');
-</script>
-<![endif]-->
 
     <body ms-controller="fugujiaojing" id="homefirst">
-        <div id="wrapper">
-                        <%template "header" .%>
+       <div id="wrapper">
+             <%template "header" .%>
 
-            
-            <div id="maincontent">
+
+         <div id="maincontent">
             
 
-            </div>
                 <div class="idea divclass" id="d1">
                     <h2>设定</h2>
                    
@@ -47,6 +40,23 @@
                         交管要闻<span style="color: white">*</span>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="isTraffic" value="true" <%if .Article.IsTraffic%>checked='checked'<%end%>>
                     </div> 
+
+                    <%if .Article.IsTraffic%>
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        是否置顶<span style="color: white">*</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="isTop" value="true" <%if .Article.IsTop%>checked='checked'<%end%>>
+                    </div>
+                    
+                    <%else%>
+                      <%if eq .Article.Category "领导讲话"%>
+                      <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                          是否置顶<span style="color: white">*</span>
+                           <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="isTop" value="true" <%if .Article.IsTop%>checked='checked'<%end%>>
+                      </div>
+                      <%end%>
+                    <%end%> 
+
+
                     <%if .Article.Pic%>
                      <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         图片新闻<span style="color: white">*</span>
@@ -75,22 +85,15 @@
                    
                     <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
                     &emsp;&emsp;
-                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/admin?category=<%.Article.Category%>&isRed=<%.Article.IsRed%>'">
+                    <input style="width:80px;height: 40px;line-height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" type="button" name="取消" value="取消"  onclick="window.location.href='/admin/page/dadui_admin?isRed=<%.Article.IsRed%>'">
 
                 </form>
-            </div>
-            <div id="footer " style="text-align: center;">
-                        <p id="p2 " style="margin-left: 0;margin-top: 200px">
-                            <a style="color: #636161;font-size: 0.8em; " target="_blank " title="府谷县公安局交警大队 ">府谷县公安局交警大队版权所有 保留一切权利</a>
-                            <a target="_blank "></a>
-                        </p>
-                     </div>
-        </div>
-        
-        <script type="text/javascript" charset="utf-8"  src="/js/ku/avalon.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/houtaifabu.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/webuploader/webuploader.js"></script>
+         </div>
+         <br>
+
+     </div>
+      
+
 
 </body>
     <script type="text/javascript">

@@ -1,9 +1,9 @@
 ﻿<%define "noleftlist"%>
 <!DOCTYPE html>
 
-<html>
+<html> 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
@@ -211,12 +211,13 @@
     <div class="nav mtop">您的位置：
         <a href="/">首页</a>
         &gt;&gt; <%if eq .IsTraffic "true"%><a href="/noLeftList?isTraffic=true">交管要闻</a><%end%>
+        <%if eq .IsLeader "true"%><a href="/noLeftList?isLeader=true">领导讲话</a><%end%>
         <%if .Subject%><a href="/noLeftList?subject=<%.Subject%>"><%.Subject%></a><%end%></div>
     <div class="govMain">
         <div class="dt_right" style="width: 1028px">
             <div class="border1">
                 <div class="head11">
-                    <span class="title19"><%if eq .IsTraffic "true"%>交管要闻<%end%><%if .Subject%><%.Subject%><%end%></span>
+                    <span class="title19"><%if eq .IsLeader "true"%>领导讲话<%end%><%if eq .IsTraffic "true"%>交管要闻<%end%><%if .Subject%><%.Subject%><%end%></span>
                 </div>
                 <div class="main1">
                      <ul class="label_ul_b">
@@ -260,9 +261,9 @@
     <script type="text/javascript">
     	
 var meiyenum=15;
-var params = <%if eq .IsTraffic "true"%>"&isTraffic=true"<%end%><%if .Subject%>"&subject="+encodeURIComponent("<%.Subject%>")<%end%>;
+var params = <%if eq .IsLeader "true"%>"&category=领导讲话"<%end%><%if eq .IsTraffic "true"%>"&isTraffic=true"<%end%><%if .Subject%>"&subject="+encodeURIComponent("<%.Subject%>")<%end%>;
 
-
+ 
 var net=function(page){
 
 }

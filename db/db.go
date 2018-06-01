@@ -148,6 +148,14 @@ func Upsert(collection string, data Any) error {
 	return WitchCollection(collection, update)
 }
 
+func UpsertByCond(collection string, cond Any, data Any) error {
+	update := func(c *mgo.Collection) error {
+		_, err := c.Upsert(cond, data)
+		return err
+	}
+	return WitchCollection(collection, update)
+}
+
 func GetCount(collection string, condition Any) int {
 	result := 0
 	query := func(c *mgo.Collection) error {

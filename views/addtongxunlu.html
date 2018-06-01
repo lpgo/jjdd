@@ -49,19 +49,14 @@
                         部&emsp;门<span style="color: red">*</span>
                         
                         <%range $i,$v := .Deps%>
-                            <%if $.Update%>
+                            
                                 <%if eq $v.Name $.DepName%>
-                                    <input style="vertical-align: middle; margin-left: 2em;" checked="checked"type="radio" name="dep" value="<%.Name%>" checked="checked"><%.Name%>
+                                    <input style="vertical-align: middle; margin-left: 2em;" checked="checked" type="radio" name="dep" id="<%.Name%>"  value="<%.Name%>" checked="checked"><label for="<%.Name%>"><%.Name%></label>
                                 <%else%>
-                                    <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" ><%.Name%>
+                                    <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" id="<%.Name%>"  value="<%.Name%>" ><label for="<%.Name%>"><%.Name%></label>
                                 <%end%>
-                            <%else%>
-                                <%if eq $i 0%>
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" checked="checked"><%.Name%>
-                                <%else%>
-                                <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" value="<%.Name%>" ><%.Name%>
-                                <%end%>
-                            <%end%>
+                          
+                           
                         <%end%>
                        
                     </div> 
@@ -87,7 +82,7 @@
                    
                     <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
                     &emsp;&emsp;
-                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/directory_list'">
+                    <input style="width:80px;height: 40px;line-height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;"  type="button"  name="取消" value="取消"  onclick="window.location.href='/admin/page/directory_list'">
 
                 </form>
             </div>
@@ -103,7 +98,7 @@
         
         <script type="text/javascript" charset="utf-8"  src="/js/ku/avalon.js"></script>
         <script type="text/javascript" charset="utf-8"  src="/js/houtaifabu.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="/js/jquerygao.js"></script>
         <script type="text/javascript" charset="utf-8"  src="/js/webuploader/webuploader.js"></script>
 
 </body>

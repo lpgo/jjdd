@@ -17,7 +17,17 @@ type Link struct {
 	IsHidden bool          `bson:"ishidden" json:"ishidden"`
 }
 
-//值班表
+type Notice struct {
+	Id       bson.ObjectId `bson:"_id" json:"id"`
+	Title    string        `bson:"title" json:"title"`
+	Content  string        `bson:"content" json:"content"`
+	Dep      string        `bson:"dep" json:"dep"`
+	Time     time.Time     `bson:"time" json:"time"`
+	IsShow   bool          `bson:"isShow" json:"isShow"`
+	IsHidden bool          `bson:"ishidden" json:"ishidden"`
+}
+
+//大队值班表
 type Rota struct {
 	Lingdao string   `bson:"lingdao" json:"lingdao"`
 	Zuzhang string   `bson:"zuzhang" json:"zuzhang"`
@@ -26,6 +36,18 @@ type Rota struct {
 	Beiqing []string `bson:"beiqing" json:"beiqing"`
 	Jiejing []string `bson:"jiejing" json:"jiejing"`
 	Tel     string   `bson:"tel" json:"tel"`
+}
+
+type RotaItem struct {
+	Name  string   `bson:"name" json:"name"`   //名称
+	Staff []string `bson:"staff" json:"staff"` //人员
+}
+
+//中队值班表
+type ZRota struct {
+	Duty []RotaItem `bson:"duty" json:"duty"`
+	Dep  string     `bson:"dep" json:"dep"`
+	Time time.Time  `json:"time" bson:"time"`
 }
 
 //通讯录
@@ -49,12 +71,13 @@ type Department struct {
 
 //用户
 type User struct {
-	Id         bson.ObjectId `bson:"_id" json:"id"`
-	Name       string        `bson:"name" json:"name"`
-	Password   string        `bson:"pwd" json:"-"`
-	Role       string        `bson:"role" json:"role"`
-	Department string        `bson:"dep" json:"dep"`
-	IsHidden   bool          `bson:"ishidden" json:"ishidden"`
+	Id          bson.ObjectId `bson:"_id" json:"id"`
+	Name        string        `bson:"name" json:"name"`
+	Password    string        `bson:"pwd" json:"-"`
+	Role        string        `bson:"role" json:"role"`
+	Authorities []string      `bson:"authorities" json:"quanxian"`
+	Department  string        `bson:"dep" json:"dep"`
+	IsHidden    bool          `bson:"ishidden" json:"ishidden"`
 }
 
 type Subject struct {
@@ -85,7 +108,10 @@ type Article struct {
 	IsImage    bool          `bson:"isImage" json:"isImage"`       //图片新闻
 	IsTraffic  bool          `bson:"isTraffic" json:"isTraffic"`   //交管要闻
 	IsRed      bool          `bson:"isRed" json:"isRed"`           //红头文件
+	IsTop      bool          `bson:"isTop" json:"isTop"`           //是否置顶
 	IsAuditing bool          `bson:"isAuditing" json:"isAuditing"` //是否审核
+	IsPass     bool          `bson:"isPass" json:"isPass"`         //是否通过
+	Reason     string        `bson:"reason" json:"reason"`         //回退原因
 	Hits       int64         `bson:"hits" json:"hits"`             //点击量
 	NeedSign   bool          `bson:"needSign" json:"needSign"`     //是否签收
 	Year       string        `bson:"year" json:"year"`             //发文年号

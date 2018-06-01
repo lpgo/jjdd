@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>府谷交警</title>
     <meta name="keywords" content="府谷交警">
@@ -18,7 +18,13 @@
     <script type="text/javascript" src="/js/util.js"></script>
     <script type="text/javascript" src="/js/zh-cn.js"></script>
     <script type="text/javascript" src="/js/zh-cn(1).js"></script>
+ <script type="text/javascript" src="js/DD_belatedPNG.js"></script>
+        <script type="text/javascript">
+        window.onload = function () {
+            DD_belatedPNG.fix('*');    
 
+        };
+    </script>
     <script type="text/javascript">
         function nTabs(thisObj, Num) {
             if (thisObj.className == "active") return;
@@ -167,7 +173,12 @@
         }
     </style>
 </head>
-<body  ms-controller="fugujiaojing" >
+<style type="text/css">
+            .ms-controller{
+               visibility: hidden
+            }
+        </style>
+        <body ms-controller="fugujiaojing"  class="ms-controller">  
 
 <div id="content" class="container"> <!--中间内容部分-->
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -247,7 +258,6 @@ avalon.filters.uppercase = function (str) {
     var length=searchValue.length;
     var kaishi=str.indexOf(searchValue);
     var jieshu=kaishi+length;
-    console.log(kaishi);
     var str1=str.substring(0,kaishi);
     var str2=str.substring(jieshu,str.length);
     var str3='<span style="color:red">'+searchValue+'</span>';
@@ -267,7 +277,7 @@ var vm = avalon.define({
   search:function(sousuovalue){
     searchV=sousuovalue
    $.ajax({
-    url:"/searchArticle?searchValue="+sousuovalue,    //请求的url地址
+    url:"/searchArticle?searchValue="+encodeURIComponent(sousuovalue),    //请求的url地址
     dataType:"json",   //返回格式为json
     xhrFields: {
         withCredentials: true
@@ -295,7 +305,7 @@ var vm = avalon.define({
   del:function(index){
     function a(){
        $.ajax({
-        url:"/searchArticle?id="+index+"&searchValue="+vm.searchValue,    //请求的url地址
+        url:"/searchArticle?id="+index+"&searchValue="+encodeURIComponent(vm.searchValue),    //请求的url地址
         dataType:"json",   //返回格式为json
         async:true,//请求是否异步，默认为异步，这也是ajax重要特性
         type:"GET",   //请求方式
@@ -351,7 +361,7 @@ var vm = avalon.define({
   jump:function(page){
     vm.page=parseInt(page) ;
     $.ajax({
-    url:"/searchArticle?page="+page+"&searchValue="+vm.searchValue,    //请求的url地址
+    url:"/searchArticle?page="+page+"&searchValue="+encodeURIComponent(vm.searchValue),    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
@@ -376,7 +386,7 @@ var vm = avalon.define({
       return;
     }
     $.ajax({
-    url:"/searchArticle?page="+(page-1)+"&searchValue="+vm.searchValue,    //请求的url地址
+    url:"/searchArticle?page="+(page-1)+"&searchValue="+encodeURIComponent(vm.searchValue),    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
@@ -401,7 +411,7 @@ var vm = avalon.define({
     }
 
    $.ajax({
-    url:"/searchArticle?page="+(page+1)+"&searchValue="+vm.searchValue,    //请求的url地址
+    url:"/searchArticle?page="+(page+1)+"&searchValue="+encodeURIComponent(vm.searchValue),    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
@@ -426,7 +436,7 @@ var vm = avalon.define({
  })
 
 $.ajax({
-    url:"/searchArticle?page=1"+"&searchValue="+vm.searchValue,    //请求的url地址
+    url:"/searchArticle?page=1"+"&searchValue="+encodeURIComponent(vm.searchValue),    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式

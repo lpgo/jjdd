@@ -2,9 +2,8 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -101,7 +100,9 @@
         position: absolute;
         height: 25px;
     }
-
+    .ms-controller{
+       visibility: hidden
+    }
     #play_9609 .playNum a {
         margin: 5px 2px;
         width: 15px;
@@ -170,7 +171,7 @@
         }
     </style>
 </head>
-<body  ms-controller="fugujiaojing" >
+<body  ms-controller="fugujiaojing"  class="ms-controller" >
          <%template "headerindex" .%>
 
 <script type="text/javascript">
@@ -216,11 +217,11 @@
     <div class="govMain">
         <div class="dt_left">
             <div class="left_nav">
-                <div class="head10" style="cursor: pointer;" onclick="window.location.href='/list?class=<%.Class%>'"><span class="title16"><a href="/list?class=<%.Class%>"><%.Class%></a></span></div>
+                <div class="head10" style="cursor: pointer;" onclick="javascript:window.location.href='/list?class='+encodeURIComponent('<%.Class%>')"><span class="title16"><a href="/list?class=<%.Class%>"><%.Class%></a></span></div>
                 <div class="main3" style="padding:10px 10px 60px 10px;">
                     <ul class="menu_list_1" id="left_nav_url">
                         <%range .AllCategorys%>
-                        <li class="cid_1241 "  onclick="window.location.href='/list?category=<%.%>'">
+                        <li class="cid_1241 "  onclick="javascript:window.location.href='/list?category='+encodeURIComponent('<%.%>')">
                             <dt><a href="/list?category=<%.%>"><%.%></a></dt>
                             
                         </li>
@@ -246,21 +247,21 @@
         <div class="dt_right">
             <div class="border1">
                 <div class="head11">
-                    <span class="title19"><%if .Category%><%.Category%><%else%><%.Class%><%end%></span>
+                    <span class="title19" style="background: none;background-color: #0071cf;"><%if .Category%><%.Category%><%else%><%.Class%><%end%></span>
                 </div>
                 <div class="main1">
                     <ul class="label_ul_b">
                         <br>
                         <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;&emsp;&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
-                        </li>
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span>
+                            <a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
                         <br>
                         <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
                         </li>
                         <br>
                         <li ms-for="($index, el) in @arr3"  class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
                         </li>
                         <li class="clear"></li>
                     </ul>
@@ -290,11 +291,9 @@
     <script type="text/javascript">
     	
 var meiyenum=15;
-var isca=<%.Category%>;
-var iscl=<%.Class%>
-var net=function(page){
+var isca="<%.Category%>";
+var iscl="<%.Class%>";
 
-}
 var searchV;
 avalon.filters.uppercase = function (str) {
     var searchValue=searchV;
@@ -375,7 +374,7 @@ var vm = avalon.define({
   del:function(index){
     function a(){
        $.ajax({
-        url:"/searchArticle?id="+index+"&searchValue="+vm.searchValue,    //请求的url地址
+        url:"/searchArticle?id="+index+"&searchValue="+encodeURIComponent(vm.searchValue),    //请求的url地址
         dataType:"json",   //返回格式为json
         async:true,//请求是否异步，默认为异步，这也是ajax重要特性
         type:"GET",   //请求方式
@@ -594,40 +593,45 @@ var vm = avalon.define({
  })
 
 $.ajax({
-    url:"/searchArticle?page=1"+"&class="+encodeURIComponent(iscl)+"&category="+encodeURIComponent(isca),    //请求的url地址
+    url:"/searchArticle?page=1&class="+encodeURIComponent(iscl)+"&category="+encodeURIComponent(isca),    //请求的url地址
     dataType:"json",   //返回格式为json
-    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
+    xhrFields: {
+            withCredentials: true
+    },
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     beforeSend:function(){
         //请求前的处理
+        
     },
-    success:function(data,status){
-        data.data.forEach(function(item){
-        item.title=item.title.substring(0,34);
-        var d=new Date(item.time);
-        var year=d.getFullYear();
-        var month=d.getMonth();
-        var day=d.getDate();
+    success:function(sss,status){
 
-        var today=new Date();
-        var year1=today.getFullYear();
-        var month1=today.getMonth();
-        var day1=today.getDate();
-
-
-        if(year==year1&&month==month1){
-            if((day1-day)<2){
-                item['isNew']=true;
+        sss.data.forEach(function(item){
+            item.title=item.title.substring(0,34);
+            var d=new Date(item.time);
+            var year=d.getFullYear();
+            var month=d.getMonth();
+            var day=d.getDate();
+            var today=new Date();
+            var year1=today.getFullYear();
+            var month1=today.getMonth();
+            var day1=today.getDate();
+           
+            if(year==year1&&month==month1){
+                if((day1-day)<2){
+                    item['isNew']=true;
+                }
             }
-        }
-      })
-      vm.arr1=data.data.slice(0,5);
-      vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-      vm.count =data.count;
-      vm.page=1;
-      vm.pagenum=parseInt(vm.count/meiyenum)+1;
-      console.log(vm.pagenum)
+            
+        })
+
+        vm.arr1=sss.data.slice(0,5);
+        vm.arr2=sss.data.slice(5,10);
+        vm.arr3=sss.data.slice(10,15);   
+        vm.count =sss.count;
+        vm.page=1;
+        vm.pagenum=parseInt(vm.count/meiyenum)+1;
+       
     },
     complete:function(){
         //请求完成的处理

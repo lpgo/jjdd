@@ -1,9 +1,9 @@
 ﻿<%define "subjectArticleList"%>
 <!DOCTYPE html>
 
-<html>
+<html> 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
@@ -170,7 +170,12 @@
         }
     </style>
 </head>
-<body  ms-controller="fugujiaojing" >
+ <style type="text/css">
+            .ms-controller{
+               visibility: hidden
+            }
+        </style>
+        <body ms-controller="fugujiaojing" id="homefirst"  class="ms-controller">
          <%template "headerindex" .%>
 
 <script type="text/javascript">
@@ -220,7 +225,7 @@
                 <div class="main3" style="padding:10px 10px 60px 10px;">
                     <ul class="menu_list_1" id="left_nav_url">
                         <%range .AllSubjects%>
-                        <li class="cid_1241 "  onclick="window.location.href='/subjectList?subject=<%.Name%>'">
+                        <li class="cid_1241 "  onclick="window.location.href='/subjectList?subject='+encodeURIComponent('<%.Name%>')">
                             <dt><a href="/subjectList?subject=<%.Name%>"><%.Name%></a></dt>
                             
                         </li>

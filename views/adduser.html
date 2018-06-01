@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/css/houtai.css">
     <link rel="stylesheet" type="text/css" href="/js/webuploader/webuploader.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="zh-cn">
     <meta http-equiv="imagetoolbar" content="false">
     <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
@@ -24,7 +24,7 @@
 </script>
 <![endif]-->
 
-    <body ms-controller="fugujiaojing" id="homefirst">
+    <body >
         <div id="wrapper">
             <%template "header" .%>
             <div id="maincontent">
@@ -37,7 +37,7 @@
                     <h2>增加用户</h2>
                     <%end%>
                 </div>
-                <form action="<%if .Update%>/admin/modifyUser<%else%>/admin/addUser<%end%>" method="post" name="user"  onsubmit="return CheckPost();">
+                <form  action="<%if .Update%>/admin/modifyUser<%else%>/admin/addUser<%end%>" method="post" name="user"  onsubmit="return CheckPost();">
 
                     <%if not .Update%>
                      <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
@@ -50,7 +50,7 @@
                     <%end%>
 
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        所属部门<span style="color: red">*</span>
+                        账号部门<span style="color: red"> *</span>
                          <select style="vertical-align: middle; margin-left: 2em;" type="radio" name="dep" >
                                 
                             <%if .Update%>
@@ -66,15 +66,75 @@
                     </div>
 
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
+                        所属部门<span style="color: red"> *</span>
+                        <input onchange="change(this.value)" style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" id="dadui" value="大队" <%if .DD%>checked<%end%> >&emsp;<label  for="dadui" >&emsp;大队</lable>
+                        <input onchange="change(this.value)" style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" id="zhongdui" value="中队" <%if .ZD%>checked<%end%> >&emsp;<label  for="zhongdui" >&emsp;中队</lable>
+                    </div>
+                    <div class="idea clearboder" id="dadui10" style="padding-top: 30px;padding-left:60px">
                         账号权限 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" value="大队" <%if .DD%>checked<%end%> >&emsp;大队
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" value="中队" <%if .ZD%>checked<%end%> >&emsp;中队
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" value="部门" <%if .BM%>checked<%end%> >&emsp;部门
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="hongtoushenhe" value="红头文件" <%if Include .Auth "红头文件"%>checked<%end%> >&emsp;<label  for="hongtoushenhe" >&emsp;红头文章审核</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="putongshenhe" value="普通文章" <%if Include .Auth "普通文章"%>checked<%end%> >&emsp;<label  for="putongshenhe" >&emsp;普通文章审核</lable>
+                       
 
                     </div>
+                    <div  class="idea clearboder" id="dadui1" style="padding-top: 30px;padding-left:60px">
+                        <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
+                       
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="yonghuguanli" value="用户管理" <%if Include .Auth "用户管理"%>checked<%end%> >&emsp;<label  for="yonghuguanli" >&emsp;用户管理</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="bumenguanli"  value="部门管理" <%if Include .Auth "部门管理"%>checked<%end%> >&emsp;<label  for="bumenguanli" >&emsp;部门管理</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="tongxunluguanli"  value="通讯录管理" <%if Include .Auth "通讯录管理"%>checked<%end%> >&emsp;<label  for="tongxunluguanli" >&emsp;通讯录管理</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="lianjieguanli"  value="链接管理" <%if Include .Auth "链接管理"%>checked<%end%>>&emsp;<label  for="lianjieguanli" >&emsp;链接管理</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="zhuantiguanli"   value="专题管理" <%if Include .Auth "专题管理"%>checked<%end%> >&emsp;<label  for="zhuantiguanli" >&emsp;专题管理</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="tongzhiguanli"  value="通知管理" <%if Include .Auth "通知管理"%>checked<%end%> >&emsp;<label  for="tongzhiguanli" >&emsp;通知管理</lable>
+                        
+
+                    </div>
+                      <div  class="idea clearboder" id="daduizhiban" style="padding-top: 30px;padding-left:60px">
+                        <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
+                       
+                       <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="zhibananpai"   value="值班管理" <%if Include .Auth "值班管理"%>checked<%end%> >&emsp;<label  for="zhibananpai" >&emsp;值班管理</lable>
+
+                    </div>
+                     <div class="idea clearboder" id="dadui12" style="padding-top: 30px;padding-left:60px">
+                        <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="lingdaojianghua"   value="领导讲话" <%if Include .Auth "领导讲话"%>checked<%end%>  >&emsp;<label  for="lingdaojianghua" >&emsp;领导讲话</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="daduigaikuo"   value="大队概括" <%if Include .Auth "大队概括"%>checked<%end%>  >&emsp;<label  for="daduigaikuo" >&emsp;大队概括</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="duchatongbao"   value="督察通报" <%if Include .Auth "督察通报"%>checked<%end%>  >&emsp;<label  for="duchatongbao" >&emsp;督察通报</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="meiyuejingxing"   value="每月警星" <%if Include .Auth "每月警星"%>checked<%end%>  >&emsp;<label  for="meiyuejingxing" >&emsp;每月警星</lable>
+                    </div>
+                     <div class="idea clearboder" id="dadui13" style="padding-top: 30px;padding-left:60px">
+                        <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="tongzhitongbao"   value="通知通报" <%if Include .Auth "通知通报"%>checked<%end%> >&emsp;<label  for="tongzhitongbao" >&emsp;通知通报</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="renshiwenjian"   value="人事文件" <%if Include .Auth "人事文件"%>checked<%end%> >&emsp;<label  for="renshiwenjian" >&emsp;人事文件</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="jiaoguanjianbao"   value="交管简报" <%if Include .Auth "交管简报"%>checked<%end%> >&emsp;<label  for="jiaoguanjianbao" >&emsp;交管简报</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="daduihuodong"  value="大队活动" <%if Include .Auth "大队活动"%>checked<%end%> >&emsp;<label  for="daduihuodong" >&emsp;大队活动</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jiaoanweiwenjian"  value="交安委文件" <%if Include .Auth "交安委文件"%>checked<%end%> >&emsp;<label  for="jiaoanweiwenjian" >&emsp;交安委文件</lable>
+                    </div>
+                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
+                        <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="zhibuhuodong"  value="支部活动" <%if Include .Auth "支部活动"%>checked<%end%>  >&emsp;<label  for="zhibuhuodong" >&emsp;支部活动</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jilvjiaoyu"  value="纪律教育" <%if Include .Auth "纪律教育"%>checked<%end%>  >&emsp;<label  for="jilvjiaoyu" >&emsp;纪律教育</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="xuexipeixun"  value="学习培训" <%if Include .Auth "学习培训"%>checked<%end%>  >&emsp;<label  for="xuexipeixun" >&emsp;学习培训</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jiaojingfengcai"  value="交警风采" <%if Include .Auth "交警风采"%>checked<%end%>  >&emsp;<label  for="jiaojingfengcai" >&emsp;交警风采</lable>
+                    </div>
+                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
+                        <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="zhixuzhengzhi"  value="秩序整治" <%if Include .Auth "秩序整治"%>checked<%end%> >&emsp;<label  for="zhixuzhengzhi" >&emsp;秩序整治</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="shiguyufang"  value="事故预防" <%if Include .Auth "事故预防"%>checked<%end%> >&emsp;<label  for="shiguyufang" >&emsp;事故预防</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="kejixinxi"  value="科技信息" <%if Include .Auth "科技信息"%>checked<%end%> >&emsp;<label  for="kejixinxi" >&emsp;科技信息</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jiaoguanxuanchuan"  value="交管宣传" <%if Include .Auth "交管宣传"%>checked<%end%> >&emsp;<label  for="jiaoguanxuanchuan" >&emsp;交管宣传</lable>
+                    </div>
+                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
+                        <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"   id="falvfagui"   value="法律法规" <%if Include .Auth "法律法规"%>checked<%end%> >&emsp;<label  for="falvfagui" >&emsp;法律法规</lable>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"   id="guizhangzhidu"   value="规章制度" <%if Include .Auth "规章制度"%>checked<%end%> >&emsp;<label  for="guizhangzhidu" >&emsp;规章制度</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"   id="jingyhanjiaoliu"   value="经验调研" <%if Include .Auth "经验调研"%>checked<%end%> >&emsp;<label  for="jingyhanjiaoliu" >&emsp;经验调研</lable>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"   id="xuexijiaoliu"   value="学习交流" <%if Include .Auth "学习交流"%>checked<%end%> >&emsp;<label  for="xuexijiaoliu" >&emsp;学习交流</lable>
+                    </div>
+                    
                     <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
                     &emsp;&emsp;
-                    <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;" name="取消" value="取消"  onclick="window.location.href='/admin/page/user_list'">
+                    <input style="width:80px;height: 40px;line-height: 40px;margin-top: 2em;margin-left: 57px;background-color: #CCC;color: white;margin-bottom: 20px;cursor: pointer;text-align: center;"  type="button"  name="取消" value="取消"  onclick="window.location.href='/admin/page/user_list'">
 
                 </form>
             </div>
@@ -88,15 +148,67 @@
                      </div>
         </div>
         
-        <script type="text/javascript" charset="utf-8"  src="/js/ku/avalon.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/houtaifabu.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/webuploader/webuploader.js"></script>
 
 </body>
     <script type="text/javascript">
+
+      
+
+    <%if .DD%>
+          document.getElementById("dadui1").style.display="";//隐藏
+         document.getElementById("dadui12").style.display="";//隐藏
+          document.getElementById("dadui13").style.display="";//隐藏
+          document.getElementById("dadui10").style.display="";//隐藏
+
+    <%end%>
+      
+    <%if .ZD%>
+         document.getElementById("dadui1").style.display="none";//隐藏
+           document.getElementById("dadui12").style.display="none";//隐藏
+          document.getElementById("dadui13").style.display="none";//隐藏
+          document.getElementById("dadui10").style.display="none";//隐藏
+
+    <%end%>
+     
+
+
     function myTrim(x) {
         return x.replace(/^\s+|\s+$/gm,'');
+    }
+    function change(e){
+       if(e=="大队"){
+          document.getElementById("dadui1").style.display="";//隐藏
+          document.getElementById("dadui12").style.display="";//隐藏
+          document.getElementById("dadui13").style.display="";//隐藏
+          document.getElementById("dadui10").style.display="";//隐藏
+
+
+       }else{
+          document.getElementById("dadui1").style.display="none";//隐藏
+          document.getElementById("dadui12").style.display="none";//隐藏
+          document.getElementById("dadui13").style.display="none";//隐藏
+          document.getElementById("dadui10").style.display="none";//隐藏
+
+          document.getElementById("yonghuguanli").checked=false;
+          document.getElementById("bumenguanli").checked=false;
+          document.getElementById("tongxunluguanli").checked=false;
+          document.getElementById("lianjieguanli").checked=false;
+          document.getElementById("zhuantiguanli").checked=false;
+          document.getElementById("tongzhiguanli").checked=false;
+          document.getElementById("hongtoushenhe").checked=false;
+          document.getElementById("putongshenhe").checked=false;
+          document.getElementById("lingdaojianghua").checked=false;
+          document.getElementById("daduigaikuo").checked=false;
+          document.getElementById("duchatongbao").checked=false;
+          document.getElementById("meiyuejingxing").checked=false;
+          document.getElementById("tongzhitongbao").checked=false;
+          document.getElementById("renshiwenjian").checked=false;
+          document.getElementById("jiaoguanjianbao").checked=false;
+          document.getElementById("daduihuodong").checked=false;
+          document.getElementById("jiaoanweiwenjian").checked=false;
+
+
+       }
     }
 
      function CheckPost ()
