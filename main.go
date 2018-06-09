@@ -1004,7 +1004,7 @@ func subjectArticleListPage(c echo.Context) error {
 }
 
 func noLeftListPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "noleftlist", map[string]db.Any{"IsLeader": c.QueryParam("isLeader"), "IsTraffic": c.QueryParam("isTraffic"), "Subject": c.QueryParam("subject")})
+	return c.Render(http.StatusOK, "noleftlist", map[string]db.Any{"IsLeader": c.QueryParam("isLeader"), "IsTraffic": c.QueryParam("isTraffic"), "Subject": c.QueryParam("subject"), "Dep": c.QueryParam("dep")})
 }
 
 func adminPage(c echo.Context) error {
@@ -1577,6 +1577,10 @@ func searchArticle(c echo.Context) error {
 
 	if "" != c.QueryParam("class") {
 		cond["class"] = c.QueryParam("class")
+	}
+
+	if "" != c.QueryParam("dep") {
+		cond["dep"] = c.QueryParam("dep")
 	}
 
 	if "true" == c.QueryParam("isTraffic") {

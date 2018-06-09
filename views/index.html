@@ -623,7 +623,7 @@
                                     <td style="background-color:#f59026" onclick="window.location.href='/search'"><img style="padding-bottom: 2px" src="images/shuju.png">
                                         <div style="margin-top:4px;">站内搜索</div>
                                     </td>
-                                    <td style="background-color:#8ab436"  onclick="window.location.href='http://download.jaq.sh/xfxz'"><img style="padding-bottom: 2px" src="images/xiazai.png">
+                                    <td style="background-color:#8ab436"  onclick="window.location.href='http://download.zbq.sh/xfxz'"><img style="padding-bottom: 2px" src="images/xiazai.png">
                                         <div style="margin-top:4px;">软件下载</div>
 
                                     </td>
@@ -663,7 +663,7 @@
                                 <th>采用数量</th>
                               </tr>
                               <%range $i,$v := .statistics%>
-                                <tr>
+                                <tr style="cursor: pointer;" onclick="window.location.href='/noLeftList?dep='+encodeURIComponent('<%._id.from%>')">
                                 <td><%Add $i 1%></td>
                                 <td><%._id.from%></td>
                                 <td><%.count%></td>
@@ -795,7 +795,7 @@
                                 <%range .links%>
                                     <%if eq .Category "全国公安部门导航"%>
                                         <li>
-                                            <a href="<%.Url%>" target="_blank">
+                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
                                                 <%.Name%>
                                             </a>
                                         </li>
@@ -808,20 +808,20 @@
                                 <%range .links%>
                                     <%if eq .Category "全国交警部门导航"%>
                                         <li>
-                                            <a href="<%.Url%>" target="_blank">
+                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
                                                 <%.Name%>
                                             </a>
                                         </li>
                                         <%end%>
                                             <%end%>
                             </ul>
-                        </div>
+                        </div> 
                        <div id="Tab9_Content2" class="none" style="display: none;">
                             <ul class="friendLink">
                                 <%range .links%>
                                     <%if eq .Category "车管应用系统导航"%>
                                         <li>
-                                            <a href="<%.Url%>" target="_blank">
+                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
                                                 <%.Name%>
                                             </a>
                                         </li>
@@ -834,7 +834,7 @@
                                 <%range .links%>
                                     <%if eq .Category "全省交警支队导航"%>
                                         <li>
-                                            <a href="<%.Url%>" target="_blank">
+                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
                                                 <%.Name%>
                                             </a>
                                         </li>
@@ -847,7 +847,7 @@
                                 <%range .links%>
                                     <%if eq .Category "全市交警大队导航"%>
                                         <li>
-                                            <a href="<%.Url%>" target="_blank">
+                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
                                                 <%.Name%>
                                             </a>
                                         </li>
@@ -860,7 +860,7 @@
                                 <%range .links%>
                                     <%if eq .Category "全县公安部门导航"%>
                                         <li>
-                                            <a href="<%.Url%>" target="_blank">
+                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
                                                 <%.Name%>
                                             </a>
                                         </li>
