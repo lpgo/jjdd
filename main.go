@@ -28,7 +28,7 @@ import (
 
 //文章类型
 var clazz map[string][]string = map[string][]string{
-	"文件简报": []string{"交管简报", "通知通报", "人事文件", "交安委文件", "大队活动"},
+	"文件简报": []string{"重要文件", "通知通报", "交管简报", "人事文件", "交安委文件", "大队活动"},
 	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
 	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "交警风采"},
 	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
@@ -53,7 +53,6 @@ type Resp struct {
 
 func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
 	if viewContext, isMap := data.(map[string]db.Any); isMap {
-		viewContext["reverse"] = c.Echo().Reverse
 		viewContext["Hex"] = bson.ObjectId.Hex
 	}
 
@@ -316,9 +315,10 @@ func download(c echo.Context) error {
 		return err
 	}
 	info, _ := f.Stat()
-	info.Size()
+	c.Logger().Print("filesize: ", info.Size())
 	header["Content-Length"] = []string{string(info.Size())}
-	return c.Stream(http.StatusOK, "application/x-msdownload", f)
+	header["Content-Disposition"] = []string{"attachment;filename=360.exe"}
+	return c.Stream(http.StatusOK, "application/octet-stream", f)
 }
 
 func addLink(c echo.Context) error {
@@ -837,7 +837,7 @@ func publishArticle(c echo.Context) error {
 		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
-		return MyRedirect(c, "/admin/page/admin?category="+article.Category)
+		return RedirectToPageAdmin(c, article.Category)
 	}
 }
 
@@ -1107,6 +1107,7 @@ func indexPage(c echo.Context) error {
 	duChaArticles := service.GetDuChaArticles()
 	starArticles := service.GetStarArticles()
 	summarizationId := service.GetSummarization()
+	keys := service.GetSeachKeys()
 
 	//统计
 	statistics := service.Statistics(true)
@@ -1133,7 +1134,7 @@ func indexPage(c echo.Context) error {
 		notice = true
 	}
 
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"notice": notice, "leaderArticles": leaderArticles, "summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"keys": keys, "notice": notice, "leaderArticles": leaderArticles, "summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
 }
 
 func noticePage(c echo.Context) error {
@@ -1150,7 +1151,7 @@ func directoryPage(c echo.Context) error {
 }
 
 func searchPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "search", map[string]db.Any{})
+	return c.Render(http.StatusOK, "search", map[string]db.Any{"searchValue": c.QueryParam("searchValue")})
 }
 
 func articleListPage(c echo.Context) error {
@@ -1569,6 +1570,9 @@ func searchArticle(c echo.Context) error {
 
 	if "" != c.QueryParam("searchValue") {
 		cond["title"] = bson.M{"$regex": bson.RegEx{Pattern: c.QueryParam("searchValue"), Options: "ixs"}}
+		if err := db.UpdateOneByCond("searchKey", bson.M{"name": c.QueryParam("searchValue")}, bson.M{"$inc": bson.M{"count": 1}}); err != nil {
+			db.Add("searchKey", db.SearchKey{Name: c.QueryParam("searchValue"), Count: 1})
+		}
 	}
 
 	if "" != c.QueryParam("category") {
@@ -1854,4 +1858,31 @@ func Include(slice []string, s string) bool {
 		}
 	}
 	return false
+}
+
+func RedirectToPageAdmin(c echo.Context, Category string) error {
+	switch Category {
+	case "督察通报":
+		{
+			return MyRedirect(c, "/admin/page/admin?category=督察通报&isRed=true&header=duchatongbao.gif")
+		}
+	case "通知通报":
+		{
+			return MyRedirect(c, "/admin/page/admin?category=通知通报&isRed=true")
+		}
+	case "人事文件":
+		{
+			return MyRedirect(c, "/admin/page/admin?category=人事文件&isRed=true")
+		}
+	case "交管简报":
+		{
+			return MyRedirect(c, "/admin/page/admin?category=交管简报&isRed=true&header=jiaoguanjianbao.gif")
+		}
+	case "交安委文件":
+		{
+			return MyRedirect(c, "/admin/page/admin?category=交安委文件&isRed=true&header=jiaoanwei.jpg")
+		}
+	default:
+		return MyRedirect(c, "/admin/page/admin?category="+Category)
+	}
 }

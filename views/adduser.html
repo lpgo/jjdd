@@ -27,7 +27,7 @@
     <body >
         <div id="wrapper">
             <%template "header" .%>
-            <div id="maincontent">
+            <div id="maincontent" style="margin-bottom: 10em;padding-bottom: 10em;">
             
 
                 <div class="idea divclass" id="d1">
@@ -67,8 +67,8 @@
 
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属部门<span style="color: red"> *</span>
-                        <input onchange="change(this.value)" style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" id="dadui" value="大队" <%if .DD%>checked<%end%> >&emsp;<label  for="dadui" >&emsp;大队</lable>
-                        <input onchange="change(this.value)" style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" id="zhongdui" value="中队" <%if .ZD%>checked<%end%> >&emsp;<label  for="zhongdui" >&emsp;中队</lable>
+                        <input onclick="change(this.value)" style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" id="dadui" value="大队" <%if .DD%>checked<%end%> >&emsp;<label  for="dadui" >&emsp;大队</lable>
+                        <input onclick="change(this.value)" style="vertical-align: middle; margin-left: 2em;" type="radio" name="role" id="zhongdui" value="中队" <%if .ZD%>checked<%end%> >&emsp;<label  for="zhongdui" >&emsp;中队</lable>
                     </div>
                     <div class="idea clearboder" id="dadui10" style="padding-top: 30px;padding-left:60px">
                         账号权限 &nbsp;
@@ -104,6 +104,7 @@
                     </div>
                      <div class="idea clearboder" id="dadui13" style="padding-top: 30px;padding-left:60px">
                         <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="zhongyaowenjian"   value="重要文件" <%if Include .Auth "重要文件"%>checked<%end%> >&emsp;<label  for="zhongyaowenjian" >&emsp;重要文件</lable>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="tongzhitongbao"   value="通知通报" <%if Include .Auth "通知通报"%>checked<%end%> >&emsp;<label  for="tongzhitongbao" >&emsp;通知通报</lable>
                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="renshiwenjian"   value="人事文件" <%if Include .Auth "人事文件"%>checked<%end%> >&emsp;<label  for="renshiwenjian" >&emsp;人事文件</lable>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian" id="jiaoguanjianbao"   value="交管简报" <%if Include .Auth "交管简报"%>checked<%end%> >&emsp;<label  for="jiaoguanjianbao" >&emsp;交管简报</lable>
@@ -138,14 +139,9 @@
 
                 </form>
             </div>
-                        </div>
+             </div>
 
-            <div id="footer " style="text-align: center;">
-                        <p id="p2 " style="margin-left: 0;">
-                            <a style="color: #636161;font-size: 0.8em; " target="_blank " title="府谷县公安局交警大队 ">府谷县公安局交警大队版权所有 保留一切权利</a>
-                            <a target="_blank "></a>
-                        </p>
-                     </div>
+          	
         </div>
         
 
@@ -169,18 +165,89 @@
           document.getElementById("dadui10").style.display="none";//隐藏
 
     <%end%>
-     
+     <%if .Update%>
+       <%else%>
+                 document.getElementById("dadui").checked=true;
 
+          document.getElementById("yonghuguanli").checked=true;
+          document.getElementById("bumenguanli").checked=true;
+          document.getElementById("tongxunluguanli").checked=true;
+          document.getElementById("lianjieguanli").checked=true;
+          document.getElementById("zhuantiguanli").checked=true;
+          document.getElementById("tongzhiguanli").checked=true;
+          document.getElementById("hongtoushenhe").checked=true;
+          document.getElementById("putongshenhe").checked=true;
+          document.getElementById("lingdaojianghua").checked=true;
+          document.getElementById("daduigaikuo").checked=true;
+          document.getElementById("duchatongbao").checked=true;
+          document.getElementById("meiyuejingxing").checked=true;
+          document.getElementById("tongzhitongbao").checked=true;
+          document.getElementById("renshiwenjian").checked=true;
+          document.getElementById("jiaoguanjianbao").checked=true;
+          document.getElementById("daduihuodong").checked=true;
+          document.getElementById("jiaoanweiwenjian").checked=true;
+          document.getElementById("zhibananpai").checked=true;
+          document.getElementById("zhongyaowenjian").checked=true;
+          document.getElementById("zhibuhuodong").checked=true;
+          document.getElementById("jilvjiaoyu").checked=true;
+          document.getElementById("xuexipeixun").checked=true;
+          document.getElementById("jiaojingfengcai").checked=true;
+          document.getElementById("zhixuzhengzhi").checked=true;
+          document.getElementById("shiguyufang").checked=true;
+          document.getElementById("kejixinxi").checked=true;
+          document.getElementById("jiaoguanxuanchuan").checked=true;
+          document.getElementById("falvfagui").checked=true;
+          document.getElementById("guizhangzhidu").checked=true;
+          document.getElementById("jingyhanjiaoliu").checked=true;
+          document.getElementById("xuexijiaoliu").checked=true;
+
+
+
+     <%end%>
+         
 
     function myTrim(x) {
         return x.replace(/^\s+|\s+$/gm,'');
     }
     function change(e){
        if(e=="大队"){
+
           document.getElementById("dadui1").style.display="";//隐藏
           document.getElementById("dadui12").style.display="";//隐藏
           document.getElementById("dadui13").style.display="";//隐藏
           document.getElementById("dadui10").style.display="";//隐藏
+
+           document.getElementById("yonghuguanli").checked=true;
+          document.getElementById("bumenguanli").checked=true;
+          document.getElementById("tongxunluguanli").checked=true;
+          document.getElementById("lianjieguanli").checked=true;
+          document.getElementById("zhuantiguanli").checked=true;
+          document.getElementById("tongzhiguanli").checked=true;
+          document.getElementById("hongtoushenhe").checked=true;
+          document.getElementById("putongshenhe").checked=true;
+          document.getElementById("lingdaojianghua").checked=true;
+          document.getElementById("daduigaikuo").checked=true;
+          document.getElementById("duchatongbao").checked=true;
+          document.getElementById("meiyuejingxing").checked=true;
+          document.getElementById("tongzhitongbao").checked=true;
+          document.getElementById("renshiwenjian").checked=true;
+          document.getElementById("jiaoguanjianbao").checked=true;
+          document.getElementById("daduihuodong").checked=true;
+          document.getElementById("jiaoanweiwenjian").checked=true;
+          document.getElementById("zhibananpai").checked=true;
+          document.getElementById("zhongyaowenjian").checked=true;
+          document.getElementById("zhibuhuodong").checked=true;
+          document.getElementById("jilvjiaoyu").checked=true;
+          document.getElementById("xuexipeixun").checked=true;
+          document.getElementById("jiaojingfengcai").checked=true;
+          document.getElementById("zhixuzhengzhi").checked=true;
+          document.getElementById("shiguyufang").checked=true;
+          document.getElementById("kejixinxi").checked=true;
+          document.getElementById("jiaoguanxuanchuan").checked=true;
+          document.getElementById("falvfagui").checked=true;
+          document.getElementById("guizhangzhidu").checked=true;
+          document.getElementById("jingyhanjiaoliu").checked=true;
+          document.getElementById("xuexijiaoliu").checked=true;
 
 
        }else{
@@ -206,6 +273,7 @@
           document.getElementById("jiaoguanjianbao").checked=false;
           document.getElementById("daduihuodong").checked=false;
           document.getElementById("jiaoanweiwenjian").checked=false;
+          document.getElementById("zhongyaowenjian").checked=false;
 
 
        }

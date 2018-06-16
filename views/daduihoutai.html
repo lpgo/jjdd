@@ -75,7 +75,7 @@
 
 
 
-                            <a style="color: #5cb85c;" ms-attr="{href:'/admin/page/set_article?id='+ el.id}" :visible="el.isAuditing">设定 &emsp;</a> &emsp;<a  style="color: #d9534f" :visible="!el.isAuditing" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  
+                            <a style="color: #5cb85c;" ms-attr="{href:'/admin/page/set_article?id='+ el.id}" :visible="el.isPass">设定 &emsp;</a> &emsp;<a  style="color: #d9534f" :visible="!el.isPass" href="#" ms-on-click="del(el.id)">删除 &emsp;</a>  
                             <a :visible="!el.isAuditing || !el.isPass" style="color: #f0ad4e" ms-attr="{href:'/admin/page/modifyPage?id='+ el.id}" >修改</a>
                             </span></div> 
                                 <div class="cleardiv" style="width: 20%;float: left;">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</div>

@@ -28,7 +28,7 @@ var menuClass map[string][]string = map[string][]string{
 	"后台首页": []string{"后台首页"},
 	"网站管理": []string{"值班管理", "用户管理", "部门管理", "通讯录管理", "链接管理", "专题管理", "通知管理"},
 	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
-	"文件简报": []string{"通知通报", "人事文件", "交管简报", "交安委文件", "大队活动"},
+	"文件简报": []string{"重要文件", "通知通报", "交管简报", "人事文件", "交安委文件", "大队活动"},
 	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "交警风采"},
 	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
 	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流"}}
@@ -48,6 +48,7 @@ var menuItemHtml map[string]string = map[string]string{
 	"大队概括":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('大队概括')">大队概括</a>`,
 	"督察通报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('督察通报')+'&isRed=true&header=duchatongbao.gif'">督察通报</a>`,
 	"每月警星":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('每月警星')">每月警星</a>`,
+	"重要文件":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('重要文件')">重要文件</a>`,
 	"通知通报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('通知通报')+'&isRed=true'">通知通报</a>`,
 	"人事文件":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('人事文件')+'&isRed=true'">人事文件</a>`,
 	"交管简报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管简报')+'&isRed=true&header=jiaoguanjianbao.gif'">交管简报</a>`,
@@ -637,4 +638,10 @@ func CreateMenuHtml(user *db.User, subMenu string) (template.HTML, template.HTML
 
 	return template.HTML(navBar), template.HTML(subNav)
 
+}
+
+func GetSeachKeys() []db.SearchKey {
+	keys := make([]db.SearchKey, 0)
+	db.FindManyOrder("searchKey", nil, "-count", 6, &keys)
+	return keys
 }

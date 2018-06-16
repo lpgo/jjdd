@@ -11,6 +11,9 @@
     <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
     <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
     <script src="/js/ku/avalon.js "></script>
+    <script src="/js/Json2.js "></script>
+
+
 <!--     <script type="text/javascript" src="/js/ku/date.js"></script>
  --></head>
 
@@ -30,7 +33,7 @@
 
         <div class="idea divclass" id="d3"
              style="padding:0;border: 1px solid #aaa;border-top: none;margin-bottom: 10px">
-            <div style="float: left;">
+            <div style="float: left;height: 4em;line-height: 4em;">
 
                 <input onclick="window.location.href=window.location.href"
                        style="cursor: pointer;text-align: center;width: 6em;margin: 1em;height: 3em;line-height: 2em;color: white;background-color: #fc8114;padding: 4px 6px"
@@ -38,12 +41,12 @@
 
 
             </div>
-            <div style="float: right;">
+            <div style="float: right;height: 4em;line-height: 4em;">
                 <input type="text"
-                       style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;"
+                       style=" margin: 1em;margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;"
                        onclick="fPopCalendar(event,this,this)" onfocus="this.select()" ms-duplex="starttime" value="">
                 <input type="text"
-                       style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;"
+                       style="margin: 1em; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;"
                        onclick="fPopCalendar(event,this,this)" onfocus="this.select()" ms-duplex="endtime" value="">
                 <input id="search" ms-on-click="chaxun()"
                        style="cursor: pointer;margin: 1em;height: 3em;width: 6em;line-height: 2em;text-align: center;color: white;background-color: #006CE8;padding: 4px 6px"
@@ -153,163 +156,6 @@
         border: 1px solid #cfcfcf !important;
     }
 </style>
-
-<script type="text/javascript">
-
-
-    function myTrim(x) {
-        return x.replace(/^\s+|\s+$/gm, '');
-    }
-
-    $(document).ready(function () {
-
-        avalon.filters.parseSymbol = function (str) {
-            if (!str) {
-                return ""
-            } else {
-                return str
-            }
-        };
-        var vm = avalon.define({
-            $id: "fugujiaojing",
-            name: "mike",
-            isbox: false,
-            arr: [],
-            time11: [],
-            dayarr: [],
-            count: 0,
-            pagenum: 0,
-            page: 1,
-            pagemeiye: 15,
-            aaa: "",
-            sousuovalue: "",
-            starttime: "",
-            endtime: "",
-            addstaff: function () {
-                vm.arr.push({name: "", staff: ["", "", "", "", ""]});
-            },
-            save: function () {
-                var starttime = vm.starttime;
-                var endtime = vm.endtime;
-
-                if (!starttime || !endtime) {
-                    alert("必须输入开始时间和结束时间");
-                    return;
-                }
-
-                if (vm.arr.length == 0) {
-                    alert("不能提交空数据！");
-
-                    return;
-                }
-                vm.arr.forEach(function (item) {
-
-                    for (var i = item.staff.length - 1; i >= 0; i--) {
-                        item.staff[i] = myTrim(item.staff[i])
-                        if (!item.staff[i]) {
-                            item.staff.splice(i, 1)
-                        }
-                    }
-
-                });
-                for (var i = vm.arr.length - 1; i >= 0; i--) {
-                    if (!vm.arr[i].name) {
-                        vm.arr.splice(i, 1)
-                    }
-                }
-
-                $.ajax({
-                    url: "/admin/addRotas?starttime=" + starttime + "&endtime=" + endtime,    //请求的url地址
-                    dataType: "json",
-                    contentType: 'application/json;charset=utf-8',
-                    data: JSON.stringify({duty: vm.arr}),  //返回格式为json
-                    type: "POST",   //请求方式
-                    beforeSend: function () {
-
-                    },
-                    success: function (data, status) {
-                        alert("保存成功")
-                    },
-                    complete: function () {
-                        //请求完成的处理
-                    },
-                    error: function () {
-                        alert("网络错误")
-                        //请求出错处理
-                    }
-                });
-            },
-            removestaff: function (index) {
-                vm.arr.splice(index, 1)
-            },
-            daychaxun: function (time) {
-                var date = new Date(time);
-                var year = date.getFullYear();
-                var month = (date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-                var day = date.getDate() >= 10 ? date.getDate() : '0' + date.getDate();
-                vm.time11 = year + "-" + month + "-" + day;
-                vm.starttime = year + "-" + month + "-" + day;
-                vm.endtime = year + "-" + month + "-" + day;
-                $.ajax({
-                    url: "/admin/getRotas?starttime=" + vm.starttime + "&endtime=" + vm.starttime,    //请求的url地址
-                    dataType: "json",
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    async: true,//请求是否异步，默认为异步，这也是ajax重要特性
-                    type: "GET",   //请求方式
-                    beforeSend: function () {
-                    },
-                    success: function (data, status) {
-                        if (data[0]) {
-                            vm.arr = data[0].duty;
-                        } else {
-                            vm.arr = [];
-                        }
-                    },
-                    complete: function () {
-                        //请求完成的处理
-                    },
-                    error: function () {
-                        alert("网络错误")
-                        //请求出错处理
-                    }
-                });
-
-            },
-            chaxun: function () {
-                var starttime1;
-                var endtime1;
-                if (!vm.starttime || !vm.endtime) {
-                    alert("必须输入开始时间和结束时间");
-                    return;
-                }
-
-                function formatTime(time, spliter) {
-                    spliter = '-'
-                    var date = new Date(time);
-                    var year = date.getFullYear();
-                    var month = (date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-                    var day = date.getDate() >= 10 ? date.getDate() : '0' + date.getDate();
-                    return year + "-" + month + "-" + day
-                }
-
-                vm.dayarr = [];
-                starttime1 = new Date(vm.starttime).getTime();
-                endtime1 = new Date(vm.endtime).getTime();
-                for (var i = starttime1; i <= endtime1;) {
-                    vm.dayarr.push(formatTime(i, ''));
-                    i += 24 * 60 * 60 * 1000;
-                }
-
-            }
-
-        });
-
-    });
-
-</script>
-
 
 <script type="text/javascript">
     var gMonths = new Array("一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月");
@@ -610,6 +456,176 @@
         write(getDateDiv());
     }
 </script>
+<script type="text/javascript">
+
+
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm, '');
+    }
+
+
+        avalon.filters.parseSymbol = function (str) {
+            if (!str) {
+                return ""
+            } else {
+                return str
+            }
+        };
+        var vm = avalon.define({
+            $id: "fugujiaojing",
+            name: "mike",
+            isbox: false,
+            arr: [],
+            time11: [],
+            dayarr: [],
+            count: 0,
+            pagenum: 0,
+            page: 1,
+            pagemeiye: 15,
+            aaa: "",
+            sousuovalue: "",
+            starttime: "",
+            endtime: "",
+            addstaff: function () {
+                vm.arr.push({name: "", staff: ["", "", "", "", ""]});
+            },
+            save: function () {
+                var starttime = vm.starttime;
+                var endtime = vm.endtime;
+
+                if (!starttime || !endtime) {
+                    alert("必须输入开始时间和结束时间");
+                    return;
+                }
+                if (vm.arr.length == 0) {
+                    alert("不能提交空数据！");
+
+                    return;
+                }
+                vm.arr.forEach(function (item) {
+
+                    for (var i = item.staff.length - 1; i >= 0; i--) {
+                        item.staff[i] = myTrim(item.staff[i])
+                        if (!item.staff[i]) {
+                            item.staff.splice(i, 1)
+                        }
+                    }
+
+                });
+                for (var i = vm.arr.length - 1; i >= 0; i--) {
+                    if (!vm.arr[i].name) {
+                        vm.arr.splice(i, 1)
+                    }
+                }
+
+                $.ajax({
+                    url: "/admin/addRotas?starttime=" + starttime + "&endtime=" + endtime,    //请求的url地址
+                    dataType: "json",
+                    contentType: 'application/json;charset=utf-8',
+                    data: JSON.stringify({duty: vm.arr}),  //返回格式为json
+                    type: "POST",   //请求方式
+                    beforeSend: function () {
+
+                    },
+                    success: function (data, status) {
+                        alert("保存成功")
+                    },
+                    complete: function () {
+                        //请求完成的处理
+                    },
+                    error: function () {
+                        alert("网络错误")
+                        //请求出错处理
+                    }
+                });
+            },
+            removestaff: function (index) {
+                vm.arr.splice(index, 1)
+            },
+            daychaxun: function (time) {
+                var date = new Date(Date.parse(time.replace(/-/g,"/")));
+                var year = date.getFullYear();
+                var month = (date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+                var day = date.getDate() >= 10 ? date.getDate() : '0' + date.getDate();
+
+                vm.time11 = year + "-" + month + "-" + day;
+                vm.starttime = year + "-" + month + "-" + day;
+                vm.endtime = year + "-" + month + "-" + day;
+                $.ajax({
+                    url: "/admin/getRotas?starttime=" + vm.starttime + "&endtime=" + vm.starttime,    //请求的url地址
+                    dataType: "json",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    async: true,//请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    beforeSend: function () {
+                    },
+                    success: function (data, status) {
+                        if (data[0]) {
+                            vm.arr = data[0].duty;
+                        } else {
+                            vm.arr = [];
+                        }
+                    },
+                    complete: function () {
+                        //请求完成的处理
+                    },
+                    error: function () {
+                        alert("网络错误")
+                        //请求出错处理
+                    }
+                });
+
+            },
+            chaxun: function () {
+                var starttime1;
+                var endtime1;
+                if (!vm.starttime || !vm.endtime) {
+                    alert("必须输入开始时间和结束时间");
+                    return;
+                }
+                var newDate = function (o) {
+                    if (arguments.length === 1 && VF.lang.isString(o)) {
+                        o = VF.browser.ie ? o.replace(/\D/g, ',') : '"' + o + '"';
+                    }
+                    if (arguments.length > 1) {
+                        var t = [];
+                        
+                        o = t.join(',');
+                    }
+                    return eval('new Date(' + (o || '') + ')');
+                };
+
+                function formatTime(time, spliter) {
+                    spliter = '-'
+                    var date = new Date(time);
+                    var year = date.getFullYear();
+                    var month = (date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+                    var day = date.getDate() >= 10 ? date.getDate() : '0' + date.getDate();
+                    return year + "/" + month + "/" + day
+                }
+                vm.dayarr = [];
+
+                starttime1 = new Date(Date.parse(vm.starttime.replace(/-/g,"/"))).getTime();
+                endtime1 = new Date(Date.parse(vm.endtime.replace(/-/g,"/"))).getTime();
+
+
+
+                for (var i = starttime1; i <= endtime1;) {
+
+                    vm.dayarr.push(formatTime(i, ''));
+                    i += 24 * 60 * 60 * 1000;
+                }
+
+            }
+
+        });
+
+
+</script>
+
+
 </body>
 </html>
 <%end%>

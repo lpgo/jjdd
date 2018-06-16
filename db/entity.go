@@ -88,6 +88,11 @@ type Subject struct {
 	IsHidden bool          `bson:"ishidden" json:"ishidden"`
 }
 
+type SearchKey struct {
+	Name  string `bson:"name" json:"name"`
+	Count int    `bson:"count" json:"count"`
+}
+
 type Article struct {
 	Id         bson.ObjectId `bson:"_id" json:"id"`
 	Department string        `bson:"dep" json:"dep"`               //发布部门
