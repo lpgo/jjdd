@@ -27,7 +27,8 @@
                visibility: hidden
             }
         </style>
-        <body ms-controller="fugujiaojing" id="homefirst"  class="ms-controller">        <div id="wrapper">
+        <body ms-controller="fugujiaojing" id="homefirst"  class="ms-controller">        
+            <div id="wrapper">
             <%template "header" .%>
             
             <div id="maincontent">
@@ -46,7 +47,9 @@
                 </div>
                 <div  class="idea divclass" id="d1" style="padding-top: 10px">
                     <form name="test">
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全国公安部门导航')" checked="checked" name="category" value="全国公安部门导航" id="category1" >&emsp;<label for="category1">全国公安部门导航</label>
+
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('图片链接')" checked="checked" name="category" value="图片链接" id="category" >&emsp;<label for="category">图片链接</label>
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全国公安部门导航')"  name="category" value="全国公安部门导航" id="category1" >&emsp;<label for="category1">全国公安部门导航</label>
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全国交警部门导航')" name="category" value="全国交警部门导航"  id="category2" >&emsp;<label for="category2">全国交警部门导航</label>
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('车管应用系统导航')" name="category" value="车管应用系统导航"  id="category3" >&emsp;<label for="category3">车管应用系统导航</label>
                         <input style="vertical-align: middle; margin-left: 2em;" type="radio" ms-on-click="depSearch('全省交警支队导航')" name="category" value="全省交警支队导航"  id="category4" >&emsp;<label for="category4">全省交警支队导航</label>

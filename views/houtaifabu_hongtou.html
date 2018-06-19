@@ -67,14 +67,22 @@
                         签&emsp;&emsp;发 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="<%.Article.Signature%>">
                     </div>
-                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+
+                    <%if or (eq .Article.Category "督察通报") (eq .Article.Category "交管简报")%>
+                    	<div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+	                        第几期 <span style="color: red">*</span>
+	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
+	                    </div>
+        			<%else%>
+        				 <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         发文年号 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="year" value="<%.Article.Year%>">
-                    </div>
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        发文序号 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
-                    </div>
+	                    </div>
+	                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+	                        发文序号 <span style="color: red">*</span>
+	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
+	                    </div>
+        			<%end%>
                     <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
                         内容来源 <span style="color: red ">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 20em; " type="text " name="from"  value="<%.Article.From%>">
@@ -121,14 +129,21 @@
                         签&emsp;&emsp;发 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="">
                     </div>
-                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                    <%if or (eq .Category "督察通报") (eq .Category "交管简报")%>
+                    	<div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+	                        第几期 <span style="color: red">*</span>
+	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="">
+	                    </div>
+        			<%else%>
+        				 <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         发文年号 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="year" value="">
-                    </div>
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        发文序号 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="">
-                    </div>
+	                    </div>
+	                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+	                        发文序号 <span style="color: red">*</span>
+	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="">
+	                    </div>
+        			<%end%>
                     <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
                         内容来源 <span style="color: red ">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 20em; " type="text " name="from"  value="">
@@ -175,14 +190,21 @@
                         签&emsp;&emsp;发 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="<%.Article.Signature%>">
                     </div>
-                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                    <%if or (eq .Article.Category "督察通报") (eq .Article.Category "交管简报")%>
+                    	<div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+	                        第几期 <span style="color: red">*</span>
+	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
+	                    </div>
+        			<%else%>
+        				 <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         发文年号 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="year" value="<%.Article.Year%>">
-                    </div>
-                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-                        发文序号 <span style="color: red">*</span>
-                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
-                    </div>
+	                    </div>
+	                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+	                        发文序号 <span style="color: red">*</span>
+	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
+	                    </div>
+        			<%end%>
                     <div class=" idea clearboder " id="d1 " style="padding-top: 10px;padding-left:60px ">
                         内容来源 <span style="color: red ">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 20em; " type="text " name="from"  value="<%.Article.From%>">

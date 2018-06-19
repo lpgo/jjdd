@@ -24,7 +24,8 @@
         <script type="text/javascript" src="js/jquery1.42.min.js"></script>
         <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
         <script type="text/javascript">
-        
+
+      
         
         <%if .notice%>
         if(document.referrer.indexOf(window.location.host)==-1){
@@ -72,10 +73,12 @@
         
 
 
-
+ 
 
     </head>
-
+    <style type="text/css">
+        	*{margin:0;padding:0;}
+    </style>
     <body>
          <%template "headerindex" .%>
 
@@ -223,16 +226,32 @@
                 </div>
 
 
-
+                <div style="clear: both;"></div>
                 <!--    搜索  -->
 
-                <div class="special fl" style="background: #efefef;height:6em;line-height: 6em;padding-left: 2em;">
-                    <input type="" id="serachvalue" name="" style="height: 30px;line-height:30px;padding-left: 1em;margin-right: 2em;width: 300px"> <span style="cursor: pointer;padding: 8px;padding-left: 1.5em;padding-right: 1.5em;background-color: #136dc6;font-size: 1.2em;color: white;margin-right: 30px" onclick="search()">搜索</span> <span>热门标签：</span>
-                        <%range .keys%>
-                            <a href="javascript:window.location.href='/search?searchValue=<%.Name%>'" style="margin-left: 2em;"><%.Name%></a>
-                        <%end%>    
+                <div class="special1 " style="background: #efefef;margin-bottom: 8px;margin-top: 10px;height: 50px;line-height: 50px">
+
+                	<table>
+                		<tr>
+                			<td style="padding-left: 2em;width: 50%">
+                			 站内搜索：<input type="" id="serachvalue" name="" style="vertical-align: middle;height: 30px;line-height:30px;padding-left: 1em;width: 300px;margin-right: 0"> 
+                              <div style="vertical-align: middle;margin-left: -5px;cursor: pointer;height: 34px;line-height: 34px;display: inline-block; *display: inline;*zoom: 1;padding-left: 1.5em;padding-right: 1.5em;background-color: #136dc6;font-size: 1.2em;color: white;margin-right: 30px;" onclick="search()">搜索</div> 
+                            </td>
+                			<td style="text-align: right;padding-right: 2em;width: 49%;overflow: hidden;">
+                				<span style="float: right;padding-right: 4em;">
+		                    		 <span style="margin-left: 40px;vertical-align: middle;">热门标签：</span>
+		                        <%range .keys%>
+		                            <a href="javascript:window.location.href='/search?searchValue=<%.Name%>'" style="margin-left: 2px;"><%.Name%></a>
+		                        <%end%>    
+		                    	</span>
+                			</td>
+                		</tr>
+                	</table>
                     
+
+                    	
                 </div>
+                
                 <script type="text/javascript">
                     function search(){
                         var serachvalue1=document.getElementById("serachvalue").value;
@@ -242,13 +261,7 @@
                 </script>
 
 
-
-
-
-
-
-
-                <div class="special fl">
+                <div class="special1 " style="margin-top: 0px;margin-bottom: 10px;">
                     <%range .subjects%>
                         <%if .IsHot%> 
                     <a href="/noLeftList?subject=<%.Name%>"  title="" style="text-decoration:none;"><img width="1094" height="95" border="none" alt="" src="<%.Pic%>"></a>
@@ -400,7 +413,7 @@
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('支部活动')">支部活动</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('纪律教育')">纪律教育</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('学习培训')">学习培训</li>
-                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('交警风采')">交警风采</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('警营文化')">警营文化</li>
                                         </ul>
                                     </div>
                                     <div class="bd TabContent" style="border-left: none;padding-bottom: 5px;height: 245px">
@@ -422,8 +435,8 @@
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <%range $i,$v := .arts.交警风采%>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交警风采]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%range $i,$v := .arts.警营文化%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[警营文化]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
                                             <%end%>
                                             <li class="clear"></li>
                                         </ul>
@@ -657,8 +670,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="background-color:#f59026" onclick="window.location.href='/search'"><img style="padding-bottom: 2px" src="images/shuju.png">
-                                        <div style="margin-top:4px;">站内搜索</div>
+                                    <td style="background-color:#f59026" onclick="window.location.href='http://10.172.1.118/space'"><img style="padding-bottom: 2px" src="images/shuju.png">
+                                        <div style="margin-top:4px;">文档传输</div>
                                     </td>
                                     <td style="background-color:#8ab436"  onclick="window.location.href='http://download.zbq.sh/xfxz'"><img style="padding-bottom: 2px" src="images/xiazai.png">
                                         <div style="margin-top:4px;">软件下载</div>
@@ -759,50 +772,201 @@
                     }
                     
                 </script>
-                <!--  µÚÁù°æ   ÷ÈÁ¦Ä³Ä³ -->
-                <div class="mlyl fl">
-                    <div class="mlyl-bt"> <span class="tit">新闻图片</span> <span class="more"></span> </div>
-                    <div class="mlyl-neir">
-                        <div class="layer" style="height:150px;width:1094px;overflow:hidden" id="pingpaibox_9550">
-                            <div id="scroll_9550" style="width:800%">
-                                <ul class="label_pic_ul" id="pingpai_9550" style="float:left;height:150px;">
+               
+                <div class="linkTab fl" style="width: 100%;">
+                    <div class="TabTitle" style="background: none">
+                        <ul id="Tab9">
+                            <li class="active1" style="cursor: pointer;"  onclick="nTabs1(this,0);"><a  class="l1">新闻图片</a></li>
+                            <li class="normal" style="cursor: pointer;"  onclick="nTabs1(this,1);"><a  class="l1">警营文化</a></li>
+                        </ul>
+                    </div>
+                    <div class="TabContent">
+                        <div id="Tab9_Content0" style="display: block;">
+                            <div class="layer" style="height:150px;width:1094px;overflow:hidden" id="pingpaibox_9550">
+	                            <div id="scroll_9550" style="width:800%">
+	                                <ul class="label_pic_ul" id="pingpai_9550" style="float:left;height:150px;">
 
 
-                                    <%range $i,$v := .imageArticles%>
-                                    <%if gt $i 3%>
-                                    <li style="float:left;display:inline-block; margin-right:5px"> <a href="/showArticle?id=<%call $.Hex .Id%>"  title="<%.Title%>"><img width="180" height="150" alt="<%.Title%>" onload="this.height=this.width-30" src="<%.Pic%>"></a>
-                                     
-                                    </li>
+	                                    <%range $i,$v := .imageArticles%>
+	                                    <%if gt $i 3%>
+	                                    <li style="float:left;display:inline-block; margin-right:5px"> <a href="/showArticle?id=<%call $.Hex .Id%>"  title="<%.Title%>"><img width="180" height="150" alt="<%.Title%>" onload="this.height=this.width-30" src="<%.Pic%>"></a>
+	                                     
+	                                    </li>
 
 
-                                    <%end%>
-                                    <%end%>
+	                                    <%end%>
+	                                    <%end%>
 
-                                    
-                                </ul>
-                                <ul class="fleft" id="pingpaicopy_9550" style="float:left;height:150px;">
-                                    
-                                </ul>
+	                                    
+	                                </ul>
+	                                <ul class="fleft" id="pingpaicopy_9550" style="float:left;height:150px;">
+	                                    
+	                                </ul>
+	                            </div>
+	                            <script type="text/javascript">
+	                            (function() {
+	                                $('#pingpaicopy_9550').html($('#pingpai_9550').html());
+	                                var MyMar = setInterval(Marquee, 20);
+	                                $('#scroll_9550').hover(function() { clearInterval(MyMar) }, function() { MyMar = setInterval(Marquee, 20) });
+
+	                                function Marquee() {
+	                                    var tabs = $('#pingpaibox_9550')[0],
+	                                        tabs1 = $('#pingpai_9550')[0],
+	                                        tabs2 = $('#pingpaicopy_9550')[0];
+	                                    if (tabs2.offsetWidth - tabs.scrollLeft <= 0) tabs.scrollLeft -= tabs1.offsetWidth;
+	                                    else { tabs.scrollLeft++; }
+	                                    $('#tabs').html(tabs.scrollLeft);
+	                                    $('#tabs1').html(tabs1.offsetWidth);
+	                                    $('#tabs2').html(tabs2.offsetWidth);
+	                                }
+	                            })()
+	                            </script>
+                        	</div>
+                        </div>
+                        <div id="Tab9_Content1" class="none" style="display: none;">
+                           
+                        	 <div class="layer" style="height:150px;width:1094px;overflow:hidden" id="pingpaibox_95501">
+	                            <div id="scroll_95501" style="width:800%">
+	                                <ul class="label_pic_ul" id="pingpai_95501" style="float:left;height:150px;">
+	                                    <%range $i,$v := .arts.警营文化%>
+	                                   		<%range FindImageLink $v.Content%>
+	                                   			<li style="float:left;display:inline-block; margin-right:5px"> <a href="/showArticle?id=<%call $.Hex $v.Id%>"  title="<%$v.Title%>"><img width="180" height="150" alt="<%$v.Title%>" onload="this.height=this.width-30" src="<%.%>"></a>
+	                                   		<%end%>
+	                                    <%end%> 
+	                                </ul>
+	                                <ul class="fleft" id="pingpaicopy_95501" style="float:left;height:150px;">
+	                                    
+	                                </ul>
+	                            </div>
+	                            <script type="text/javascript">
+	                            (function() {
+	                                $('#pingpaicopy_95501').html($('#pingpai_95501').html());
+	                                var MyMar = setInterval(Marquee, 20);
+	                                $('#scroll_95501').hover(function() { clearInterval(MyMar) }, function() { MyMar = setInterval(Marquee, 20) });
+
+	                                function Marquee() {
+	                                    var tabs = $('#pingpaibox_95501')[0],
+	                                        tabs1 = $('#pingpai_95501')[0],
+	                                        tabs2 = $('#pingpaicopy_95501')[0];
+	                                    if (tabs2.offsetWidth - tabs.scrollLeft <= 0) tabs.scrollLeft -= tabs1.offsetWidth;
+	                                    else { tabs.scrollLeft++; }
+	                                    $('#tabs').html(tabs.scrollLeft);
+	                                    $('#tabs1').html(tabs1.offsetWidth);
+	                                    $('#tabs2').html(tabs2.offsetWidth);
+	                                }
+	                            })()
+	                            </script>
+                        	</div>	
+
+
+
+                        </div> 
+                       
+                    </div>
+                </div>
+
+                <style type="text/css">
+                    .active1{
+                        color: white;
+                        background-color: #0763ca!important;
+                    }
+                    .active1 a{
+                        color: white!important; 
+                    }
+                </style>
+                <!--友情链接 -->
+                  <div class="mlyl fl">
+                    <div class="mlyl-bt"> <span class="tit">友情链接</span> <span class="more"></span> </div>
+                    <div class="mlyl-neir" style="margin: 0 auto;width: 100%">
+                        <div style="margin: 0 auto;margin-bottom: 1em;border:none;">
+                             
+                            <div class="picMarquee-left2" style="position: relative;border:none;">
+                               
+                                <div class="bd" style="width: 100%;border:none;" >
+                                    <ul class="picList" style="width: 100%">
+
+                                        <%range .links%>
+                                        <%if eq .Category "图片链接"%>
+
+                                        <li>
+                                            <div class="pic ztpic"><a href="<%.Url%>"  title="<%.Name%>" ><img alt="<%.Name%>" width="200" height="70" border="none" src="<%.Pic%>" /></a></div>
+
+                                        </li>
+                                         
+
+                                        <%end%>
+                                        <%end%>
+                                    </ul>
+                                </div>
+                                <style type="text/css">
+
+                                </style>
+                                 <a href="javascript:void(0)" class=" prev" style="position: absolute;left: -5px;margin-top: -53px;display: block;width: 32px;height: 40px;color: white;font-weight: bold;font-size: 4em;">〈</a>
+                                 <a  href="javascript:void(0)" class=" next" style="position: absolute;right: 11px; margin-top: -53px;display: block;width: 32px;height: 40px;color: white;font-size: 4em;font-weight: bold;"> 〉</a>
                             </div>
                             <script type="text/javascript">
-                            (function() {
-                                $('#pingpaicopy_9550').html($('#pingpai_9550').html());
-                                var MyMar = setInterval(Marquee, 20);
-                                $('#scroll_9550').hover(function() { clearInterval(MyMar) }, function() { MyMar = setInterval(Marquee, 20) });
-
-                                function Marquee() {
-                                    var tabs = $('#pingpaibox_9550')[0],
-                                        tabs1 = $('#pingpai_9550')[0],
-                                        tabs2 = $('#pingpaicopy_9550')[0];
-                                    if (tabs2.offsetWidth - tabs.scrollLeft <= 0) tabs.scrollLeft -= tabs1.offsetWidth;
-                                    else { tabs.scrollLeft++; }
-                                    $('#tabs').html(tabs.scrollLeft);
-                                    $('#tabs1').html(tabs1.offsetWidth);
-                                    $('#tabs2').html(tabs2.offsetWidth);
-                                }
-                            })()
+                               jQuery(".picMarquee-left2").slide({ mainCell: ".bd ul",  effect: "left",vis:5, pnLoop:true, scroll:5, autoPage:true});
                             </script>
                         </div>
+                        <div style="margin: 0 auto;text-align: center;">
+                             <select style="margin-right: 16px;width: 145px" onchange="changeurl(this.value)">
+                                <option >--全国公安部门导航--</option>
+                                <%range .links%>
+                                    <%if eq .Category "全国公安部门导航"%>
+                                        <option value="<%.Url%>"><%.Name%></option>
+                                    <%end%>
+                                <%end%>
+                            </select>
+                            <select  style="margin-left: 16px;margin-right: 16px;width: 145px"  onchange="changeurl(this.value)">
+                                <option>--全国交警部门导航--</option>
+                                <%range .links%>
+                                    <%if eq .Category "全国交警部门导航"%>
+                                        <option value="<%.Url%>"><%.Name%></option>
+                                    <%end%>
+                                <%end%>
+                            </select>
+                            <select  style="margin-left: 16px;margin-right: 16px;width: 145px"  onchange="changeurl(this.value)">
+                                <option>--车管应用系统导航--</option>
+                                <%range .links%>
+                                    <%if eq .Category "车管应用系统导航"%>
+                                        <option value="<%.Url%>"><%.Name%></option>
+                                    <%end%>
+                                <%end%>
+                            </select>
+                            <select  style="margin-left: 16px;margin-right: 16px;width: 145px"  onchange="changeurl(this.value)">
+                                <option>--全省交警支队导航--</option>
+                                <%range .links%>
+                                    <%if eq .Category "全省交警支队导航"%>
+                                        <option value="<%.Url%>"><%.Name%></option>
+                                    <%end%>
+                                <%end%>
+                            </select>
+                            <select  style="margin-left: 16px;margin-right: 16px;width: 145px"  onchange="changeurl(this.value)">
+                                <option>--全市交警大队导航--</option>
+                                <%range .links%>
+                                    <%if eq .Category "全市交警大队导航"%>
+                                        <option value="<%.Url%>"><%.Name%></option>
+                                    <%end%>
+                                <%end%>
+                            </select>
+                            <select  style="margin-left: 16px;margin-right: 16px;width: 145px"  onchange="changeurl(this.value)">
+                                <option>--全县公安部门导航--</option>
+                                <%range .links%>
+                                    <%if eq .Category "全县公安部门导航"%>
+                                        <option value="<%.Url%>"><%.Name%></option>
+                                    <%end%>
+                                <%end%>
+                            </select>
+                        </div>
+                        <script type="text/javascript">
+                            function changeurl(value){
+                                if(value){
+                                   window.open(value);
+                                }
+                            }
+                        </script>
+                        </div>
+                        
                     </div>
                 </div>
                 <style type="text/css">
@@ -814,99 +978,6 @@
                         color: white!important; 
                     }
                 </style>
-                <!--  µÚÆß°æ   ÓÑÇéÁ´½Ó -->
-                <div class="linkTab fl" style="width: 100%;">
-                    <div class="TabTitle" style="background: none">
-                        <ul id="Tab9">
-                            <li class="active1" style="cursor: pointer;"  onmouseover="nTabs1(this,0);"><a  class="l1">全国公安部门导航</a></li>
-                            <li class="normal" style="cursor: pointer;"  onmouseover="nTabs1(this,1);"><a  class="l1">全国交警部门导航</a></li>
-                            <li class="normal"  style="cursor: pointer;" onmouseover="nTabs1(this,2);"><a  class="l1">车管应用系统导航</a></li>
-                            <li class="normal" style="cursor: pointer;"  onmouseover="nTabs1(this,3);"><a  class="l1">全省交警支队导航</a></li>
-                            <li class="normal" style="cursor: pointer;"  onmouseover="nTabs1(this,4);"><a  class="l1">全市交警大队导航</a></li>
-                            <li class="normal" style="cursor: pointer;"  onmouseover="nTabs1(this,5);"><a  class="l1">全县公安部门导航</a></li>
-                        </ul>
-                    </div>
-                    <div class="TabContent">
-                        <div id="Tab9_Content0" style="display: block;">
-                            <ul class="friendLink">
-                                <%range .links%>
-                                    <%if eq .Category "全国公安部门导航"%>
-                                        <li>
-                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
-                                                <%.Name%>
-                                            </a>
-                                        </li>
-                                        <%end%>
-                                            <%end%>
-                            </ul>
-                        </div>
-                        <div id="Tab9_Content1" class="none" style="display: none;">
-                            <ul class="friendLink">
-                                <%range .links%>
-                                    <%if eq .Category "全国交警部门导航"%>
-                                        <li>
-                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
-                                                <%.Name%>
-                                            </a>
-                                        </li>
-                                        <%end%>
-                                            <%end%>
-                            </ul>
-                        </div> 
-                       <div id="Tab9_Content2" class="none" style="display: none;">
-                            <ul class="friendLink">
-                                <%range .links%>
-                                    <%if eq .Category "车管应用系统导航"%>
-                                        <li>
-                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
-                                                <%.Name%>
-                                            </a>
-                                        </li>
-                                        <%end%>
-                                            <%end%>
-                            </ul>
-                        </div>
-                        <div id="Tab9_Content3" class="none" style="display: none;">
-                            <ul class="friendLink">
-                                <%range .links%>
-                                    <%if eq .Category "全省交警支队导航"%>
-                                        <li>
-                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
-                                                <%.Name%>
-                                            </a>
-                                        </li>
-                                        <%end%>
-                                            <%end%>
-                            </ul>
-                        </div>
-                        <div id="Tab9_Content4" class="none" style="display: none;">
-                            <ul class="friendLink">
-                                <%range .links%>
-                                    <%if eq .Category "全市交警大队导航"%>
-                                        <li>
-                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
-                                                <%.Name%>
-                                            </a>
-                                        </li>
-                                        <%end%>
-                                            <%end%>
-                            </ul>
-                        </div>
-                        <div id="Tab9_Content5" class="none" style="display: none;">
-                            <ul class="friendLink">
-                                <%range .links%>
-                                    <%if eq .Category "全县公安部门导航"%>
-                                        <li>
-                                            <a href="<%.Url%>" target="_blank" style="height: 1em;overflow: hidden;" title="<%.Name%>">
-                                                <%.Name%>
-                                            </a>
-                                        </li>
-                                        <%end%>
-                                            <%end%>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
             <script language="javascript">
             $(document).ready(function() {

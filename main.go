@@ -19,6 +19,7 @@ import (
 	//"github.com/Luxurioust/excelize"
 	//"fmt"
 	"log"
+	"regexp"
 	"time"
 )
 
@@ -30,7 +31,7 @@ import (
 var clazz map[string][]string = map[string][]string{
 	"文件简报": []string{"重要文件", "通知通报", "交管简报", "人事文件", "交安委文件", "大队活动"},
 	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
-	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "交警风采"},
+	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "警营文化"},
 	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
 	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流"}}
 
@@ -135,10 +136,21 @@ func newRenderer() *Template {
 	funmap["Substring"] = Substring
 	funmap["IsNew"] = IsNew
 	funmap["Include"] = Include
+	funmap["FindImageLink"] = FindImageLink
 	temp.Funcs(funmap)
 	return &Template{
 		templates: template.Must(temp.ParseGlob("views/*.html")),
 	}
+}
+
+func FindImageLink(content template.HTML) []template.HTML {
+	result := []template.HTML{}
+	link := regexp.MustCompile(`/user/images/\w*\.jpg`)
+	for _, l := range link.FindAllString(string(content), -1) {
+		result = append(result, template.HTML(l))
+	}
+	log.Println(result)
+	return result
 }
 
 func main() {
@@ -327,6 +339,7 @@ func addLink(c echo.Context) error {
 		Name:     c.FormValue("linkName"),
 		Url:      c.FormValue("url"),
 		Category: c.FormValue("category"),
+		Pic:      c.FormValue("pic"),
 		Order:    service.GetLinksCount(c.FormValue("category")) + 1,
 	}
 	if err := db.Add("link", link); err != nil {
@@ -1142,11 +1155,7 @@ func noticePage(c echo.Context) error {
 }
 
 func directoryPage(c echo.Context) error {
-	var deps []db.Department = make([]db.Department, 10)
-	if err := db.GetAll("department", &deps); err != nil {
-		c.Logger().Warn(err)
-		return err
-	}
+	deps := service.GetAllDeps()
 	return c.Render(http.StatusOK, "directory", map[string]db.Any{"Deps": deps})
 }
 
@@ -1188,11 +1197,7 @@ func addDirectoryPage(c echo.Context) error {
 
 func directoryListPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	var deps []db.Department = make([]db.Department, 10)
-	if err := db.GetAll("department", &deps); err != nil {
-		c.Logger().Warn(err)
-		return err
-	}
+	deps := service.GetAllDeps()
 	navBar, subNav := service.CreateMenuHtml(user, "通讯录管理")
 	return c.Render(http.StatusOK, "directorylist", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Deps": deps, "Menu": "网站管理"})
 }

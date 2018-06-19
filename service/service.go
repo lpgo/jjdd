@@ -29,7 +29,7 @@ var menuClass map[string][]string = map[string][]string{
 	"网站管理": []string{"值班管理", "用户管理", "部门管理", "通讯录管理", "链接管理", "专题管理", "通知管理"},
 	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
 	"文件简报": []string{"重要文件", "通知通报", "交管简报", "人事文件", "交安委文件", "大队活动"},
-	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "交警风采"},
+	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "警营文化"},
 	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
 	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流"}}
 
@@ -57,7 +57,7 @@ var menuItemHtml map[string]string = map[string]string{
 	"支部活动":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('支部活动')">支部活动</a>`,
 	"纪律教育":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('纪律教育')">纪律教育</a>`,
 	"学习培训":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('学习培训')">学习培训</a>`,
-	"交警风采":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交警风采')">交警风采</a>`,
+	"警营文化":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('警营文化')">警营文化</a>`,
 	"秩序整治":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('秩序整治')">秩序整治</a>`,
 	"事故预防":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('事故预防')">事故预防</a>`,
 	"科技信息":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('科技信息')">科技信息</a>`,
@@ -229,7 +229,7 @@ func GetNotice(id string) *db.Notice {
 
 func GetAllDeps() []db.Department {
 	var deps = make([]db.Department, 10)
-	if err := db.GetAll("department", &deps); err != nil {
+	if err := db.GetAllByOrder("department", nil, &deps); err != nil {
 		log.Println(err)
 	}
 	return deps

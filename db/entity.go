@@ -13,6 +13,7 @@ type Link struct {
 	Name     string        `bson:"name" json:"name"`
 	Url      string        `bson:"url" json:"url"`
 	Category string        `bson:"category" json:"category"`
+	Pic      string        `bson:"pic" json:"pic"`
 	Order    int           `bson:"order" json:"order"`
 	IsHidden bool          `bson:"ishidden" json:"ishidden"`
 }

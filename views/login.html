@@ -148,14 +148,14 @@ else if(isEdge)
   }
   
   var canup=true;
-  if(BrowserType()=="0"){
-    if(confirm("当前浏览器版本过低，点击确定下载适用的浏览器")){
-        window.location.href="/firefox.exe"
-    }else{
-      alert("您将不能登录系统进行操作");
-      canup=false;
-    } 
-  }
+  // if(BrowserType()=="0"){
+  //   if(confirm("当前浏览器版本过低，点击确定下载适用的浏览器")){
+  //       window.location.href="/firefox.exe"
+  //   }else{
+  //     alert("您将不能登录系统进行操作");
+  //     canup=false;
+  //   } 
+  // }
 
     function myTrim(x) {
         return x.replace(/^\s+|\s+$/gm,'');

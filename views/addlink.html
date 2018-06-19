@@ -14,7 +14,7 @@
     <meta http-equiv="Content-Language" content="zh-cn">
     <meta http-equiv="imagetoolbar" content="false">
     <script type="text/javascript" src="/js/ku/DD_belatedPNG.js"></script>
-    <script type="text/javascript" src="/js/ku/jquery1.42.min.js"></script>
+    <script type="text/javascript" src="/js/ku/jquery.min.js"></script>
     <script type="text/javascript" src="/js/ku/jquery.SuperSlide.2.1.1.js"></script>
    
     <!--[if IE 6]>
@@ -47,7 +47,7 @@
                     </div> 
                      <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         类&emsp;别<span style="color: red">*</span>
-                                
+                                  <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category"  id="category"  value="图片链接" <%if eq .Category "图片链接"%>checked="checked"<%end%>><label for="category">图片链接</label>
                                  <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category"  id="category1"  value="全国公安部门导航" <%if eq .Category "全国公安部门导航"%>checked="checked"<%end%>><label for="category1">全国公安部门导航</label>
                                 <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category"  id="category2"  value="全国交警部门导航" <%if eq .Category "全国交警部门导航"%>checked="checked"<%end%>><label for="category2">全国交警部门导航</label>
                                 <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="category"  id="category3"  value="车管应用系统导航"  <%if eq .Category "车管应用系统导航"%>checked="checked"<%end%>><label for="category3">车管应用系统导航</label>
@@ -61,6 +61,13 @@
                         链&emsp;接<span style="color: red">*</span>
                         <input  style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 15em;" type="text" name="url" value="<%.Url%>"> 
                     </div> 
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        链接图片 &nbsp;<input id="imagename" type="hidden" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 22em;" name="pic" value="<%.Pic%>">
+                        <span id="picker" style="display: inline-block;vertical-align: middle;margin-left: 2em;width: 8em!important">上传</span> 
+                        <span id="chakan" style="vertical-align: middle;margin-left: 2em;width: 54px;height: 42px;line-height: 42px;border-radius: 3px;color: white;text-align: center;background-color: #3cc24c;;cursor: pointer;display: none;">查看图片</span>
+                     
+                        <div id="chakan" style="vertical-align: middle;margin-left: 2em;height: 42px;line-height: 42px;border-radius: 3px;color: gray;text-align: left;"></div>
+                    </div>
                     <%if .Update%>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         排&emsp;序<span style="color: white">*</span>
@@ -85,13 +92,54 @@
                      </div>
         </div>
         
-        <script type="text/javascript" charset="utf-8"  src="/js/ku/avalon.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/houtaifabu.js"></script>
-        <script type="text/javascript" charset="utf-8"  src="/js/jquerygao.js"></script>
+  
+        <script type="text/javascript" charset="utf-8"  src="/js/ku/jqueryMig.js"></script>
         <script type="text/javascript" charset="utf-8"  src="/js/webuploader/webuploader.js"></script>
 
 </body>
     <script type="text/javascript">
+         var cantijiao=false;
+       var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf: '/js/webuploader/Uploader.swf',
+
+            // 文件接收服务端。
+            server: '/uploadImage',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker',
+            fileVal:"upfile", 
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        uploader.on( 'uploadSuccess', function(file, res) {
+            alert("上传图片成功！")
+            $("#imagename").val(res.url);
+            $("#chakan").css('display','inline-block');
+            $("#chakan").unbind();
+            $("#chakan").click(function(){
+                window.open(res.url)
+            })
+        });
+
+            // 文件上传失败，显示上传出错。
+        uploader.on( 'uploadError', function( file ) {
+           alert("上传图片错误，请重新上传！")
+        });
+
+            // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on( 'uploadComplete', function( file ) {
+
+        });
     function myTrim(x) {
         return x.replace(/^\s+|\s+$/gm,'');
     }
@@ -101,6 +149,14 @@
         link.linkName.value=myTrim(link.linkName.value);
         link.url.value=myTrim(link.url.value);
        
+        if( $('input[name="category"]:checked ').val()=="图片链接"){
+            if(!$("#imagename").val()){
+                alert("请上传图片");
+               return false;
+
+            }
+        }
+
         if (myTrim(link.linkName.value) == "")
           {
               alert("请填写链接名！");
