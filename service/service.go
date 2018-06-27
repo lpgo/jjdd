@@ -288,7 +288,6 @@ func GetRota() template.HTML {
 }
 
 func RotaToHtml(rota db.ZRota) template.HTML {
-	log.Println(rota)
 
 	result := ""
 
@@ -349,7 +348,7 @@ func RotaToHtml(rota db.ZRota) template.HTML {
 
 func GetLinks() []db.Link {
 	var links []db.Link
-	if err := db.GetAll("link", &links); nil != err {
+	if err := db.GetAllByOrder("link", nil, &links); nil != err {
 		log.Println(err)
 
 	}

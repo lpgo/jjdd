@@ -23,10 +23,9 @@
         <script type="text/javascript" src="js/zh-cn(1).js"></script>
         <script type="text/javascript" src="js/jquery1.42.min.js"></script>
         <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
-        <script type="text/javascript">
-
-      
         
+        <script type="text/javascript">
+       
         <%if .notice%>
         if(document.referrer.indexOf(window.location.host)==-1){
 
@@ -62,10 +61,10 @@
             for (i = 0; i < tabList.length; i++) {
                 if (i == Num) {
                     thisObj.className = "active1";
-                    document.getElementById(tabObj + "_Content" + i).style.display = "block";
+                    document.getElementById(tabObj + "_Content" + i).style.visibility = "visible";
                 } else {
                     tabList[i].className = "normal";
-                    document.getElementById(tabObj + "_Content" + i).style.display = "none";
+                    document.getElementById(tabObj + "_Content" + i).style.visibility = "hidden";
                 }
             }
         }
@@ -235,7 +234,9 @@
                 		<tr>
                 			<td style="padding-left: 2em;width: 50%">
                 			 站内搜索：<input type="" id="serachvalue" name="" style="vertical-align: middle;height: 30px;line-height:30px;padding-left: 1em;width: 300px;margin-right: 0"> 
-                              <div style="vertical-align: middle;margin-left: -5px;cursor: pointer;height: 34px;line-height: 34px;display: inline-block; *display: inline;*zoom: 1;padding-left: 1.5em;padding-right: 1.5em;background-color: #136dc6;font-size: 1.2em;color: white;margin-right: 30px;" onclick="search()">搜索</div> 
+
+                              <div style="vertical-align: middle;margin-left: -5px;cursor: pointer;height: 34px;line-height: 34px;display: inline-block; *display: inline;*zoom: 1;padding-left: 1.5em;padding-right: 1.5em;font-size: 1.2em;color: white;margin-right: 30px;background: url('images/fangda.png');background-repeat: no-repeat;background-color: #136dc6;background-position: 8px 3px"  onclick="search()" ></div> 
+ 
                             </td>
                 			<td style="text-align: right;padding-right: 2em;width: 49%;overflow: hidden;">
                 				<span style="float: right;padding-right: 4em;">
@@ -716,8 +717,9 @@
                                 <tr style="cursor: pointer;" onclick="window.location.href='/noLeftList?dep='+encodeURIComponent('<%._id.from%>')">
                                 <td><%Add $i 1%></td>
                                 <td><%._id.from%></td>
-                                <td><%.count%></td>
                                 <td><%.all%></td>
+                                <td><%.count%></td>
+                                
                               </tr>
                               <%end%>
                               
@@ -780,8 +782,8 @@
                             <li class="normal" style="cursor: pointer;"  onclick="nTabs1(this,1);"><a  class="l1">警营文化</a></li>
                         </ul>
                     </div>
-                    <div class="TabContent">
-                        <div id="Tab9_Content0" style="display: block;">
+                    <div class="TabContent" style="position: relative;height: 150px">
+                        <div id="Tab9_Content0" style="visibility: visible;position: absolute;left: 0">
                             <div class="layer" style="height:150px;width:1094px;overflow:hidden" id="pingpaibox_9550">
 	                            <div id="scroll_9550" style="width:800%">
 	                                <ul class="label_pic_ul" id="pingpai_9550" style="float:left;height:150px;">
@@ -823,7 +825,7 @@
 	                            </script>
                         	</div>
                         </div>
-                        <div id="Tab9_Content1" class="none" style="display: none;">
+                        <div id="Tab9_Content1"  style=" visibility:hidden;float: left;position: absolute;left: 0">
                            
                         	 <div class="layer" style="height:150px;width:1094px;overflow:hidden" id="pingpaibox_95501">
 	                            <div id="scroll_95501" style="width:800%">
@@ -880,16 +882,16 @@
                     <div class="mlyl-neir" style="margin: 0 auto;width: 100%">
                         <div style="margin: 0 auto;margin-bottom: 1em;border:none;">
                              
-                            <div class="picMarquee-left2" style="position: relative;border:none;">
+                            <div class="picMarquee-left2" style="width: 100%;">
                                
-                                <div class="bd" style="width: 100%;border:none;" >
+                                <div class="bd" style="width: 92%;border:none;margin: 0 auto;height: 70px" >
                                     <ul class="picList" style="width: 100%">
 
                                         <%range .links%>
                                         <%if eq .Category "图片链接"%>
 
                                         <li>
-                                            <div class="pic ztpic"><a href="<%.Url%>"  title="<%.Name%>" ><img alt="<%.Name%>" width="200" height="70" border="none" src="<%.Pic%>" /></a></div>
+                                            <div class="pic ztpic"><a href="<%.Url%>"  title="<%.Name%>" ><img alt="<%.Name%>" width="190" height="70" border="none" src="<%.Pic%>" /></a></div>
 
                                         </li>
                                          
@@ -898,11 +900,25 @@
                                         <%end%>
                                     </ul>
                                 </div>
-                                <style type="text/css">
+                                
+                                 <div  class=" prev" style="float:left;margin-top: -79px;display: block;height: 70px;line-height: 76px;color: #ececec;font-weight: bold;font-size: 4em;text-align: right;margin-left: -11px;cursor: pointer;"><a href="javacript:void(0);"  onclick="return false;" id="previd"  >〈</a></div>
+                                 <div  class=" next" style="float: right;margin-top: -79px;display: block;height: 70px;line-height: 76px;color: #ececec;font-size: 4em;font-weight: bold;text-align: right;cursor: pointer;margin-right: -12px;" ><a  href="javacript:void(0);"  onclick="return false;" id="nextid"  >〉</a></div>
 
-                                </style>
-                                 <a href="javascript:void(0)" class=" prev" style="position: absolute;left: -5px;margin-top: -53px;display: block;width: 32px;height: 40px;color: white;font-weight: bold;font-size: 4em;">〈</a>
-                                 <a  href="javascript:void(0)" class=" next" style="position: absolute;right: 11px; margin-top: -53px;display: block;width: 32px;height: 40px;color: white;font-size: 4em;font-weight: bold;"> 〉</a>
+                                 <style type="text/css">
+	                                 #previd{
+	                                 	color: #e6e6e6;
+	                                 }
+	                                 #nextid{
+	                                 	color: #e6e6e6;
+	                                 }
+                                 	#previd:hover{
+                                 		color: gray;
+                                 	}
+                                 	#nextid:hover{
+                                 		color: gray;
+                                 	}
+                                 </style>
+                                 <div style="clear: both;"></div>
                             </div>
                             <script type="text/javascript">
                                jQuery(".picMarquee-left2").slide({ mainCell: ".bd ul",  effect: "left",vis:5, pnLoop:true, scroll:5, autoPage:true});

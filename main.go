@@ -13,6 +13,7 @@ import (
 	"jjdd/service"
 	"jjdd/session"
 	"net/http"
+	"net/url"
 	"os"
 	"strconv"
 	//"strings"
@@ -1869,25 +1870,25 @@ func RedirectToPageAdmin(c echo.Context, Category string) error {
 	switch Category {
 	case "督察通报":
 		{
-			return MyRedirect(c, "/admin/page/admin?category=督察通报&isRed=true&header=duchatongbao.gif")
+			return MyRedirect(c, "/admin/page/admin?category=%e7%9d%a3%e5%af%9f%e9%80%9a%e6%8a%a5&isRed=true&header=duchatongbao.gif")
 		}
 	case "通知通报":
 		{
-			return MyRedirect(c, "/admin/page/admin?category=通知通报&isRed=true")
+			return MyRedirect(c, "/admin/page/admin?category=%e9%80%9a%e7%9f%a5%e9%80%9a%e6%8a%a5&isRed=true")
 		}
 	case "人事文件":
 		{
-			return MyRedirect(c, "/admin/page/admin?category=人事文件&isRed=true")
+			return MyRedirect(c, "/admin/page/admin?category=%e4%ba%ba%e4%ba%8b%e6%96%87%e4%bb%b6&isRed=true")
 		}
 	case "交管简报":
 		{
-			return MyRedirect(c, "/admin/page/admin?category=交管简报&isRed=true&header=jiaoguanjianbao.gif")
+			return MyRedirect(c, "/admin/page/admin?category=%e4%ba%a4%e7%ae%a1%e7%ae%80%e6%8a%a5&isRed=true&header=jiaoguanjianbao.gif")
 		}
 	case "交安委文件":
 		{
-			return MyRedirect(c, "/admin/page/admin?category=交安委文件&isRed=true&header=jiaoanwei.jpg")
+			return MyRedirect(c, "/admin/page/admin?category=%e4%ba%a4%e5%ae%89%e5%a7%94%e6%96%87%e4%bb%b6&isRed=true&header=jiaoanwei.jpg")
 		}
 	default:
-		return MyRedirect(c, "/admin/page/admin?category="+Category)
+		return MyRedirect(c, "/admin/page/admin?category="+url.QueryEscape(Category))
 	}
 }
