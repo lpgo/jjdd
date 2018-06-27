@@ -1374,7 +1374,7 @@ func modifyDep(c echo.Context) error {
 		c.Logger().Warn(err)
 		return err
 	}
-	return directoryListPage(c)
+	return MyRedirect(c, "/admin/page/dep_list")
 }
 
 func modifySubject(c echo.Context) error {
@@ -1417,7 +1417,8 @@ func modifyDirectory(c echo.Context) error {
 		c.Logger().Warn(err)
 		return err
 	}
-	return MyRedirect(c, "/admin/page/dep_list")
+
+	return directoryListPage(c)
 }
 
 func modifyLink(c echo.Context) error {
