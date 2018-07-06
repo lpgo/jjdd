@@ -216,7 +216,7 @@ func GetNotice(id string) *db.Notice {
 			return nil
 		} else {
 			return &notice
-		}
+		} 
 	} else {
 		if err := db.GetById("notice", id, &notice); err != nil {
 			return nil
@@ -225,6 +225,20 @@ func GetNotice(id string) *db.Notice {
 		}
 	}
 
+}
+
+func GetTongZhi() *db.Article {
+	var tongzhi db.Article
+	if err := db.FindOne("article", bson.M{"isNotice": true}, &tongzhi); err != nil {
+		log.Println(err)
+		return nil
+	}
+	noticeDate := tongzhi.NoticeTime.AddDate(0,0,1)
+	if time.Now().Before(noticeDate) {
+		return &tongzhi
+	} else {
+		return nil
+	}
 }
 
 func GetAllDeps() []db.Department {

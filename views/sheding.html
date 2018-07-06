@@ -40,7 +40,10 @@
                         交管要闻<span style="color: white">*</span>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="isTraffic" value="true" <%if .Article.IsTraffic%>checked='checked'<%end%>>
                     </div> 
-
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        设为通知<span style="color: white">*</span>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="isNotice" value="true" <%if .Article.IsNotice%>checked='checked'<%end%>>
+                    </div> 
                     <%if .Article.IsTraffic%>
                      <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否置顶<span style="color: white">*</span>
@@ -66,8 +69,6 @@
                      <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         移动文章<span style="color: white">*</span>
                          <select style="vertical-align: middle; margin-left: 2em;" type="radio" name="category" >
-
-
                             <%range .Clazz%>
                               <%range .%>
                                 <option value="<%.%>" <%if eq $.Article.Category .%>selected='selected'<%end%>><%.%></option>

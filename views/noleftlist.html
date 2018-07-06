@@ -4,7 +4,6 @@
 <html> 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -101,7 +100,9 @@
         position: absolute;
         height: 25px;
     }
-
+    .ms-controller{
+       visibility: hidden
+    }
     #play_9609 .playNum a {
         margin: 5px 2px;
         width: 15px;
@@ -170,7 +171,7 @@
         }
     </style>
 </head>
-<body  ms-controller="fugujiaojing" >
+<body  ms-controller="fugujiaojing"  class="ms-controller" >
          <%template "headerindex" .%>
 
 <script type="text/javascript">
@@ -222,21 +223,22 @@
                 </div>
                 <div class="main1">
                      <ul class="label_ul_b">
-                        <br>
-                        <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;&emsp;&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
+                       
+                    <br>
+                    <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;position: relative;">
+                        <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span>
+                        <a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
                         </li>
-                        <br>
-                        <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
-                        </li>
-                        <br>
-                        <li ms-for="($index, el) in @arr3"  class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
-                        </li>
-                        <li class="clear"></li>
-                    </ul>
-                    
+                    <br>
+                    <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;position: relative;">
+                        <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
+                    </li>
+                    <br>
+                    <li ms-for="($index, el) in @arr3"  class="label_arrow_1" style="overflow: hidden;position: relative;">
+                        <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
+                    </li>
+                    <li class="clear"></li>
+                </ul>
                    <div class="mtop pages" id="page">
                         共{{@pagenum}}页{{@count}}条
                         <a class="s1 s3"   ms-on-click="jump(1)">首页</a>
@@ -259,10 +261,10 @@
     <%template "footer" .%>
 
     <script src="/js/ku/avalon.js "></script>
-    <script type="text/javascript">
+    <script type="text/javascript"> 
     	
 var meiyenum=15;
-var params = <%if eq .IsLeader "true"%>"&category=领导讲话"<%end%><%if eq .IsTraffic "true"%>"&isTraffic=true"<%end%><%if .Subject%>"&subject="+encodeURIComponent("<%.Subject%>")<%end%><%if .Dep%>"&dep="+encodeURIComponent("<%.Dep%>")<%end%>;
+var params = <%if eq .IsLeader "true"%>"&category="+encodeURIComponent("领导讲话")<%end%><%if eq .IsTraffic "true"%>"&isTraffic=true"<%end%><%if .Subject%>"&subject="+encodeURIComponent("<%.Subject%>")<%end%><%if .Dep%>"&dep="+encodeURIComponent("<%.Dep%>")<%end%>;
 
  
 var net=function(page){
@@ -566,36 +568,38 @@ $.ajax({
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
+    xhrFields: {
+            withCredentials: true
+    },
     beforeSend:function(){
         //请求前的处理
     },
-    success:function(data,status){
-        data.data.forEach(function(item){
-        item.title=item.title.substring(0,34);
-        var d=new Date(item.time);
-        var year=d.getFullYear();
-        var month=d.getMonth();
-        var day=d.getDate();
-
-        var today=new Date();
-        var year1=today.getFullYear();
-        var month1=today.getMonth();
-        var day1=today.getDate();
-
-
-        if(year==year1&&month==month1){
-            if((day1-day)<2){
-                item['isNew']=true;
+    success:function(sss,status){
+        sss.data.forEach(function(item){
+            item.title=item.title.substring(0,34);
+            var d=new Date(item.time);
+            var year=d.getFullYear();
+            var month=d.getMonth();
+            var day=d.getDate();
+            var today=new Date();
+            var year1=today.getFullYear();
+            var month1=today.getMonth();
+            var day1=today.getDate();
+           
+            if(year==year1&&month==month1){
+                if((day1-day)<2){
+                    item['isNew']=true;
+                }
             }
-        }
-      })
-      vm.arr1=data.data.slice(0,5);
-      vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-      vm.count =data.count;
-      vm.page=1;
-      vm.pagenum=parseInt(vm.count/meiyenum)+1;
-      console.log(vm.pagenum)
+            
+        })
+
+        vm.arr1=sss.data.slice(0,5);
+        vm.arr2=sss.data.slice(5,10);
+        vm.arr3=sss.data.slice(10,15);   
+        vm.count =sss.count;
+        vm.page=1;
+        vm.pagenum=parseInt(vm.count/meiyenum)+1;
     },
     complete:function(){
         //请求完成的处理

@@ -255,6 +255,7 @@
                         <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;position: relative;">
                             <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span>
                             <a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
+                            </li>
                         <br>
                         <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;position: relative;">
                             <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;

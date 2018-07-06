@@ -93,7 +93,7 @@ type SearchKey struct {
 	Name  string `bson:"name" json:"name"`
 	Count int    `bson:"count" json:"count"`
 }
-
+ 
 type Article struct {
 	Id         bson.ObjectId `bson:"_id" json:"id"`
 	Department string        `bson:"dep" json:"dep"`               //发布部门
@@ -107,6 +107,7 @@ type Article struct {
 	Content    template.HTML `bson:"content" json:"content"`       //内容
 	Attach     template.HTML `bson:"attach" json:"attach"`         //附加图章
 	Time       time.Time     `bson:"time" json:"time"`             //发表时间
+	RedTime    string        `bson:"redTime" json:"redTime"`       //红头发表时间
 	Class      string        `bson:"class" json:"class"`           //大类
 	Category   string        `bson:"category" json:"category"`     //分类(移动文章)
 	Subject    string        `bson:"subject" json:"subject"`       //专题
@@ -124,7 +125,10 @@ type Article struct {
 	No         string        `bson:"no" json:"no"`                 //发文序号
 	Signed     []string      `bson:"signed" json:"signed"`         //已签收
 	UnSign     []string      `bson:"unSign" json:"unSign"`         //未签收
+	IsNotice   bool 		 `bson:"isNotice" json:"isNotice"`     //设置为通知
+	NoticeTime time.Time     `bson:"noticeTime" json:"noticeTime"` //通知时间
 
+ 
 	IsHidden bool `bson:"ishidden" json:"ishidden"`
 }
 

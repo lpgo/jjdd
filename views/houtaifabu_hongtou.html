@@ -67,10 +67,13 @@
                         签&emsp;&emsp;发 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="<%.Article.Signature%>">
                     </div>
-
+                    <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        时&emsp;&emsp;间 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="redTime" value="<%.Article.RedTime%>">
+                    </div>
                     <%if or (eq .Article.Category "督察通报") (eq .Article.Category "交管简报")%>
                     	<div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-	                        第几期 <span style="color: red">*</span>
+	                        第&nbsp;几&nbsp;期 <span style="color: red">*</span>
 	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
 	                    </div>
         			<%else%>
@@ -129,9 +132,13 @@
                         签&emsp;&emsp;发 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="">
                     </div>
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        时&emsp;&emsp;间 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="redTime" >
+                    </div>
                     <%if or (eq .Category "督察通报") (eq .Category "交管简报")%>
                     	<div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-	                        第几期 <span style="color: red">*</span>
+	                        第&nbsp;几&nbsp;期 <span style="color: red">*</span>
 	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="">
 	                    </div>
         			<%else%>
@@ -177,7 +184,7 @@
                         内容标题 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;width: 40em;" type="text" name="title" value="<%.Article.Title%>"> 
 <!--                         <span style="margin-left: 2em;color: gray">还可输入<span style="color:red">40</span>个字符</span>
- -->                    </div>
+ -->                    </div> 
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         拟&emsp;&emsp;稿 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="creator" value="<%.Article.Creator%>">
@@ -190,9 +197,13 @@
                         签&emsp;&emsp;发 <span style="color: red">*</span>
                         <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="signature" value="<%.Article.Signature%>">
                     </div>
+                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
+                        时&emsp;&emsp;间 <span style="color: red">*</span>
+                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="redTime" value="<%.Article.RedTime%>">
+                    </div>
                     <%if or (eq .Article.Category "督察通报") (eq .Article.Category "交管简报")%>
                     	<div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
-	                        第几期 <span style="color: red">*</span>
+	                        第&nbsp;几&nbsp;期 <span style="color: red">*</span>
 	                        <input style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid  #aaa;width: 10em;" type="text" name="no" value="<%.Article.No%>">
 	                    </div>
         			<%else%>
@@ -270,6 +281,12 @@
           {
               alert("请填写拟稿人！");
               dep.creator.focus();
+              return false;
+          }
+          if (myTrim(dep.creator.time) == "")
+          {
+              alert("请填写发文时间！");
+              dep.time.focus();
               return false;
           }
            if (myTrim(dep.assessor.value) == "")

@@ -305,8 +305,27 @@
                         <%end%>
 
                         <div class="intr_title" style="color: #136dc6"><%.Article.Title%></div>
-                        <div class="ht_date" style="text-align:center;font-size:14px;color:#666;border-bottom: #0071cf 2px solid;padding-bottom: 11px">发布时间：<span id="time"><%Format .Article.Time "2006/01/02 15:04:05"%></span>&nbsp;&nbsp;&nbsp;&nbsp;来源：<%.Article.From%> &nbsp;&nbsp;&nbsp;&nbsp;作者：<%.Article.Creator%> &nbsp;&nbsp;&nbsp;&nbsp;浏览量：<span class="item_views"><%.Article.Hits%></span>
-                        </div>
+                          <table style="font-size:14px;color:#666;margin: 0 auto;">
+                          <tr>  
+                            <td>&emsp;拟稿:</td>
+                            <td><%.Article.Creator%></td>
+                            <td>&emsp;</td>
+                            <td>&emsp;审核:</td>
+                            <td><%.Article.Assessor%></td>
+                            <td>&emsp;</td>
+                            <td>&emsp;签发:</td>
+                            <td><%.Article.Signature%></td>
+                            <td>&emsp;</td>
+                            <td>&emsp;来源:</td>
+                            <td><%.Article.From%></td>
+                            <td>&emsp;</td>
+                            <td>&emsp;发布时间:</td>
+                            <td><span  id="time"><%Format .Article.Time "2006/01/02 15:04:05"%></span></td>
+                            <td>&emsp;</td>
+                            <td>&emsp;浏览次数:</td>
+                            <td><%.Article.Hits%>次</td>
+                          </tr>
+                        </table>
                         <div class="conTxt">
                             <br>
                             <%.Article.Content%>

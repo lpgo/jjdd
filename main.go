@@ -299,6 +299,7 @@ func main() {
 	e.GET("/login.html", loginPage)
 	e.Any("/login", login)
 	e.Any("/notice", noticePage)
+	e.Any("/tongzhi",tongzhiPage)
 	e.Any("/zhibanbiao", rotaListPage)
 	e.Any("/searchphone", searchPhone)
 	//test
@@ -683,7 +684,7 @@ func previewHongtouArticle(c echo.Context) error {
 	    <br/>
 	</p>`
 
-	year, month, day := GetChineseDate()
+	//year, month, day := GetChineseDate()
 
 	article := db.Article{
 		Subject:   c.FormValue("subject"),
@@ -693,7 +694,7 @@ func previewHongtouArticle(c echo.Context) error {
 		Signature: c.FormValue("signature"),
 		From:      c.FormValue("from"),
 		Content:   template.HTML(c.FormValue("content")),
-		Attach:    template.HTML(str1 + year + "年" + month + "月" + day + "日" + str2),
+		Attach:    template.HTML(str1 +c.FormValue("redTime") + str2),
 		Category:  c.FormValue("category"),
 		Year:      c.FormValue("year"),
 		No:        c.FormValue("no"),
@@ -896,6 +897,11 @@ func modifyArticle(c echo.Context) error {
 	} else {
 		user := c.(*CustomContext).GetSession("user").(*db.User)
 		if user.Role == "大队" {
+			if article.IsRed {
+				return MyRedirect(c, "/admin/page/dadui_admin?isRed=true")
+			} else {
+				return MyRedirect(c, "/admin/page/dadui_admin")
+			}
 			return MyRedirect(c, "/admin/page/dadui_admin?isRed=true")
 		} else {
 			return MyRedirect(c, "/admin/page/zhongdui_admin")
@@ -920,15 +926,26 @@ func setArticle(c echo.Context) error {
 		update["isTraffic"] = true
 	} else {
 		update["isTraffic"] = false
-	}
+	} 
 	if c.FormValue("isTop") != "" {
 		update["isTop"] = true
 	} else {
 		update["isTop"] = false
 	}
 
+	if c.FormValue("isNotice") != "" {
+		update["isNotice"] = true
+	} else {
+		update["isNotice"] = false
+	}
+
 	if update["isHot"].(bool) {
 		db.UpdateByCond("article", bson.M{"isHot": true}, bson.M{"$set": bson.M{"isHot": false}})
+	}
+
+	if update["isNotice"].(bool) {
+		db.UpdateByCond("article", bson.M{"isNotice": true}, bson.M{"$set": bson.M{"isNotice": false}})
+		update["noticeTime"] = time.Now()
 	}
 
 	if update["isTop"].(bool) {
@@ -1148,11 +1165,25 @@ func indexPage(c echo.Context) error {
 		notice = true
 	}
 
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"keys": keys, "notice": notice, "leaderArticles": leaderArticles, "summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
+	var tongzhi bool
+	s := service.GetTongZhi()
+	if s != nil {
+		tongzhi = true
+	} else { 
+		tongzhi = false
+	}
+
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"tongzhi":tongzhi, "keys": keys, "notice": notice, "leaderArticles": leaderArticles, "summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
 }
 
 func noticePage(c echo.Context) error {
 	return c.Render(http.StatusOK, "notice", service.GetNotice(c.FormValue("id")))
+}
+
+func tongzhiPage(c echo.Context) error {
+	a := service.GetTongZhi()
+
+	return c.Render(http.StatusOK, "tongzhi", *a)
 }
 
 func directoryPage(c echo.Context) error {
