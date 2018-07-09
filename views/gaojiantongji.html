@@ -73,7 +73,7 @@ code.hide();
     }
   </style>
   
-  <div style="margin-bottom: 10px;padding-left: 5px;text-align: center;color:#5c5c5c;height: 2em;line-height: 2em;background-color: #ccc;font-size: 2em;">
+  <div style="margin-bottom: 10px;padding-left: 5px;text-align: center;color:#5c5c5c;background-color: #ccc;font-size: 2em;"> 
     <script type="text/javascript">
       var year="<%.Time%>";
       
@@ -87,10 +87,10 @@ code.hide();
 
 
       function pre(){
-        window.location.href="/gaojiantongji?time="+pretime;
+        window.location.href="/tongji?time="+pretime;
       }
       function next(){
-        window.location.href="/gaojiantongji?time="+nexttime;
+        window.location.href="/tongji?time="+nexttime;
 
       }
     </script>
@@ -99,17 +99,35 @@ code.hide();
 
         <span >府谷县公安局交警大队<%.Time%>年稿件统计表</span>
         <div>年统计</div>
-        <div>
 
-        </div>
+        <table>
+          <%range $i,$v := .year%>
+           <tr> 
+            <td><%Add $i 1%></td>
+            <td><%._id.from%></td>
+            <td><%.all%></td>
+            <td><%.count%></td>
+            </tr>
+          <%end%>
+        </table>
         <div>月统计</div>
 
         <div>
 
+            
             <div>
-
-            </div>
-            <div>
+              
+                <%range $i,$v := .month%>
+                <span><%$i%>月</span>
+                  <%range $x,$y := $v%>
+                    <td><%Add $x 1%></td>
+                    <td><%$y._id.from%></td>
+                    <td><%$y.all%></td>
+                    <td><%$y.count%></td>
+                  <%end%>
+                  <br>
+                </tr>
+              <%end%>
 
             </div>            
             <div>
@@ -151,29 +169,7 @@ code.hide();
   
  
 
-  <style type="text/css">
-    table tr th{
-      height: 3em;line-height: 3em;font-size: 1.2em;
-    }
-    table tr td{
-      height: 3em;line-height: 3em;font-size: 1.2em;
 
-    }
-     td{
-    border: 1px solid #eeeeee!important;
-    padding: 0.2em;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    }
-  </style>
-  <table  id="mytable" style="width: 60%;text-align: center;border-bottom: 1px solid #ccc;margin: 0 auto;background-color: #fffef3;font-size: 1.3em;color: black">
-    <tr id="tableth">
-      <%.Rota%>
-    
-    </tr>
-   
-     
-  </table>
             <%template "footer" .%>
 
 <style type="text/css">

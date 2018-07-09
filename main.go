@@ -1321,18 +1321,51 @@ func modifyUserPage(c echo.Context) error {
 }
 
 func tongjiPage(c echo.Context) error {
-	year := c.FormValue("time")
-	if year == "" {
-		return c.Render(http.StatusOK, "tongji", map[string]db.Any{"Time": time.Now().Year()})
-	} else {
-		if y, ok := strconv.Atoi(year); ok {
-			return c.Render(http.StatusOK, "tongji", map[string]db.Any{"Time": y})
-		} else {
-			return c.Render(http.StatusOK, "tongji", map[string]db.Any{"Time": time.Now().Year()})
-	} else {
-		}
-
+	var (
+		year int
+		err  error
+	)
+	if year, err = strconv.Atoi(c.FormValue("time")); err != nil {
+		year = time.Now().Year()
 	}
+
+	data := map[string]db.Any{}
+
+	sm := service.StatisticsPerMonth(true, year)
+
+	ms := map[int]db.Any{}
+	for i := 1; i <= 12; i++ {
+		buf := []bson.M{}
+		for _, e := range sm {
+			if i == e["_id"].(bson.M)["month"].(int) {
+				for _, a := range service.StatisticsPerMonth(false, year) {
+
+					if (e["_id"].(bson.M)["from"].(string) == a["_id"].(bson.M)["from"].(string)) && (e["_id"].(bson.M)["month"].(int) == a["_id"].(bson.M)["month"].(int)) {
+						e["all"] = a["count"]
+						buf = append(buf, e)
+					}
+				}
+			}
+		}
+		ms[i] = buf
+	}
+
+	sy := service.StatisticsOneYear(true, year)
+
+	for _, e := range sy {
+		for _, a := range service.StatisticsOneYear(false, year) {
+			if e["_id"].(bson.M)["from"].(string) == a["_id"].(bson.M)["from"].(string) {
+				e["all"] = a["count"]
+			}
+		}
+	}
+
+	data["Time"] = year
+	data["year"] = sy
+	data["month"] = ms
+
+	return c.Render(http.StatusOK, "tongji", data)
+
 }
 
 func modifyUser(c echo.Context) error {

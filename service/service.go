@@ -572,11 +572,7 @@ func NoHtml(src string) string {
 
 //稿件统计(当月)
 func Statistics(auditing bool) []bson.M {
-	return StatisticsByYear(auditing, time.Now().Year())
-}
-
-func StatisticsByYear(auditing bool, year int) []bson.M {
-
+	year := time.Now().Year()
 	start := time.Date(year, 0, 0, 0, 0, 0, 0, time.Local)
 	end := time.Date(year+1, 0, 0, 0, 0, 0, 0, time.Local)
 
@@ -598,6 +594,36 @@ func StatisticsByYear(auditing bool, year int) []bson.M {
 				{"$group": bson.M{"_id": bson.M{"from": "$dep", "month": bson.M{"$month": "$time"}}, "count": bson.M{"$sum": 1}}},
 				{"$sort": bson.M{"count": -1}},
 				{"$match": bson.M{"_id.month": int(time.Now().Month())}},
+			})
+			return pipe.All(&resp)
+		}
+	}
+	if err := db.WitchCollection("article", query); err != nil {
+		log.Println(err)
+	}
+	return resp
+}
+
+func StatisticsPerMonth(auditing bool, year int) []bson.M {
+	start := time.Date(year, 0, 0, 0, 0, 0, 0, time.Local)
+	end := time.Date(year+1, 0, 0, 0, 0, 0, 0, time.Local)
+
+	resp := []bson.M{}
+	query := func(c *mgo.Collection) error {
+		if auditing {
+			pipe := c.Pipe([]bson.M{
+				{"$match": bson.D{{Name: "isPass", Value: true}, {Name: "time", Value: bson.M{"$gte": start}}, {Name: "time", Value: bson.M{"$lt": end}}}},
+				//{"$project": bson.M{"time": bson.M{"$add": bson.D{{"$time", 28800000}}}, "com": 1, "driver": 1, "capacity": 1, "project": 1, "car": 1, "way": 1, "part": 1, "strength": 1, "price": 1, "total": 1, "carFee": 1, "autoFee": 1, "driverFee": 1}},
+				{"$group": bson.M{"_id": bson.M{"from": "$dep", "month": bson.M{"$month": "$time"}}, "count": bson.M{"$sum": 1}}},
+				{"$sort": bson.M{"count": -1}},
+			})
+			return pipe.All(&resp)
+		} else {
+			pipe := c.Pipe([]bson.M{
+				{"$match": bson.D{{Name: "time", Value: bson.M{"$gte": start}}, {Name: "time", Value: bson.M{"$lt": end}}}},
+				//{"$project": bson.M{"time": bson.M{"$add": bson.D{{"$time", 28800000}}}, "com": 1, "driver": 1, "capacity": 1, "project": 1, "car": 1, "way": 1, "part": 1, "strength": 1, "price": 1, "total": 1, "carFee": 1, "autoFee": 1, "driverFee": 1}},
+				{"$group": bson.M{"_id": bson.M{"from": "$dep", "month": bson.M{"$month": "$time"}}, "count": bson.M{"$sum": 1}}},
+				{"$sort": bson.M{"count": -1}},
 			})
 			return pipe.All(&resp)
 		}
