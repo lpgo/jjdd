@@ -3,14 +3,15 @@ package service
 import (
 	"errors"
 	"fmt"
-	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
 	"html/template"
 	"jjdd/db"
 	"log"
 	"regexp"
 	"strings"
 	"time"
+
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var menuSlice []string = []string{
@@ -48,7 +49,7 @@ var menuItemHtml map[string]string = map[string]string{
 	"大队概括":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('大队概括')">大队概括</a>`,
 	"督察通报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('督察通报')+'&isRed=true&header=duchatongbao.gif'">督察通报</a>`,
 	"每月警星":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('每月警星')">每月警星</a>`,
-	"重要文件":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('重要文件')">重要文件</a>`,
+	"重要文件":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('重要文件')+'&isRed=true'">重要文件</a>`,
 	"通知通报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('通知通报')+'&isRed=true'">通知通报</a>`,
 	"人事文件":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('人事文件')+'&isRed=true'">人事文件</a>`,
 	"交管简报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管简报')+'&isRed=true&header=jiaoguanjianbao.gif'">交管简报</a>`,
@@ -216,7 +217,7 @@ func GetNotice(id string) *db.Notice {
 			return nil
 		} else {
 			return &notice
-		} 
+		}
 	} else {
 		if err := db.GetById("notice", id, &notice); err != nil {
 			return nil
@@ -233,7 +234,7 @@ func GetTongZhi() *db.Article {
 		log.Println(err)
 		return nil
 	}
-	noticeDate := tongzhi.NoticeTime.AddDate(0,0,1)
+	noticeDate := tongzhi.NoticeTime.AddDate(0, 0, 1)
 	if time.Now().Before(noticeDate) {
 		return &tongzhi
 	} else {
@@ -571,11 +572,19 @@ func NoHtml(src string) string {
 
 //稿件统计(当月)
 func Statistics(auditing bool) []bson.M {
+	return StatisticsByYear(auditing, time.Now().Year())
+}
+
+func StatisticsByYear(auditing bool, year int) []bson.M {
+
+	start := time.Date(year, 0, 0, 0, 0, 0, 0, time.Local)
+	end := time.Date(year+1, 0, 0, 0, 0, 0, 0, time.Local)
+
 	resp := []bson.M{}
 	query := func(c *mgo.Collection) error {
 		if auditing {
 			pipe := c.Pipe([]bson.M{
-				{"$match": bson.M{"isPass": true}},
+				{"$match": bson.D{{Name: "isPass", Value: true}, {Name: "time", Value: bson.M{"$gte": start}}, {Name: "time", Value: bson.M{"$lt": end}}}},
 				//{"$project": bson.M{"time": bson.M{"$add": bson.D{{"$time", 28800000}}}, "com": 1, "driver": 1, "capacity": 1, "project": 1, "car": 1, "way": 1, "part": 1, "strength": 1, "price": 1, "total": 1, "carFee": 1, "autoFee": 1, "driverFee": 1}},
 				{"$group": bson.M{"_id": bson.M{"from": "$dep", "month": bson.M{"$month": "$time"}}, "count": bson.M{"$sum": 1}}},
 				{"$sort": bson.M{"count": -1}},
@@ -584,11 +593,41 @@ func Statistics(auditing bool) []bson.M {
 			return pipe.All(&resp)
 		} else {
 			pipe := c.Pipe([]bson.M{
-				//{"$match": bson.M{"isPass": true}},
+				{"$match": bson.D{{Name: "time", Value: bson.M{"$gte": start}}, {Name: "time", Value: bson.M{"$lt": end}}}},
 				//{"$project": bson.M{"time": bson.M{"$add": bson.D{{"$time", 28800000}}}, "com": 1, "driver": 1, "capacity": 1, "project": 1, "car": 1, "way": 1, "part": 1, "strength": 1, "price": 1, "total": 1, "carFee": 1, "autoFee": 1, "driverFee": 1}},
 				{"$group": bson.M{"_id": bson.M{"from": "$dep", "month": bson.M{"$month": "$time"}}, "count": bson.M{"$sum": 1}}},
 				{"$sort": bson.M{"count": -1}},
 				{"$match": bson.M{"_id.month": int(time.Now().Month())}},
+			})
+			return pipe.All(&resp)
+		}
+	}
+	if err := db.WitchCollection("article", query); err != nil {
+		log.Println(err)
+	}
+	return resp
+}
+
+func StatisticsOneYear(auditing bool, year int) []bson.M {
+
+	start := time.Date(year, 0, 0, 0, 0, 0, 0, time.Local)
+	end := time.Date(year+1, 0, 0, 0, 0, 0, 0, time.Local)
+	resp := []bson.M{}
+	query := func(c *mgo.Collection) error {
+		if auditing {
+			pipe := c.Pipe([]bson.M{
+				{"$match": bson.D{{Name: "isPass", Value: true}, {Name: "time", Value: bson.M{"$gte": start}}, {Name: "time", Value: bson.M{"$lt": end}}}},
+				//{"$project": bson.M{"time": bson.M{"$add": bson.D{{"$time", 28800000}}}, "com": 1, "driver": 1, "capacity": 1, "project": 1, "car": 1, "way": 1, "part": 1, "strength": 1, "price": 1, "total": 1, "carFee": 1, "autoFee": 1, "driverFee": 1}},
+				{"$group": bson.M{"_id": bson.M{"from": "$dep", "year": bson.M{"$year": "$time"}}, "count": bson.M{"$sum": 1}}},
+				{"$sort": bson.M{"count": -1}},
+			})
+			return pipe.All(&resp)
+		} else {
+			pipe := c.Pipe([]bson.M{
+				{"$match": bson.D{{Name: "time", Value: bson.M{"$gte": start}}, {Name: "time", Value: bson.M{"$lt": end}}}},
+				//{"$project": bson.M{"time": bson.M{"$add": bson.D{{"$time", 28800000}}}, "com": 1, "driver": 1, "capacity": 1, "project": 1, "car": 1, "way": 1, "part": 1, "strength": 1, "price": 1, "total": 1, "carFee": 1, "autoFee": 1, "driverFee": 1}},
+				{"$group": bson.M{"_id": bson.M{"from": "$dep", "year": bson.M{"$year": "$time"}}, "count": bson.M{"$sum": 1}}},
+				{"$sort": bson.M{"count": -1}},
 			})
 			return pipe.All(&resp)
 		}

@@ -320,6 +320,8 @@
                         <div style="padding-top: 230px;text-align: center;font-size: 20px;font-family: '仿宋'">
                             <%if or (eq .Article.Category "督察通报") (eq .Article.Category "交管简报")%>
                                 第<%.Article.No%>期
+                            <%else if (eq .Article.Category "交安委文件")%>
+                                府交安委办&nbsp;﹝<%.Article.Year%>﹞&nbsp;<%.Article.No%>号
                             <%else%>
                                 府公交&nbsp;﹝<%.Article.Year%>﹞&nbsp;<%.Article.No%>号
                             <%end%>

@@ -3,9 +3,6 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	"gopkg.in/mgo.v2/bson"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -16,6 +13,11 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	"gopkg.in/mgo.v2/bson"
+
 	//"strings"
 	//"github.com/Luxurioust/excelize"
 	//"fmt"
@@ -299,9 +301,10 @@ func main() {
 	e.GET("/login.html", loginPage)
 	e.Any("/login", login)
 	e.Any("/notice", noticePage)
-	e.Any("/tongzhi",tongzhiPage)
+	e.Any("/tongzhi", tongzhiPage)
 	e.Any("/zhibanbiao", rotaListPage)
 	e.Any("/searchphone", searchPhone)
+	e.Any("/tongji", tongjiPage)
 	//test
 
 	//登录
@@ -623,7 +626,7 @@ func getArticles(c echo.Context) error {
 	}
 
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	if user.Role != "大队" {
+	if user.Department != "大队" {
 		cond["dep"] = user.Department
 	}
 
@@ -694,7 +697,7 @@ func previewHongtouArticle(c echo.Context) error {
 		Signature: c.FormValue("signature"),
 		From:      c.FormValue("from"),
 		Content:   template.HTML(c.FormValue("content")),
-		Attach:    template.HTML(str1 +c.FormValue("redTime") + str2),
+		Attach:    template.HTML(str1 + c.FormValue("redTime") + str2),
 		Category:  c.FormValue("category"),
 		Year:      c.FormValue("year"),
 		No:        c.FormValue("no"),
@@ -902,7 +905,6 @@ func modifyArticle(c echo.Context) error {
 			} else {
 				return MyRedirect(c, "/admin/page/dadui_admin")
 			}
-			return MyRedirect(c, "/admin/page/dadui_admin?isRed=true")
 		} else {
 			return MyRedirect(c, "/admin/page/zhongdui_admin")
 		}
@@ -926,7 +928,7 @@ func setArticle(c echo.Context) error {
 		update["isTraffic"] = true
 	} else {
 		update["isTraffic"] = false
-	} 
+	}
 	if c.FormValue("isTop") != "" {
 		update["isTop"] = true
 	} else {
@@ -963,7 +965,7 @@ func setArticle(c echo.Context) error {
 func login(c echo.Context) error {
 	if user := service.LoginByName(c.FormValue("name"), c.FormValue("pwd")); user != nil {
 		c.(*CustomContext).SetSession("user", user)
-		if user.Role == "大队" {
+		if user.Role == "大队" && (Include(user.Authorities, "红头文件") || Include(user.Authorities, "普通文章")) {
 			return MyRedirect(c, "/admin/page/dadui_admin?isRed=true")
 		} else {
 			return MyRedirect(c, "/admin/page/zhongdui_admin")
@@ -1169,11 +1171,11 @@ func indexPage(c echo.Context) error {
 	s := service.GetTongZhi()
 	if s != nil {
 		tongzhi = true
-	} else { 
+	} else {
 		tongzhi = false
 	}
 
-	return c.Render(http.StatusOK, "index", map[string]db.Any{"tongzhi":tongzhi, "keys": keys, "notice": notice, "leaderArticles": leaderArticles, "summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
+	return c.Render(http.StatusOK, "index", map[string]db.Any{"tongzhi": tongzhi, "keys": keys, "notice": notice, "leaderArticles": leaderArticles, "summarizationId": summarizationId, "duChaArticles": duChaArticles, "starArticles": starArticles, "arts": arts, "statistics": statistics, "now": time.Now(), "week": GetWeek(time.Now().Weekday()), "rota": rota, "links": links, "trafficArticles": trafficArticles, "hotArticle": hotArticle, "imageArticles": imageArticles, "subjects": subjects})
 }
 
 func noticePage(c echo.Context) error {
@@ -1316,6 +1318,21 @@ func modifyUserPage(c echo.Context) error {
 	data["navBar"] = navBar
 	data["subNav"] = subNav
 	return c.Render(http.StatusOK, "adduser", data)
+}
+
+func tongjiPage(c echo.Context) error {
+	year := c.FormValue("time")
+	if year == "" {
+		return c.Render(http.StatusOK, "tongji", map[string]db.Any{"Time": time.Now().Year()})
+	} else {
+		if y, ok := strconv.Atoi(year); ok {
+			return c.Render(http.StatusOK, "tongji", map[string]db.Any{"Time": y})
+		} else {
+			return c.Render(http.StatusOK, "tongji", map[string]db.Any{"Time": time.Now().Year()})
+	} else {
+		}
+
+	}
 }
 
 func modifyUser(c echo.Context) error {
