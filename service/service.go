@@ -247,6 +247,7 @@ func GetAllDeps() []db.Department {
 	if err := db.GetAllByOrder("department", nil, &deps); err != nil {
 		log.Println(err)
 	}
+	log.Println(deps)
 	return deps
 }
 

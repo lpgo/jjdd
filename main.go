@@ -626,7 +626,7 @@ func getArticles(c echo.Context) error {
 	}
 
 	user := c.(*CustomContext).GetSession("user").(*db.User)
-	if user.Department != "大队" {
+	if (user.Department != "大队") && (user.Department != "大队领导") {
 		cond["dep"] = user.Department
 	}
 
@@ -709,6 +709,8 @@ func previewHongtouArticle(c echo.Context) error {
 
 	if c.FormValue("needSign") == "true" {
 		article.NeedSign = true
+		params, _ := c.FormParams()
+		article.UnSign = params["unSign"]
 	}
 
 	c.(*CustomContext).SetSession("article", article)
@@ -832,7 +834,7 @@ func modifyArticlePage(c echo.Context) error {
 	} else {
 		navBar, subNav := service.CreateMenuHtml(user, article.Category)
 		if article.IsRed {
-			return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
+			return c.Render(http.StatusOK, "publish_hongtou", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects(), "Deps": service.GetAllDeps()})
 		} else {
 			return c.Render(http.StatusOK, "publish", map[string]db.Any{"navBar": navBar, "subNav": subNav, "User": user, "Modify": true, "Article": article, "Menu": GetClass(article.Category), "Subjects": service.GetAllSubjects()})
 		}
@@ -844,12 +846,6 @@ func publishArticle(c echo.Context) error {
 	article := c.(*CustomContext).GetSession("article").(db.Article)
 	article.Time = time.Now()
 	article.Department = user.Department
-
-	if article.IsRed {
-		for _, dep := range service.GetAllDeps() {
-			article.UnSign = append(article.UnSign, dep.Name)
-		}
-	}
 
 	if err := db.Add("article", &article); err != nil {
 		c.Logger().Warn(err)
@@ -979,7 +975,7 @@ func login(c echo.Context) error {
 func publishPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	navBar, subNav := service.CreateMenuHtml(user, c.QueryParam("category"))
-	data := map[string]db.Any{"navBar": navBar, "subNav": subNav, "Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "Subjects": service.GetAllSubjects()}
+	data := map[string]db.Any{"navBar": navBar, "subNav": subNav, "Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Menu": GetClass(c.QueryParam("category")), "Subjects": service.GetAllSubjects(), "Deps": service.GetAllDeps()}
 	if c.QueryParam("action") == "edit" {
 		data["Edit"] = true
 	}
@@ -1000,7 +996,7 @@ func publishPage(c echo.Context) error {
 func publishHongtouPage(c echo.Context) error {
 	user := c.(*CustomContext).GetSession("user").(*db.User)
 	navBar, subNav := service.CreateMenuHtml(user, c.QueryParam("category"))
-	data := map[string]db.Any{"navBar": navBar, "subNav": subNav, "Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Subjects": service.GetAllSubjects()}
+	data := map[string]db.Any{"navBar": navBar, "subNav": subNav, "Article": c.(*CustomContext).GetSession("article"), "User": user, "Category": c.QueryParam("category"), "Subjects": service.GetAllSubjects(), "Deps": service.GetAllDeps()}
 	if c.QueryParam("action") == "edit" {
 		data["Edit"] = true
 	}

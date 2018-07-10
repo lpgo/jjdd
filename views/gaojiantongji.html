@@ -34,7 +34,7 @@
 <%template "headerindex" .%>
 <script type="text/javascript">
 $(document).ready(function(){
-//**show_edit**//					   
+//**show_edit**//            
 init_labelshows('header_t');
 //**menu**//
 $('#menu_nav li>dl').hide();
@@ -73,7 +73,7 @@ code.hide();
     }
   </style>
   
-  <div style="margin-bottom: 10px;padding-left: 5px;text-align: center;color:#5c5c5c;background-color: #ccc;font-size: 2em;"> 
+  <div style="margin-bottom: 10px;padding-left: 5px;text-align: center;color:#5c5c5c;background-color: #ccc;font-size: 2em;height: 2em;line-height: 2em;"> 
     <script type="text/javascript">
       var year="<%.Time%>";
       
@@ -94,78 +94,82 @@ code.hide();
 
       }
     </script>
+    <style>
+      table{
+        border-collapse:collapse;
+        border: none;
+      }
+      table td,table th{
+        border:1px solid #dedede;
+        height: 2em;
+      }
+      table tr{
+        height: 2em;
+        line-height: 2em;
+      }
+      table th{
+        font-weight: bold
+      }
+      
+    </style>
     <span onclick="pre()" style="float: left;cursor: pointer;font-size: 0.7em;padding-left: 1em;color: red">前一年</span>
     <span onclick="next()" style="float: right;cursor: pointer;font-size: 0.7em;padding-right: 1em;color: red;">后一年</span>
 
         <span >府谷县公安局交警大队<%.Time%>年稿件统计表</span>
-        <div>年统计</div>
+    </div>
+        <div style="margin-left: 6%;font-size: 1.3em;border-bottom: 1px solid #ccc;margin-right: 6%;height: 2em;line-height: 2em;">年统计</div>
 
-        <table>
-          <%range $i,$v := .year%>
-           <tr> 
-            <td><%Add $i 1%></td>
-            <td><%._id.from%></td>
-            <td><%.all%></td>
-            <td><%.count%></td>
+        <div  style="margin-left: 6%;margin-bottom: 30px;margin-top: 20px;width: 25%">
+          <table style="width: 100%;text-align: center">
+            <tr>
+              <th>序号</th>
+              <th>部门</th>
+              <th>发布数量</th>
+              <th>采用数量</th>
             </tr>
-          <%end%>
-        </table>
-        <div>月统计</div>
+            <%range $i,$v := .year%>
+             <tr  style="cursor: pointer;" onclick="window.location.href='/noLeftList?dep='+encodeURIComponent('<%._id.from%>')"> 
+              <td><%Add $i 1%></td>
+              <td><%._id.from%></td>
+              <td><%.all%></td>
+              <td><%.count%></td>
+              </tr>
+            <%end%>
+          </table>
+        </div>
+        
 
-        <div>
+        <div style="margin-left: 6%;font-size: 1.3em;border-bottom: 1px solid #ccc;margin-right: 6%;height: 2em;line-height: 2em;margin-bottom: 20px">月统计</div>
 
-            
-            <div>
-              
-                <%range $i,$v := .month%>
-                <span><%$i%>月</span>
-                  <%range $x,$y := $v%>
-                    <td><%Add $x 1%></td>
-                    <td><%$y._id.from%></td>
-                    <td><%$y.all%></td>
-                    <td><%$y.count%></td>
-                  <%end%>
-                  <br>
+        <%range $i,$v := .month%>
+        <div style="width: 280px;margin-left:64px;border: 1px solid #ccc;text-align: center;height: 300px;overflow-y: scroll;margin-bottom: 30px;display:inline-block;
+        *display:inline;
+        *zoom:1;">
+          <div style="font-size: 1.1em;font-weight: bold;height:2em;line-height: 2em;"> <%$i%>月稿件统计</div>
+          <table  style="width: 100%;text-align: center"> 
+              <tr>
+                  <th>序号</th>
+                  <th>部门</th>
+                  <th>发布数量</th>
+                  <th>采用数量</th>
                 </tr>
-              <%end%>
-
-            </div>            
-            <div>
-
-            </div>
-            <div>
-
-              </div>       
-              
-            <div>
-
-              </div>
-              <div>
-  
-              </div>            
-              <div>
-  
-              </div>
-              <div>
-  
-                </div>            
-                <div>
-    
-                </div>
-                <div>
-    
-                </div>            
-                <div>
-    
-                </div>
-                <div>
-    
-                  </div>                 
+            <%range $x,$y := $v%>
+              <tr  style="cursor: pointer;" onclick="window.location.href='/noLeftList?dep='+encodeURIComponent('<%._id.from%>')">
+                <td><%Add $x 1%></td>
+                <td><%$y._id.from%></td>
+                <td><%$y.all%></td>
+                <td><%$y.count%></td>
+              </tr>
+            <%end%>
+          </table>
+        </div>
+        <%end%>
+        <div style="clear: both">
 
         </div>
 
+
         
-  </div>
   
  
 

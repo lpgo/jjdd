@@ -50,6 +50,9 @@
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
                         <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" <%if .Article.NeedSign%>checked='checked'<%end%> value="true">
+                        <%range .Deps%>
+                            <input type="checkbox" name="unSign" value="<%.Name%>" <%if Include $.Article.UnSign .Name%> checked="checked" <%end%>><%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
@@ -115,6 +118,9 @@
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
                         <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" value="true">
+                        <%range .Deps%>
+                            <input type="checkbox" name="unSign" value="<%.Name%>" checked="checked"><%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
@@ -179,6 +185,9 @@
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
                         <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" <%if .Article.NeedSign%>checked='checked'<%end%> value="true">
+                        <%range .Deps%>
+                            <input type="checkbox" name="unSign" value="<%.Name%>" <%if Include $.Article.UnSign .Name%> checked="checked" <%end%>><%.Name%>
+                        <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
