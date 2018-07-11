@@ -37,9 +37,9 @@
                     <input type="hidden" name="category" value="<%.Article.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" id="nozhuanti" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;<label for="nozhuanti">不属于专题稿件</label> 
                         <%range .Subjects%>
-                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<%.Name%>
+                            <input style="vertical-align: middle; margin-left: 2em;" id="<%.Name%>" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<label for="<%.Name%>"><%.Name%></label>
                         <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
@@ -86,9 +86,9 @@
                     <input type="hidden" name="category" value="<%.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" id="nozhuanti" name="subject" value="不属于专题稿件" checked>&emsp;<label for="nozhuanti">不属于专题稿件</label> 
                         <%range .Subjects%>
-                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" >&emsp;<%.Name%>
+                            <input style="vertical-align: middle; margin-left: 2em;" id="<%.Name%>" type="radio" name="subject" value="<%.Name%>" >&emsp;<label for="<%.Name%>"><%.Name%></label>
                         <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
@@ -133,9 +133,9 @@
                     <input type="hidden" name="category" value="<%.Article.Category%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" id="nozhuanti" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;<label for="nozhuanti">不属于专题稿件</label> 
                         <%range .Subjects%>
-                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<%.Name%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" id="<%.Name%>" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<label for="<%.Name%>"><%.Name%></label> 
                         <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">

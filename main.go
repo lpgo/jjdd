@@ -889,13 +889,15 @@ func modifyArticle(c echo.Context) error {
 		article.NeedSign = false
 	}
 
-	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
+	params, _ := c.FormParams()
+
+	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"unSign": params["unSign"], "subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
 		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No, "isAuditing": false, "time": time.Now()}}); err != nil {
 		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
 		user := c.(*CustomContext).GetSession("user").(*db.User)
-		if user.Role == "大队" {
+		if (user.Department == "大队") || (user.Department == "大队领导") {
 			if article.IsRed {
 				return MyRedirect(c, "/admin/page/dadui_admin?isRed=true")
 			} else {
@@ -961,7 +963,7 @@ func setArticle(c echo.Context) error {
 func login(c echo.Context) error {
 	if user := service.LoginByName(c.FormValue("name"), c.FormValue("pwd")); user != nil {
 		c.(*CustomContext).SetSession("user", user)
-		if user.Role == "大队" && (Include(user.Authorities, "红头文件") || Include(user.Authorities, "普通文章")) {
+		if ((user.Department == "大队") || (user.Department == "大队领导")) && (Include(user.Authorities, "红头文件") || Include(user.Authorities, "普通文章")) {
 			return MyRedirect(c, "/admin/page/dadui_admin?isRed=true")
 		} else {
 			return MyRedirect(c, "/admin/page/zhongdui_admin")

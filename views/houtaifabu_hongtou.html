@@ -42,17 +42,20 @@
                     <input type="hidden" name="category" value="<%.Article.Header%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" id="nozhuanti" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;<label for="nozhuanti">不属于专题稿件</label> 
                         <%range .Subjects%>
-                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<%.Name%>
+                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" id="<%.Name%>" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<label for="<%.Name%>"><%.Name%></label> 
                         <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
-                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" <%if .Article.NeedSign%>checked='checked'<%end%> value="true">
-                        <%range .Deps%>
-                            <input type="checkbox" name="unSign" value="<%.Name%>" <%if Include $.Article.UnSign .Name%> checked="checked" <%end%>><%.Name%>
-                        <%end%>
+                        <input id="needsignid"  onclick="onClickHander(this)" type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" <%if .Article.NeedSign%>checked='checked'<%end%> value="true">
+                        <div  id="qianshoubumen"   style="padding-left: 82px;display: none">
+                                <%range .Deps%>
+                                <input  style="vertical-align: middle;"   type="checkbox" name="unSign" id="<%.Name%>" value="<%.Name%>" <%if Include $.Article.UnSign .Name%> checked="checked" <%end%>>&nbsp;<label for="<%.Name%>"><%.Name%></label>&emsp;
+                                <%end%>
+                        </div>
+                        
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
@@ -110,17 +113,20 @@
                     <input type="hidden" name="header" value="<%if .Header%><%.Header%><%else%>hongtou.jpg<%end%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" checked>&emsp;不属于专题稿件
+                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" id="nozhuanti"  value="不属于专题稿件" checked>&emsp;<label for="nozhuanti">不属于专题稿件</label> 
                         <%range .Subjects%>
-                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" >&emsp;<%.Name%>
+                            <input id="<%.Name%>" style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" >&emsp;<label for="<%.Name%>"><%.Name%></label> 
                         <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
-                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" value="true">
-                        <%range .Deps%>
-                            <input type="checkbox" name="unSign" value="<%.Name%>" checked="checked"><%.Name%>
-                        <%end%>
+                        <input id="needsignid"  onclick="onClickHander(this)"  type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" value="true">
+                        <div  id="qianshoubumen"  style="padding-left: 82px;display: none">
+                            <%range .Deps%>
+                                <input id="<%.Name%>" style="vertical-align: middle;" type="checkbox" name="unSign" value="<%.Name%>" checked="checked">&nbsp;<label for="<%.Name%>"><%.Name%></label>&emsp;
+                            <%end%>
+                        </div>
+                       
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
@@ -177,17 +183,20 @@
                     <input type="hidden" name="header" value="<%.Article.Header%>">
                     <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         所属专题 &nbsp;
-                        <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp;不属于专题稿件
+                        <input id="nozhuanti" style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="不属于专题稿件" <%if eq .Article.Subject "不属于专题稿件"%>checked='checked'<%end%>>&emsp; <label for="nozhuanti">不属于专题稿件</label> 
                         <%range .Subjects%>
-                            <input style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<%.Name%>
+                            <input id="<%.Name%>" style="vertical-align: middle; margin-left: 2em;" type="radio" name="subject" value="<%.Name%>" <%if eq $.Article.Subject .Name%>checked='checked'<%end%>>&emsp;<label for="<%.Name%>"><%.Name%></label> 
                         <%end%>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         是否签收 &nbsp;
-                        <input type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" <%if .Article.NeedSign%>checked='checked'<%end%> value="true">
-                        <%range .Deps%>
-                            <input type="checkbox" name="unSign" value="<%.Name%>" <%if Include $.Article.UnSign .Name%> checked="checked" <%end%>><%.Name%>
-                        <%end%>
+                        <input onclick="onClickHander(this)" id="needsignid"  type="checkbox" style="vertical-align: middle; margin-left: 2em;height:40px;line-height: 38px;padding-left:1em;padding-right:1em;border: 1px solid #aaa;" name="needSign" <%if .Article.NeedSign%>checked='checked'<%end%> value="true">
+                    
+                        <div id="qianshoubumen" style="padding-left: 82px;display: none" >
+                                <%range .Deps%>
+                                <input  id="<%.Name%>" style="vertical-align: middle;" type="checkbox" name="unSign" value="<%.Name%>" <%if Include $.Article.UnSign .Name%> checked="checked" <%end%>>&nbsp; <label for="<%.Name%>"><%.Name%></label>&emsp;
+                                <%end%>
+                            </div>
                     </div>
                     <div class="idea clearboder" id="d1" style="padding-top: 10px;padding-left:60px">
                         内容标题 <span style="color: red">*</span>
@@ -249,6 +258,26 @@
         <script type="text/javascript" charset="utf-8" src="/js/ku/editor_api.js"></script>
     </body>
     <script type="text/javascript">
+        var needsignid=id=document.getElementById("needsignid");
+        if(needsignid.checked){
+            qianshoubumen.style.display="block";
+
+        }else{
+            qianshoubumen.style.display="none";
+
+        }
+        function onClickHander(obj){
+            var qianshoubumen=document.getElementById("qianshoubumen");
+
+            if(obj.checked){
+                qianshoubumen.style.display="block";
+
+            }else{
+                qianshoubumen.style.display="none";
+
+            }
+            
+        }
 
     UE.getEditor('editor');
 
