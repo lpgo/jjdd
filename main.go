@@ -38,6 +38,30 @@ var clazz map[string][]string = map[string][]string{
 	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
 	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流"}}
 
+var str1 string = `<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
+    <br/>
+	</p>
+	<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
+	    <br/>
+	</p>
+	<p style="margin-top: 5px; margin-bottom: 5px; margin-left: 0px; line-height: 37px; text-align: right;position: relative;">
+	    <img src="/images/zhangzi.gif" style="position: absolute;width: 175px; height: 180px;right: 100px;top: -60px;"/> 
+	 &nbsp; &nbsp;<span style="font-family: 仿宋, FangSong; font-size: 21px;padding-right:60px"> 府谷县公安局交通警察大队</span>
+	</p>
+	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
+	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px">`
+var str2 string = `</span>
+	</p>
+	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
+	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px"><br/></span>
+	</p>
+	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
+	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px"><br/></span>
+	</p>
+	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px;">
+	    <br/>
+	</p>`
+
 type Any interface{}
 
 type CustomContext struct {
@@ -663,30 +687,6 @@ func previewArticle(c echo.Context) error {
 //发布时预览
 func previewHongtouArticle(c echo.Context) error {
 
-	str1 := `<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
-    <br/>
-	</p>
-	<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
-	    <br/>
-	</p>
-	<p style="margin-top: 5px; margin-bottom: 5px; margin-left: 0px; line-height: 37px; text-align: right;position: relative;">
-	    <img src="/images/zhangzi.gif" style="position: absolute;width: 175px; height: 180px;right: 100px;top: -60px;"/> 
-	 &nbsp; &nbsp;<span style="font-family: 仿宋, FangSong; font-size: 21px;padding-right:60px"> 府谷县公安局交通警察大队</span>
-	</p>
-	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
-	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px">`
-	str2 := `</span>
-	</p>
-	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
-	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px"><br/></span>
-	</p>
-	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
-	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px"><br/></span>
-	</p>
-	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px;">
-	    <br/>
-	</p>`
-
 	//year, month, day := GetChineseDate()
 
 	article := db.Article{
@@ -881,6 +881,8 @@ func modifyArticle(c echo.Context) error {
 		Pic:       c.FormValue("pic"),
 		Year:      c.FormValue("year"),
 		No:        c.FormValue("no"),
+		RedTime:   c.FormValue("redTime"),
+		Attach:    template.HTML(str1 + c.FormValue("redTime") + str2),
 	}
 
 	if c.FormValue("needSign") == "true" {
@@ -891,7 +893,7 @@ func modifyArticle(c echo.Context) error {
 
 	params, _ := c.FormParams()
 
-	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"unSign": params["unSign"], "subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
+	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"attach": article.Attach, "redTime": article.RedTime, "unSign": params["unSign"], "subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
 		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No, "isAuditing": false, "time": time.Now()}}); err != nil {
 		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
