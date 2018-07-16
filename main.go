@@ -36,7 +36,7 @@ var clazz map[string][]string = map[string][]string{
 	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
 	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "警营文化"},
 	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
-	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流"}}
+	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流", "规范执法"}}
 
 var str1 string = `<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
     <br/>
@@ -192,7 +192,7 @@ func main() {
 		Format: "uri=${uri}, status=${status}\n",
 	}))
 	e.Use(middleware.Recover())
-	e.Use(middleware.Gzip())
+	//e.Use(middleware.Gzip())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins:     []string{"http://localhost"},
 		AllowCredentials: true,
@@ -894,7 +894,7 @@ func modifyArticle(c echo.Context) error {
 	params, _ := c.FormParams()
 
 	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"attach": article.Attach, "redTime": article.RedTime, "unSign": params["unSign"], "subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
-		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No, "isAuditing": false, "time": time.Now()}}); err != nil {
+		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No, "time": time.Now()}}); err != nil {
 		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {

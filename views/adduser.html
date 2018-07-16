@@ -132,6 +132,8 @@
                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"   id="guizhangzhidu"   value="规章制度" <%if Include .Auth "规章制度"%>checked<%end%> >&emsp;<label  for="guizhangzhidu" >&emsp;规章制度</label>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"   id="jingyhanjiaoliu"   value="经验调研" <%if Include .Auth "经验调研"%>checked<%end%> >&emsp;<label  for="jingyhanjiaoliu" >&emsp;经验调研</label>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"   id="xuexijiaoliu"   value="学习交流" <%if Include .Auth "学习交流"%>checked<%end%> >&emsp;<label  for="xuexijiaoliu" >&emsp;学习交流</label>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"   id="guifanzhifa"   value="规范执法" <%if Include .Auth "规范执法"%>checked<%end%> >&emsp;<label  for="guifanzhifa" >&emsp;规范执法</label>
+
                     </div>
                     
                     <input style="width:80px;height: 40px;margin-top: 2em;margin-left: 57px;background-color: #fc8114;color: white;margin-bottom: 20px;cursor: pointer;" type="submit" name="提交" value="提交">
@@ -201,6 +203,7 @@
           document.getElementById("guizhangzhidu").checked=true;
           document.getElementById("jingyhanjiaoliu").checked=true;
           document.getElementById("xuexijiaoliu").checked=true;
+          document.getElementById("guifanzhifa").checked=true;
 
 
 
@@ -249,7 +252,7 @@
           document.getElementById("guizhangzhidu").checked=true;
           document.getElementById("jingyhanjiaoliu").checked=true;
           document.getElementById("xuexijiaoliu").checked=true;
-
+          document.getElementById("guifanzhifa").checked=true;
 
        }else{
           document.getElementById("dadui1").style.display="none";//隐藏

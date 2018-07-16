@@ -32,7 +32,7 @@ var menuClass map[string][]string = map[string][]string{
 	"文件简报": []string{"重要文件", "通知通报", "交管简报", "人事文件", "交安委文件", "大队活动"},
 	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "警营文化"},
 	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
-	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流"}}
+	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流", "规范执法"}}
 
 var menuItemHtml map[string]string = map[string]string{
 	"后台首页":  `<a href="/admin/page/zhongdui_admin">后台首页</a>`,
@@ -66,7 +66,8 @@ var menuItemHtml map[string]string = map[string]string{
 	"法律法规":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('法律法规')">法律法规</a>`,
 	"规章制度":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('规章制度')">规章制度</a>`,
 	"经验调研":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('经验调研')">经验调研</a>`,
-	"学习交流":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('学习交流')">学习交流</a>`}
+	"学习交流":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('学习交流')">学习交流</a>`,
+	"规范执法":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('规范执法')">规范执法</a>`}
 
 func GetMenu(category string) string {
 	for k, v := range menuClass {
