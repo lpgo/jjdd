@@ -1923,11 +1923,21 @@ func GetWeek(w time.Weekday) string {
 }
 
 func Substring(s string, l int) string {
-	if len([]rune(s)) > l {
-		return string([]rune(s)[:l])
-	} else {
-		return s
+
+	length := 0
+	index := 0
+	for _, c := range []rune(s) {
+		if c > 127 {
+			length += 2
+		} else {
+			length += 1
+		}
+		if length >= l*2 {
+			return string([]rune(s)[:index])
+		}
+		index++
 	}
+	return s
 }
 
 func IsNew(t time.Time) bool {
