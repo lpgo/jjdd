@@ -117,7 +117,9 @@
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="zhibuhuodong"  value="支部活动" <%if Include .Auth "支部活动"%>checked<%end%>  >&emsp;<label  for="zhibuhuodong" >&emsp;支部活动</label>
                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jilvjiaoyu"  value="纪律教育" <%if Include .Auth "纪律教育"%>checked<%end%>  >&emsp;<label  for="jilvjiaoyu" >&emsp;纪律教育</label>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="xuexipeixun"  value="学习培训" <%if Include .Auth "学习培训"%>checked<%end%>  >&emsp;<label  for="xuexipeixun" >&emsp;学习培训</label>
-                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jiaojingfengcai"  value="警营文化" <%if Include .Auth "警营文化"%>checked<%end%>  >&emsp;<label  for="jiaojingfengcai" >&emsp;警营文化</label>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jingyingwenhua"  value="警营文化" <%if Include .Auth "警营文化"%>checked<%end%>  >&emsp;<label  for="jingyingwenhua" >&emsp;警营文化</label>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jiaojingfengcai"  value="交警风采" <%if Include .Auth "交警风采"%>checked<%end%>  >&emsp;<label  for="jiaojingfengcai" >&emsp;交警风采</label>
+
                     </div>
                      <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
@@ -125,6 +127,8 @@
                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="shiguyufang"  value="事故预防" <%if Include .Auth "事故预防"%>checked<%end%> >&emsp;<label  for="shiguyufang" >&emsp;事故预防</label>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="kejixinxi"  value="科技信息" <%if Include .Auth "科技信息"%>checked<%end%> >&emsp;<label  for="kejixinxi" >&emsp;科技信息</label>
                          <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="jiaoguanxuanchuan"  value="交管宣传" <%if Include .Auth "交管宣传"%>checked<%end%> >&emsp;<label  for="jiaoguanxuanchuan" >&emsp;交管宣传</label>
+                         <input style="vertical-align: middle; margin-left: 2em;" type="checkbox" name="quanxian"  id="suoduidongtai"  value="所队动态" <%if Include .Auth "所队动态"%>checked<%end%>  >&emsp;<label  for="suoduidongtai" >&emsp;所队动态</label>
+
                     </div>
                      <div class="idea clearboder" id="d1" style="padding-top: 30px;padding-left:60px">
                         <span style="color: white">1 &emsp;&emsp;&emsp;&emsp;</span>
@@ -195,6 +199,9 @@
           document.getElementById("jilvjiaoyu").checked=true;
           document.getElementById("xuexipeixun").checked=true;
           document.getElementById("jiaojingfengcai").checked=true;
+          document.getElementById("suoduidongtai").checked=true;
+          document.getElementById("jingyingwenhua").checked=true;
+
           document.getElementById("zhixuzhengzhi").checked=true;
           document.getElementById("shiguyufang").checked=true;
           document.getElementById("kejixinxi").checked=true;
@@ -243,7 +250,13 @@
           document.getElementById("zhibuhuodong").checked=true;
           document.getElementById("jilvjiaoyu").checked=true;
           document.getElementById("xuexipeixun").checked=true;
+          
           document.getElementById("jiaojingfengcai").checked=true;
+          document.getElementById("suoduidongtai").checked=true;
+          document.getElementById("jingyingwenhua").checked=true;
+
+
+
           document.getElementById("zhixuzhengzhi").checked=true;
           document.getElementById("shiguyufang").checked=true;
           document.getElementById("kejixinxi").checked=true;

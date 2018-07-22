@@ -328,7 +328,11 @@
                         </div>
                         <div class="intr_title" style="padding-top: 158px;color: #000;"><%.Article.Title%></div>
                         <div class="conTxt">
-                            <%.Article.Content%><%.Article.Attach%>
+                            <%.Article.Content%>
+                            <%if or (eq .Article.Category "通知通报") (eq .Article.Category "交管简报")%>
+                            <%else%>
+                                <%.Article.Attach%>
+                            <%end%>
                         </div>
                         <div class="clear"></div>
                         <%if and .Show .Article.NeedSign%>

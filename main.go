@@ -34,8 +34,8 @@ import (
 var clazz map[string][]string = map[string][]string{
 	"文件简报": []string{"重要文件", "通知通报", "交管简报", "人事文件", "交安委文件", "大队活动"},
 	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
-	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "警营文化"},
-	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传"},
+	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "警营文化", "交警风采"},
+	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传", "所队动态"},
 	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流", "规范执法"}}
 
 var str1 string = `<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;line-height:150%">
@@ -390,7 +390,8 @@ func addUser(c echo.Context) error {
 		Authorities: params["quanxian"],
 	}
 
-	if user.Role == "中队" {
+	if Include(user.Authorities, "红头文件") || Include(user.Authorities, "普通文章") {
+	} else {
 		user.Authorities = append(user.Authorities, "后台首页")
 	}
 
@@ -1925,7 +1926,7 @@ func GetWeek(w time.Weekday) string {
 func Substring(s string, l int) string {
 
 	length := 0
-	index := 0
+	index := 1
 	for _, c := range []rune(s) {
 		if c > 127 {
 			length += 2
