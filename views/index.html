@@ -326,10 +326,9 @@
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('通知通报')">通知通报</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('大队文件')">大队文件</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('交管简报')">交管简报</li>
-                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('人事文件')">人事文件</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('交安委文件')">交安委文件</li>
-                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('大队活动')">大队活动</li>
                                         </ul>
                                     </div>
                                     <div class="bd TabContent" style="border-left: none;padding-bottom: 5px;height: 245px">
@@ -341,25 +340,19 @@
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <%range $i,$v := .arts.交管简报%>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交管简报]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%range $i,$v := .arts.大队文件%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[大队文件]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
                                             <%end%>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <%range $i,$v := .arts.人事文件%>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%> " style="position: relative;"><span style="color: #ff7600; ">[人事文件]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%range $i,$v := .arts.交管简报%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%> " style="position: relative;"><span style="color: #ff7600; ">[交管简报]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
                                             <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
                                             <%range $i,$v := .arts.交安委文件%>
                                             <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交安委文件]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
-                                            <%end%>
-                                            <li class="clear"></li>
-                                        </ul>
-                                        <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <%range $i,$v := .arts.大队活动%>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[大队活动]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
                                             <%end%>
                                             <li class="clear"></li>
                                         </ul>
@@ -426,8 +419,8 @@
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('支部活动')">支部活动</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('队伍建设')">队伍建设</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('纪律教育')">纪律教育</li>
-                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('学习培训')">学习培训</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('警营文化')">警营文化</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('交警风采')">交警风采</li>
                                         </ul>
@@ -440,13 +433,13 @@
                                             <li class="clear"></li> 
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <%range $i,$v := .arts.纪律教育%>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[纪律教育]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%range $i,$v := .arts.队伍建设%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[队伍建设]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
                                             <%end%>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <%range $i,$v := .arts.学习培训%>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[学习培训]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%range $i,$v := .arts.纪律教育%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[纪律教育]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
                                             <%end%>
                                             <li class="clear"></li>
                                         </ul>
@@ -542,14 +535,25 @@
                                         <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
                                         <span class="arrow"><a class="next"></a><a class="prev"></a></span>
                                         <ul style="float:right;margin-right: 0.4em;">
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('大队动态')">大队动态</li>
+                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('基层动态')">基层动态</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('秩序整治')">秩序整治</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('事故预防')">事故预防</li>
-                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('科技信息')">科技信息</li>
                                             <li onclick="window.location.href='/list?category='+encodeURIComponent('交管宣传')">交管宣传</li>
-                                            <li onclick="window.location.href='/list?category='+encodeURIComponent('所队动态')">所队动态</li>
                                         </ul>
                                     </div>
                                     <div class="bd TabContent" style="border-left: none;padding-bottom: 5px;height: 245px">
+                                        <ul class="infolist11" style="font-size:15px;color:#595959;">
+                                            <%range $i,$v := .arts.大队动态%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[大队动态]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
+                                            <li class="clear"></li>
+                                        </ul>
+                                        <ul class="infolist11" style="font-size:15px;color:#595959;">
+                                            <%range $i,$v := .arts.基层动态%>
+                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[基层动态]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
+                                            <%end%>
+                                        </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
                                             <%range $i,$v := .arts.秩序整治%>
                                             <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[秩序整治]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
@@ -560,22 +564,11 @@
                                             <%range $i,$v := .arts.事故预防%>
                                             <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[事故预防]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
                                             <%end%>
-                                        </ul>
-                                        <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <%range $i,$v := .arts.科技信息%>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[科技信息]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
-                                            <%end%>
                                             <li class="clear"></li>
                                         </ul>
                                         <ul class="infolist11" style="font-size:15px;color:#595959;">
                                             <%range $i,$v := .arts.交管宣传%>
                                             <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[交管宣传]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
-                                            <%end%>
-                                            <li class="clear"></li>
-                                        </ul>
-                                        <ul class="infolist11" style="font-size:15px;color:#595959;">
-                                            <%range $i,$v := .arts.所队动态%>
-                                            <li><span class="label_datatime" style="font-size:14px;color:#595959;"><%Format $v.Time "2006/01/02"%></span><a href="/showArticle?id=<%call $.Hex $v.Id%>"  style="position: relative;"><span style="color: #ff7600; ">[所队动态]</span>&nbsp;<%Substring $v.Title 13%>&nbsp;<%if $v.NeedSign%><span style="color: red">[签]</span>&nbsp;<%end%><%if IsNew $v.Time%><img style="position: absolute;top: -3px" src="images/new.gif"><%end%></a>&nbsp;</li>
                                             <%end%>
                                             <li class="clear"></li>
                                         </ul>

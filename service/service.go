@@ -19,7 +19,7 @@ var menuSlice []string = []string{
 	"后台首页",
 	"网站管理",
 	"一级栏目",
-	"文件简报",
+	"重要文件",
 	"党建队建",
 	"交管动态",
 	"学习园地"}
@@ -29,15 +29,16 @@ var menuClass map[string][]string = map[string][]string{
 	"后台首页": []string{"后台首页"},
 	"网站管理": []string{"值班管理", "用户管理", "部门管理", "通讯录管理", "链接管理", "专题管理", "通知管理"},
 	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
-	"文件简报": []string{"重要文件", "通知通报", "交管简报", "人事文件", "交安委文件", "大队活动"},
-	"党建队建": []string{"支部活动", "纪律教育", "学习培训", "警营文化", "交警风采"},
-	"交管动态": []string{"秩序整治", "事故预防", "科技信息", "交管宣传", "所队动态"},
+	"重要文件": []string{"通知通报", "大队文件", "交管简报", "交安委文件"},
+	"党建队建": []string{"支部活动", "队伍建设", "纪律教育", "警营文化", "交警风采"},
+	"交管动态": []string{"大队动态", "基层动态", "秩序整治", "事故预防", "交管宣传"},
 	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流", "规范执法"}}
 
 var menuItemHtml map[string]string = map[string]string{
 	"后台首页":  `<a href="/admin/page/zhongdui_admin">后台首页</a>`,
 	"红头文件":  `<a href="/admin/page/dadui_admin?isRed=true">红头文件</a>`,
 	"普通文章":  `<a href="/admin/page/dadui_admin?isRed=false">普通文章</a>`,
+
 	"用户管理":  `<a href="/admin/page/user_list">用户管理</a>`,
 	"部门管理":  `<a href="/admin/page/dep_list">部门管理</a>`,
 	"通讯录管理": `<a href="/admin/page/directory_list">通讯录管理</a>`,
@@ -45,26 +46,31 @@ var menuItemHtml map[string]string = map[string]string{
 	"值班管理":  `<a href="/admin/page/saveRota">值班管理</a>`,
 	"专题管理":  `<a href="/admin/page/subject_list">专题管理</a>`,
 	"通知管理":  `<a href="/admin/page/notice_list">通知管理</a>`,
+
 	"领导讲话":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('领导讲话')">领导讲话</a>`,
 	"大队概括":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('大队概括')">大队概括</a>`,
 	"督察通报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('督察通报')+'&isRed=true&header=duchatongbao.gif'">督察通报</a>`,
 	"每月警星":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('每月警星')">每月警星</a>`,
-	"重要文件":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('重要文件')+'&isRed=true'">重要文件</a>`,
-	"通知通报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('通知通报')+'&isRed=true'">通知通报</a>`,
-	"人事文件":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('人事文件')+'&isRed=true'">人事文件</a>`,
-	"交管简报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管简报')+'&isRed=true&header=jiaoguanjianbao.gif'">交管简报</a>`,
+
+	"通知通报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('通知通报')">通知通报</a>`,
+	"大队文件":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('大队文件')+'&isRed=true'">大队文件</a>`,
+	//"交管简报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管简报')+'&isRed=true&header=jiaoguanjianbao.gif'">交管简报</a>`,
+	"交管简报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管简报')">交管简报</a>`,
 	"交安委文件": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交安委文件')+'&isRed=true&header=jiaoanwei.jpg'">交安委文件</a>`,
-	"大队活动":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('大队活动')">大队活动</a>`,
+
 	"支部活动":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('支部活动')">支部活动</a>`,
+	"队伍建设":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('队伍建设')">队伍建设</a>`,
 	"纪律教育":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('纪律教育')">纪律教育</a>`,
-	"学习培训":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('学习培训')">学习培训</a>`,
 	"警营文化":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('警营文化')">警营文化</a>`,
 	"交警风采":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交警风采')">交警风采</a>`,
+
+	"大队动态":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('大队动态')">大队动态</a>`,
+	"基层动态":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('基层动态')">基层动态</a>`,
 	"秩序整治":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('秩序整治')">秩序整治</a>`,
 	"事故预防":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('事故预防')">事故预防</a>`,
-	"科技信息":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('科技信息')">科技信息</a>`,
 	"交管宣传":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管宣传')">交管宣传</a>`,
-	"所队动态":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('所队动态')">所队动态</a>`,
+	
+
 	"法律法规":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('法律法规')">法律法规</a>`,
 	"规章制度":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('规章制度')">规章制度</a>`,
 	"经验调研":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('经验调研')">经验调研</a>`,
@@ -79,7 +85,7 @@ func GetMenu(category string) string {
 			}
 		}
 	}
-	return "后台首页"
+	return ""
 }
 
 func GetAllSubMenu(sub string) []string {
@@ -691,10 +697,12 @@ func CreateMenuHtml(user *db.User, subMenu string) (template.HTML, template.HTML
 
 	for _, a := range user.Authorities {
 		menu := GetMenu(a)
-		if subs, ok := data[menu]; !ok {
-			data[menu] = []string{a}
-		} else {
-			data[menu] = append(subs, a)
+		if menu != "" {
+			if subs, ok := data[menu]; !ok {
+				data[menu] = []string{a}
+			} else {
+				data[menu] = append(subs, a)
+			}
 		}
 	}
 
