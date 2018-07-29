@@ -45,8 +45,10 @@ var str1 string = `<p style="margin-top:5px;margin-bottom:5px;margin-left: 0;lin
 	    <br/>
 	</p>
 	<p style="margin-top: 5px; margin-bottom: 5px; margin-left: 0px; line-height: 37px; text-align: right;position: relative;">
-	    <img src="/images/zhangzi.gif" style="position: absolute;width: 175px; height: 180px;right: 100px;top: -60px;"/> 
-	 &nbsp; &nbsp;<span style="font-family: 仿宋, FangSong; font-size: 21px;padding-right:60px"> 府谷县公安局交通警察大队</span>
+		<img src="/images/`
+var str3 string = `.gif" style="position: absolute;width: 175px; height: 180px;right: 100px;top: -60px;"/> 
+	 &nbsp; &nbsp;<span style="font-family: 仿宋, FangSong; font-size: 21px;padding-right:60px">`
+var str4 string = `</span>
 	</p>
 	<p style="margin: 5px 0px; text-indent: 43px; line-height: 37px; text-align: right;">
 	    <span style="font-size: 21px; font-family: 仿宋, FangSong;padding-right:80px">`
@@ -698,7 +700,6 @@ func previewHongtouArticle(c echo.Context) error {
 		Signature: c.FormValue("signature"),
 		From:      c.FormValue("from"),
 		Content:   template.HTML(c.FormValue("content")),
-		Attach:    template.HTML(str1 + c.FormValue("redTime") + str2),
 		Category:  c.FormValue("category"),
 		Year:      c.FormValue("year"),
 		No:        c.FormValue("no"),
@@ -706,6 +707,12 @@ func previewHongtouArticle(c echo.Context) error {
 		IsRed:     true,
 		Id:        bson.NewObjectId(),
 		Class:     GetClass(c.FormValue("category")),
+	}
+
+	if article.Category == "交安委文件" {
+		article.Attach = template.HTML(str1 + "jaw" + str3 + "府谷县道路交通安全委员会" + str4 + c.FormValue("redTime") + str2)
+	} else {
+		article.Attach = template.HTML(str1 + "zhangzi" + str3 + "府谷县公安局交通警察大队" + str4 + c.FormValue("redTime") + str2)
 	}
 
 	if c.FormValue("needSign") == "true" {
@@ -1203,7 +1210,15 @@ func articleListPage(c echo.Context) error {
 }
 
 func loginPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "login", nil)
+	if user, ok := c.(*CustomContext).GetSession("user").(*db.User); ok {
+		if ((user.Department == "大队") || (user.Department == "大队领导")) && (Include(user.Authorities, "红头文件") || Include(user.Authorities, "普通文章")) {
+			return MyRedirect(c, "/admin/page/dadui_admin?isRed=true")
+		} else {
+			return MyRedirect(c, "/admin/page/zhongdui_admin")
+		}
+	} else {
+		return c.Render(http.StatusOK, "login", nil)
+	}
 }
 
 func addUserPage(c echo.Context) error {

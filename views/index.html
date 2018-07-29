@@ -461,8 +461,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="information-right fr" style="height: 643px;overflow: scroll">
-                    <div class="boxNew">
+                <div class="information-right fr" style="height: 643px;">
+                    <div class="boxNew" style="height: 312px;border: 1px solid #eee">
                         <div class="bt3" style="cursor: pointer;" onclick="zhibanbiao()"> <span class="tit">今日值班</span> <span style="cursor: pointer;"  class="more">更多</span> </div> 
                         <script type="text/javascript">
                             function zhibanbiao(){
@@ -474,7 +474,7 @@
                                 window.location.href="/zhibanbiao?dep="+encodeURIComponent("大队")+"&time="+time;
                             }
                         </script>
-                        <div class="new-bc">
+                        <div class="new-bc" style="width: 251px;margin: 0 auto;overflow-y: scroll;height: 267px;"> 
                             <table id="zhibanbiao">
                                 <tr>
                                     <td colspan="3" style=" background-color: #ececec;padding-bottom: 0.7em;padding-top: 0.7em;font-size: 20px;font-weight: bold;line-height: 1.3em;"><%.week%>
@@ -483,6 +483,37 @@
                                 <%.rota%>
                             </table>
                         </div>
+                    </div>
+                    <div class="boxNew" style="height: 312px;margin-top: 20px;border: 1px solid #eee">
+                        <div class="bt3" style="cursor: pointer;" onclick="zhibanbiao()"> <span class="tit">应用平台</span></div> 
+                        <style>
+                            #pingtaiid li{
+                               border: 1px solid #eee;border-radius: 2px;
+                              margin: 5px;
+                              height: 2em;
+                              line-height: 2em;
+                              font-size: 1.2em;
+                              padding-left: 1em;
+                              list-style-type: square;
+                              list-style: square;
+
+
+                              
+                            }
+                            #pingtaiid li:hover{
+                                border-color: #ccc;
+                            }
+                        </style>
+                        <ul id="pingtaiid" style="overflow-y: scroll;height: 267px;">
+                            <li><a href="http://jdcjsr-zyk.zx.ga/first.do" target="_blank">机动车/驾驶人查询-公安部</a></li>
+                            <li><a href="http://zhcx.zx.ga/index1024.jsp" target="_blank">全国公安综合信息查询系统</a></li>
+                            <li><a href="http://10.172.134.9/trffweb/" target="_blank">榆林交警综合应用平台(1)</a></li>
+                            <li><a href="http://10.172.134.10/trffweb/" target="_blank">榆林交警综合应用平台(2)</a></li>
+                            <li><a href="http://10.172.134.9:9080/trffweb/" target="_blank">榆林交警综合应用平台(打印)</a></li>
+                            <li><a href="http://10.177.98.11:9080/zhptkzb/" target="_blank">榆林交警综合应用平台扩展版</a></li>
+                            <li><a href="http://10.177.98.9:9080/rmweb/" target="_blank">公安交通集成指挥平台</a></li>
+                            <li><a href="http://10.172.20.146:9080/qgbzgl/index.jsp" target="_blank">电子执法证据管理</a></li>
+                      </ul>
                     </div>
                 </div>
                 <!-- 专项行动 -->
