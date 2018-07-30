@@ -64,10 +64,10 @@ var menuItemHtml map[string]string = map[string]string{
 	"警营文化": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('警营文化')">警营文化</a>`,
 	"交警风采": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交警风采')">交警风采</a>`,
 
-	"大队动态": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('所队动态')">所队动态</a>`,
+	"所队动态": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('所队动态')">所队动态</a>`,
 	"秩序整治": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('秩序整治')">秩序整治</a>`,
 	"事故预防": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('事故预防')">事故预防</a>`,
-	"基层动态": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('车管动态')">车管动态</a>`,
+	"车管动态": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('车管动态')">车管动态</a>`,
 	"交管宣传": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管宣传')">交管宣传</a>`,
 
 	"法律法规": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('法律法规')">法律法规</a>`,
