@@ -31,7 +31,7 @@ var menuClass map[string][]string = map[string][]string{
 	"一级栏目": []string{"领导讲话", "大队概括", "督察通报", "每月警星"},
 	"重要文件": []string{"通知通报", "大队文件", "交管简报", "交安委文件"},
 	"党建队建": []string{"党建活动", "队伍建设", "纪律教育", "警营文化", "交警风采"},
-	"交管动态": []string{"所队动态", "秩序整治", "事故预防", "车管动态", "交管宣传"},
+	"交管动态": []string{"基层动态", "秩序整治", "事故预防", "车管动态", "安全宣传"},
 	"学习园地": []string{"法律法规", "规章制度", "经验调研", "学习交流", "规范执法"}}
 
 var menuItemHtml map[string]string = map[string]string{
@@ -64,11 +64,11 @@ var menuItemHtml map[string]string = map[string]string{
 	"警营文化": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('警营文化')">警营文化</a>`,
 	"交警风采": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交警风采')">交警风采</a>`,
 
-	"所队动态": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('所队动态')">所队动态</a>`,
+	"基层动态": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('基层动态')">基层动态</a>`,
 	"秩序整治": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('秩序整治')">秩序整治</a>`,
 	"事故预防": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('事故预防')">事故预防</a>`,
 	"车管动态": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('车管动态')">车管动态</a>`,
-	"交管宣传": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管宣传')">交管宣传</a>`,
+	"安全宣传": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('安全宣传')">安全宣传</a>`,
 
 	"法律法规": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('法律法规')">法律法规</a>`,
 	"规章制度": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('规章制度')">规章制度</a>`,
@@ -317,14 +317,14 @@ func RotaToHtml(rota db.ZRota) template.HTML {
 
 	layout1 :=
 		`<tr>
-			<td>%s</td>
+			<td width="56px">%s</td>
 			<td colspan="%d">
 			    <span style='cursor:pointer' onclick='searchphone("%s","%s")'>%s</span>
 			</td>
 		</tr>`
 	layout2 :=
 		`<tr>
-			<td rowspan="%d">%s</td>
+			<td rowspan="%d" width="56px">%s</td>
 			<td>
 			    <span style='cursor:pointer' onclick='searchphone("%s","%s")'>%s</span>
 			</td>`
