@@ -317,15 +317,15 @@ func RotaToHtml(rota db.ZRota) template.HTML {
 
 	layout1 :=
 		`<tr>
-			<td width="56px">%s</td>
+			<td>%s</td>
 			<td colspan="%d">
 			    <span style='cursor:pointer' onclick='searchphone("%s","%s")'>%s</span>
 			</td>
 		</tr>`
 	layout2 :=
 		`<tr>
-			<td rowspan="%d" width="56px">%s</td>
-			<td>
+			<td rowspan="%d" >%s</td>
+			<td >
 			    <span style='cursor:pointer' onclick='searchphone("%s","%s")'>%s</span>
 			</td>`
 
@@ -341,7 +341,7 @@ func RotaToHtml(rota db.ZRota) template.HTML {
 			} else {
 				result += fmt.Sprintf(layout1, item.Name, colspan, rota.Dep, item.Staff[0], addSpace(item.Staff[0]))
 			}
-
+ 
 		} else {
 			if l%2 > 0 {
 				rowspan = l/2 + 1
