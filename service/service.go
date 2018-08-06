@@ -58,7 +58,7 @@ var menuItemHtml map[string]string = map[string]string{
 	"交管简报":  `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交管简报')">交管简报</a>`,
 	"交安委文件": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('交安委文件')+'&isRed=true&header=jiaoanwei.jpg'">交安委文件</a>`,
 
-	"支部活动": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('党建活动')">党建活动</a>`,
+	"党建活动": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('党建活动')">党建活动</a>`,
 	"队伍建设": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('队伍建设')">队伍建设</a>`,
 	"纪律教育": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('纪律教育')">纪律教育</a>`,
 	"警营文化": `<a href="javascript:window.location.href='/admin/page/admin?category='+encodeURIComponent('警营文化')">警营文化</a>`,
@@ -341,7 +341,7 @@ func RotaToHtml(rota db.ZRota) template.HTML {
 			} else {
 				result += fmt.Sprintf(layout1, item.Name, colspan, rota.Dep, item.Staff[0], addSpace(item.Staff[0]))
 			}
- 
+
 		} else {
 			if l%2 > 0 {
 				rowspan = l/2 + 1
