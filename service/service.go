@@ -302,7 +302,13 @@ func GetLinksByDep(dep string, page int) []db.Link {
 func GetRota() template.HTML {
 	var rota db.ZRota
 	now := time.Now()
-	t := time.Date(now.Year(), now.Month(), now.Day(), 8, 0, 0, 0, time.Local)
+	var t time.Time
+	if now.Hour() < 8 {
+		t = time.Date(now.Year(), now.Month(), now.Day()-1, 8, 0, 0, 0, time.Local)
+	} else {
+		t = time.Date(now.Year(), now.Month(), now.Day(), 8, 0, 0, 0, time.Local)
+	}
+
 	if err := db.FindOne("zrota", bson.M{"dep": "大队", "time": t}, &rota); nil != err {
 		log.Println(err)
 		return template.HTML("")

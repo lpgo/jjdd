@@ -902,7 +902,7 @@ func modifyArticle(c echo.Context) error {
 	params, _ := c.FormParams()
 
 	if err := db.UpdateById("article", c.FormValue("id"), bson.M{"$set": bson.M{"attach": article.Attach, "redTime": article.RedTime, "unSign": params["unSign"], "subject": article.Subject, "title": article.Title, "creator": article.Creator, "assessor": article.Assessor,
-		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No, "time": time.Now()}}); err != nil {
+		"signature": article.Signature, "from": article.From, "content": article.Content, "category": article.Category, "pic": article.Pic, "needSign": article.NeedSign, "year": article.Year, "no": article.No}}); err != nil {
 		c.Logger().Warn(err)
 		return c.Redirect(http.StatusMovedPermanently, "/error.html")
 	} else {
