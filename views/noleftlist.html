@@ -239,16 +239,17 @@
                     </li>
                     <li class="clear"></li>
                 </ul>
-                   <div class="mtop pages" id="page">
-                        共{{@pagenum}}页{{@count}}条
-                        <a class="s1 s3"   ms-on-click="jump(1)">首页</a>
-                        <a class="s1 s3"  ms-on-click="pre(@page)">&lt;&lt;</a>
-                        <a class="s1 s3"   ms-on-click="pre(@page)">上一页</a>
-                        <span class="s1 s3" style="text-align: center;"><input ms-on-keyup="jump(@page)"   ms-duplex="@page" style="border: none;width: 30px"></span>
-                        <a class="s1 s3"  ms-on-click="next(@page)">下一页</a>
-                        <a class="s1 s3"  ms-on-click="next(@page)">&gt;&gt;</a>
-                        <a class="s1 s3"   ms-on-click="jump(@pagenum)">末页</a>
-                    </div>
+                <div class="mtop pages" id="page"> 
+                        
+                    <a class="s1 s3"  href="#" >总共{{@count}}记录</a>
+
+                    <a class="s1 s3"   ms-on-click="jump(1)">首页</a>
+                    <a class="s1 s3"   ms-on-click="pre(@page)">上一页</a>
+                    <a class="s1 s3"  ms-for="($index, el) in @pagenumarr" ms-on-click="jump(el)" >{{el}}</a>
+                    <a class="s1 s3"  ms-on-click="next(@page)">下一页</a>
+                    <a class="s1 s3"   ms-on-click="jump(@pagenum)">末页</a>
+                    <a class="s1 s3"  href="#" >当前{{@page}}/{{@pagenum}}总页</a>
+                </div>
                 </div>
             </div>
         </div>
@@ -270,6 +271,12 @@ var params = <%if eq .IsLeader "true"%>"&category="+encodeURIComponent("领导�
 var net=function(page){
 
 }
+var GetQuerySTring=function(name)
+{
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  decodeURI(r[2]); return null;
+}
 var searchV;
 avalon.filters.uppercase = function (str) {
     var searchValue=searchV;
@@ -290,6 +297,7 @@ var vm = avalon.define({
   arr1:[],
   arr2:[],
   arr3:[],
+  pagenumarr:[],
   count:0,
   pagenum:0,
   page:1,
@@ -385,10 +393,10 @@ var vm = avalon.define({
             }
         }
       })
-                  vm.arr1=data.data.slice(0,5);
-                  vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-                  vm.count =data.count;
+                vm.arr1=data.data.slice(0,5);
+                vm.arr2=data.data.slice(5,10);
+                vm.arr3=data.data.slice(10,15);                
+                vm.count =data.count;
                 vm.page=1;
                 vm.pagenum=parseInt(vm.count/meiyenum)+1;
               },
@@ -425,181 +433,101 @@ var vm = avalon.define({
   },
   jump:function(page){
     vm.page=parseInt(page) ;
-    $.ajax({
-    url:"/searchArticle?page="+page+params,    //请求的url地址
-    dataType:"json",   //返回格式为json
-    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
-    type:"GET",   //请求方式
-    beforeSend:function(){
-        //请求前的处理
-    },
-    success:function(data,status){
-        data.data.forEach(function(item){
-        item.title=item.title.substring(0,34);
-        var d=new Date(item.time);
-        var year=d.getFullYear();
-        var month=d.getMonth();
-        var day=d.getDate();
-
-        var today=new Date();
-        var year1=today.getFullYear();
-        var month1=today.getMonth();
-        var day1=today.getDate();
-
-
-        if(year==year1&&month==month1){
-            if((day1-day)<2){
-                item['isNew']=true;
-            }
-        }
-      })
-      vm.arr1=data.data.slice(0,5);
-      vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-      vm.count =data.count;
-      vm.pagenum=parseInt(vm.count/meiyenum)+1;
-    },
-    complete:function(){
-        //请求完成的处理
-    },
-    error:function(){
-        //请求出错处理
-    }
-});
+    var a=window.location.href.split("&")[0];
+    window.location.href=a+"&pagenum="+vm.page;
   },
   pre:function(page){
     if(page<=1){
       return;
     }
-    $.ajax({
-    url:"/searchArticle?page="+(page-1)+params,    //请求的url地址
-    dataType:"json",   //返回格式为json
-    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
-    type:"GET",   //请求方式
-    beforeSend:function(){
-        //请求前的处理
-    },
-    success:function(data,status){
-        data.data.forEach(function(item){
-        item.title=item.title.substring(0,34);
-        var d=new Date(item.time);
-        var year=d.getFullYear();
-        var month=d.getMonth();
-        var day=d.getDate();
+    var a=window.location.href.split("&")[0];
 
-        var today=new Date();
-        var year1=today.getFullYear();
-        var month1=today.getMonth();
-        var day1=today.getDate();
+    window.location.href=a+"&pagenum="+(page-1);
 
-
-        if(year==year1&&month==month1){
-            if((day1-day)<2){
-                item['isNew']=true;
-            }
-        }
-      })
-      vm.arr1=data.data.slice(0,5);
-      vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-      vm.page=page-1;
-    },
-    complete:function(){
-        //请求完成的处理
-    },
-    error:function(){
-        //请求出错处理
-    }
-});
+   
   },
   next:function(page){
     if(page>=vm.pagenum){
       return;
     }
+    var a=window.location.href.split("&")[0];
 
-   $.ajax({
-    url:"/searchArticle?page="+(page+1)+params,    //请求的url地址
-    dataType:"json",   //返回格式为json
-    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
-    type:"GET",   //请求方式
-    beforeSend:function(){
-        //请求前的处理
-    },
-    success:function(data,status){
-        data.data.forEach(function(item){
-        item.title=item.title.substring(0,34);
-        var d=new Date(item.time);
-        var year=d.getFullYear();
-        var month=d.getMonth();
-        var day=d.getDate();
+    window.location.href=a+"&pagenum="+(page+1);
 
-        var today=new Date();
-        var year1=today.getFullYear();
-        var month1=today.getMonth();
-        var day1=today.getDate();
-
-
-        if(year==year1&&month==month1){
-            if((day1-day)<2){
-                item['isNew']=true;
-            }
-        }
-      })
-      vm.arr1=data.data.slice(0,5);
-      vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-      vm.page=page+1;
-    },
-    complete:function(){
-        //请求完成的处理
-    },
-    error:function(){
-        //请求出错处理
-    }
-  });
+  
   },
   divmouseout:function(index){
     this.arr[index].ishidden=false;
   }
  })
 
+var pagenum=GetQuerySTring("pagenum");
+if(!pagenum){
+    pagenum=1;
+}
+vm.page=parseInt(pagenum); 
 $.ajax({
-    url:"/searchArticle?page=1"+params,    //请求的url地址
+    url:"/searchArticle?page="+pagenum+params,    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
-    xhrFields: {
-            withCredentials: true
-    },
     beforeSend:function(){
         //请求前的处理
     },
-    success:function(sss,status){
-        sss.data.forEach(function(item){
-            item.title=item.title.substring(0,34);
-            var d=new Date(item.time);
-            var year=d.getFullYear();
-            var month=d.getMonth();
-            var day=d.getDate();
-            var today=new Date();
-            var year1=today.getFullYear();
-            var month1=today.getMonth();
-            var day1=today.getDate();
-           
-            if(year==year1&&month==month1){
-                if((day1-day)<2){
-                    item['isNew']=true;
-                }
+    success:function(data,status){
+        data.data.forEach(function(item){
+        item.title=item.title.substring(0,34);
+        var d=new Date(item.time);
+        var year=d.getFullYear();
+        var month=d.getMonth();
+        var day=d.getDate();
+        var today=new Date();
+        var year1=today.getFullYear();
+        var month1=today.getMonth();
+        var day1=today.getDate();
+        if(year==year1&&month==month1){
+            if((day1-day)<2){
+                item['isNew']=true;
             }
-            
-        })
+        }
+      })
+      vm.arr1=data.data.slice(0,5);
+      vm.arr2=data.data.slice(5,10);
+      vm.arr3=data.data.slice(10,15);   
+      vm.count =data.count;
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;  
 
-        vm.arr1=sss.data.slice(0,5);
-        vm.arr2=sss.data.slice(5,10);
-        vm.arr3=sss.data.slice(10,15);   
-        vm.count =sss.count;
-        vm.page=1;
-        vm.pagenum=parseInt(vm.count/meiyenum)+1;
+      var num=vm.pagenum;
+      if(num>10)
+        num=10;
+       
+      var chaju=vm.page-5;
+       
+      var linshiarr=[];
+      for(var i=0;i<num;i++){
+        linshiarr.push(i+chaju);
+      }
+      
+      if(linshiarr[0]<=0){
+          var num=1-linshiarr[0];
+          for(var i=0;i<linshiarr.length;i++){
+            linshiarr[i]=parseInt(linshiarr[i])+num;
+          }
+      }
+      if(linshiarr[9]>vm.pagenum){
+          var num=linshiarr[9]-vm.pagenum;
+          for(var i=0;i<linshiarr.length;i++){
+            linshiarr[i]=parseInt(linshiarr[i])-num;
+          }
+      }
+
+
+      vm.pagenumarr=[];
+      vm.pagenumarr.pushArray(linshiarr);
+      
+
+
+
     },
     complete:function(){
         //请求完成的处理

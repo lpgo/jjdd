@@ -1202,6 +1202,7 @@ func directoryPage(c echo.Context) error {
 }
 
 func searchPage(c echo.Context) error {
+	c.Logger().Warn(c.QueryParam("searchValue"))
 	return c.Render(http.StatusOK, "search", map[string]db.Any{"searchValue": c.QueryParam("searchValue")})
 }
 

@@ -256,7 +256,7 @@
                 				<span style="float: right;padding-right: 4em;">
 		                    		 <span style="margin-left: 40px;vertical-align: middle;">热门标签：</span>
 		                        <%range .keys%>
-		                            <a href="javascript:window.location.href='/search?searchValue=<%.Name%>'" style="margin-left: 2px;"><%.Name%></a>
+		                            <a href="javascript:window.location.href='/search?searchValue='+encodeURIComponent('<%.Name%>')" style="margin-left: 2px;"><%.Name%></a>
 		                        <%end%>    
 		                    	</span>
                 			</td>

@@ -4,10 +4,6 @@
 <html> 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>府谷交警</title>
     <meta name="keywords" content="府谷交警">
     <link rel="shortcut icon" href="/images/1.ico" type="image/x-icon" />
@@ -257,28 +253,30 @@
                       <ul class="label_ul_b">
                         <br>
                         <li  ms-for="($index, el) in @arr1"  class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;&emsp;&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
-                        </li>
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span>
+                            <a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
+                            </li>
                         <br>
                         <li ms-for="($index, el) in @arr2" class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}"><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
                         </li>
                         <br>
                         <li ms-for="($index, el) in @arr3"  class="label_arrow_1" style="overflow: hidden;position: relative;">
-                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;</a>
+                            <span class="label_datatime">{{el.time| date("yyyy年MM月dd日 HH:mm:ss")}}</span><a ms-attr="{href:'/showArticle?id='+el.id}" ><span style="color: #0064d4;">[{{el.category}}]&emsp;</span>&emsp;{{el.title}}&nbsp;<span :visible="el.needSign" style="color: red">[签]</span>&nbsp;<img :visible="el.isNew"  style="position: absolute;top: 6px" src="images/new.gif"></a>&nbsp;
                         </li>
                         <li class="clear"></li>
                     </ul>
                     
-                   <div class="mtop pages" id="page">
-                        共{{@pagenum}}页{{@count}}条
+                    <div class="mtop pages" id="page">
+                        
+                        <a class="s1 s3"  href="#" >总共{{@count}}记录</a>
+
                         <a class="s1 s3"   ms-on-click="jump(1)">首页</a>
-                        <a class="s1 s3"  ms-on-click="pre(@page)">&lt;&lt;</a>
                         <a class="s1 s3"   ms-on-click="pre(@page)">上一页</a>
-                        <span class="s1 s3" style="text-align: center;"><input ms-on-keyup="jump(@page)"   ms-duplex="@page" style="border: none;width: 30px"></span>
+                        <a class="s1 s3"  ms-for="($index, el) in @pagenumarr" ms-on-click="jump(el)" >{{el}}</a>
                         <a class="s1 s3"  ms-on-click="next(@page)">下一页</a>
-                        <a class="s1 s3"  ms-on-click="next(@page)">&gt;&gt;</a>
                         <a class="s1 s3"   ms-on-click="jump(@pagenum)">末页</a>
+                        <a class="s1 s3"  href="#" >当前{{@page}}/{{@pagenum}}总页</a>
                     </div>
                 </div>
             </div>
@@ -295,10 +293,16 @@
     <script type="text/javascript">
     	
 var meiyenum=15;
-var isca=<%.Category%>;
-var iscl=<%.Class%>
+var isca="<%.Category%>";
+var iscl="<%.Class%>";
 var net=function(page){
 
+}
+var GetQuerySTring=function(name)
+{
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  decodeURI(r[2]); return null;
 }
 var searchV;
 avalon.filters.uppercase = function (str) {
@@ -314,12 +318,13 @@ avalon.filters.uppercase = function (str) {
     return str4;
 }
 var vm = avalon.define({
-  $id: "fugujiaojing",
+ $id: "fugujiaojing",
   isbox:false,
   arr: [],
   arr1:[],
   arr2:[],
   arr3:[],
+  pagenumarr:[],
   count:0,
   pagenum:0,
   page:1,
@@ -337,7 +342,7 @@ var vm = avalon.define({
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
     beforeSend:function(){
-        
+        	
     },
     success:function(data,status){
         data.data.forEach(function(item){
@@ -361,7 +366,7 @@ var vm = avalon.define({
       })
       vm.arr1=data.data.slice(0,5);
       vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
+      vm.arr3=data.data.slice(10,15);                
 
       vm.page=1;
       vm.count =data.count;
@@ -455,146 +460,37 @@ var vm = avalon.define({
   },
   jump:function(page){
     vm.page=parseInt(page) ;
-    $.ajax({
-    url:"/searchArticle?page="+page+"&subject="+encodeURIComponent("<%.Subject%>"),    //请求的url地址
-    dataType:"json",   //返回格式为json
-    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
-    type:"GET",   //请求方式
-    beforeSend:function(){
-        //请求前的处理
-    },
-    success:function(data,status){
-        data.data.forEach(function(item){
-        item.title=item.title.substring(0,34);
-        var d=new Date(item.time);
-        var year=d.getFullYear();
-        var month=d.getMonth();
-        var day=d.getDate();
-
-        var today=new Date();
-        var year1=today.getFullYear();
-        var month1=today.getMonth();
-        var day1=today.getDate();
-
-
-        if(year==year1&&month==month1){
-            if((day1-day)<2){
-                item['isNew']=true;
-            }
-        }
-      })
-      vm.arr1=data.data.slice(0,5);
-      vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-      vm.count =data.count;
-      vm.pagenum=parseInt(vm.count/meiyenum)+1;
-    },
-    complete:function(){
-        //请求完成的处理
-    },
-    error:function(){
-        //请求出错处理
-    }
-});
+    window.location.href="/subjectList?subject="+encodeURIComponent("<%.Subject%>")+"&pagenum="+vm.page;
   },
   pre:function(page){
     if(page<=1){
       return;
     }
-    $.ajax({
-    url:"/searchArticle?page="+(page-1)+"&subject="+encodeURIComponent("<%.Subject%>"),    //请求的url地址
-    dataType:"json",   //返回格式为json
-    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
-    type:"GET",   //请求方式
-    beforeSend:function(){
-        //请求前的处理
-    },
-    success:function(data,status){
-        data.data.forEach(function(item){
-        item.title=item.title.substring(0,34);
-        var d=new Date(item.time);
-        var year=d.getFullYear();
-        var month=d.getMonth();
-        var day=d.getDate();
+    window.location.href="/subjectList?subject="+encodeURIComponent("<%.Subject%>")+"&pagenum="+(page-1);
 
-        var today=new Date();
-        var year1=today.getFullYear();
-        var month1=today.getMonth();
-        var day1=today.getDate();
-
-
-        if(year==year1&&month==month1){
-            if((day1-day)<2){
-                item['isNew']=true;
-            }
-        }
-      })
-      vm.arr1=data.data.slice(0,5);
-      vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-      vm.page=page-1;
-    },
-    complete:function(){
-        //请求完成的处理
-    },
-    error:function(){
-        //请求出错处理
-    }
-});
+   
   },
   next:function(page){
     if(page>=vm.pagenum){
       return;
     }
+    window.location.href="/subjectList?subject="+encodeURIComponent("<%.Subject%>")+"&pagenum="+(page+1);
 
-   $.ajax({
-    url:"/searchArticle?page="+(page+1)+"&subject="+encodeURIComponent("<%.Subject%>"),    //请求的url地址
-    dataType:"json",   //返回格式为json
-    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
-    type:"GET",   //请求方式
-    beforeSend:function(){
-        //请求前的处理
-    },
-    success:function(data,status){
-        data.data.forEach(function(item){
-        item.title=item.title.substring(0,34);
-        var d=new Date(item.time);
-        var year=d.getFullYear();
-        var month=d.getMonth();
-        var day=d.getDate();
-
-        var today=new Date();
-        var year1=today.getFullYear();
-        var month1=today.getMonth();
-        var day1=today.getDate();
-
-
-        if(year==year1&&month==month1){
-            if((day1-day)<2){
-                item['isNew']=true;
-            }
-        }
-      })
-      vm.arr1=data.data.slice(0,5);
-      vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
-      vm.page=page+1;
-    },
-    complete:function(){
-        //请求完成的处理
-    },
-    error:function(){
-        //请求出错处理
-    }
-  });
+  
   },
   divmouseout:function(index){
     this.arr[index].ishidden=false;
   }
  })
 
+
+var pagenum=GetQuerySTring("pagenum");
+if(!pagenum){
+    pagenum=1;
+}
+vm.page=parseInt(pagenum); 
 $.ajax({
-    url:"/searchArticle?page=1"+"&subject="+encodeURIComponent("<%.Subject%>"),    //请求的url地址
+    url:"/searchArticle?page="+pagenum+"&subject="+encodeURIComponent("<%.Subject%>"),    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
     type:"GET",   //请求方式
@@ -602,32 +498,63 @@ $.ajax({
         //请求前的处理
     },
     success:function(data,status){
-        data.data.forEach(function(item){
+       data.data.forEach(function(item){
         item.title=item.title.substring(0,34);
         var d=new Date(item.time);
         var year=d.getFullYear();
         var month=d.getMonth();
         var day=d.getDate();
-
         var today=new Date();
         var year1=today.getFullYear();
         var month1=today.getMonth();
         var day1=today.getDate();
-
-
         if(year==year1&&month==month1){
             if((day1-day)<2){
                 item['isNew']=true;
             }
         }
       })
+
       vm.arr1=data.data.slice(0,5);
       vm.arr2=data.data.slice(5,10);
-    vm.arr3=data.data.slice(10,15);                
+      vm.arr3=data.data.slice(10,15);
+     
       vm.count =data.count;
-      vm.page=1;
-      vm.pagenum=parseInt(vm.count/meiyenum)+1;
-      console.log(vm.pagenum)
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;  
+      vm.count =data.count;
+      vm.pagenum=parseInt(vm.count/meiyenum)+1;  
+
+      var num=vm.pagenum;
+      if(num>10)
+        num=10;
+       
+      var chaju=vm.page-5;
+       
+      var linshiarr=[];
+      for(var i=0;i<num;i++){
+        linshiarr.push(i+chaju);
+      }
+      
+      if(linshiarr[0]<=0){
+          var num=1-linshiarr[0];
+          for(var i=0;i<linshiarr.length;i++){
+            linshiarr[i]=parseInt(linshiarr[i])+num;
+          }
+      }
+      if(linshiarr[9]>vm.pagenum){
+          var num=linshiarr[9]-vm.pagenum;
+          for(var i=0;i<linshiarr.length;i++){
+            linshiarr[i]=parseInt(linshiarr[i])-num;
+          }
+      }
+
+
+      vm.pagenumarr=[];
+      vm.pagenumarr.pushArray(linshiarr);
+      
+
+
+
     },
     complete:function(){
         //请求完成的处理
@@ -636,6 +563,7 @@ $.ajax({
         //请求出错处理
     }
 });
+
  // $.get("/admin/getArticles?page=1",function(data,status){
  //      vm.arr=data.data;
  //      console.log(vm.arr)

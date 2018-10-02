@@ -277,6 +277,13 @@ var vm = avalon.define({
   searchValue:'<%.searchValue%>',
   aaa:"",
   search:function(sousuovalue){
+    var patt1=new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5\\s]+([-_][a-zA-Z0-9\u4e00-\u9fa5\\s]+)*$");
+
+    if (!patt1.test(sousuovalue)){
+        alert("请输入正确字符");
+        return ;
+    }
+    
     searchV=sousuovalue
    $.ajax({
     url:"/searchArticle?searchValue="+encodeURIComponent(sousuovalue),    //请求的url地址
@@ -437,7 +444,12 @@ var vm = avalon.define({
   }
  })
 
-$.ajax({
+var patt1=new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5\\s]+([-_][a-zA-Z0-9\u4e00-\u9fa5\\s]+)*$");
+
+if (!patt1.test(vm.searchValue)){
+    alert("请输入正确字符");
+} else {
+    $.ajax({
     url:"/searchArticle?page=1"+"&searchValue="+encodeURIComponent(vm.searchValue),    //请求的url地址
     dataType:"json",   //返回格式为json
     async:true,//请求是否异步，默认为异步，这也是ajax重要特性
@@ -458,7 +470,10 @@ $.ajax({
     error:function(){
         //请求出错处理
     }
-});
+    });
+}
+ 
+
  // $.get("/admin/getArticles?page=1",function(data,status){
  //      vm.arr=data.data;
  //      console.log(vm.arr)
